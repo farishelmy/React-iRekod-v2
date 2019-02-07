@@ -207,15 +207,22 @@ class ViewDetail extends Component {
                                  <div className="author">
                                      <span>                                        
                                         <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} className="avatar border-gray" alt="..."/>
-                                        <h5 className="title">{decodeURIComponent(item.full_name)}</h5>
+                                        <h5 className="title">{decodeURIComponent(item.initials)} {decodeURIComponent(item.full_name)}</h5>
                                      </span>
                                  </div>
+                                 <div> 
+                                    <hr/>
+                                 </div>
                                  <p className="description text-center">
-                                    <label><img className="userIcon mr-2" src={require('../../../img/email.svg')} alt="email"/>{decodeURIComponent(item.email)} </label>
-                                    <br />
+                                    <br/>
+                                    <label><img className="userIcon mr-2" src={require('../../../img/email.svg')} alt="email"/>{item.email===""?"N/A":decodeURIComponent(item.email)} </label>
+                                    <br/>
+                                    <label><img className="userIcon mr-2" src={require('../../../img/event.svg')} alt="date_of_birth"/>{item.date_of_birth===null?"N/A":decodeURIComponent(item.date_of_birth)} </label>
+                                    <br/>
+                                    <label><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="role"/>{item.role_value===""?"N/A":decodeURIComponent(item.role_value)} </label>
                                     <label ></label>
                                  </p>
-                                 <div> 
+                                 {/* <div> 
                                     <hr/>
                                  </div>
                                  <h5 className="title text-center">Associate</h5>                                    
@@ -225,8 +232,7 @@ class ViewDetail extends Component {
                                         stakehType={item.stakeh_type}                                     
                                         fullName={item.full_name}
                                         typeName={item.stakeh_type_name}
-                                        setActivePage={this.setPageView} />):"No Member Items" } 
-                                         
+                                        setActivePage={this.setPageView} />):"No Member Items" }  */}                                         
                              </div>
                          </div>
                      </div>
@@ -235,7 +241,7 @@ class ViewDetail extends Component {
 
                          <form id="simpleform" name="simpleform">
 
-                             <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="col-lg-12 col-md-12 col-sm-12">
                                  <div className="card bg-light">
                                      <div className="card-header card-header-transparent d-flex align-items-center">
                                          <h4>Group</h4>
@@ -244,19 +250,40 @@ class ViewDetail extends Component {
                                         <div className='col-lg-12 col-md-12 col-sm-12'>
                                             <div className="row">
                                             {groupItem!==null?groupItem.map((item,idx)=><GroupView 
-                                                    key={idx} 
-                                                    stkhId={item.stakeholder_id}                                       
-                                                    fullName={item.full_name}
-                                                    typeName={item.stakeh_type_name}
-                                                    stakehType={item.stakeh_type}  
-                                                    setActivePage={this.setPageView}/>):"No Group Items"} 
+                                                key={idx} 
+                                                stkhId={item.stakeholder_id}                                       
+                                                fullName={item.full_name}
+                                                typeName={item.stakeh_type_name}
+                                                stakehType={item.stakeh_type}  
+                                                setActivePage={this.setPageView}/>):"No Group Items"} 
+                                            </div>
+                                        </div>
+                                     </div>
+                                 </div>
+                            </div>
+
+                            <div className="col-lg-12 col-md-12 col-sm-12">
+                                 <div className="card bg-light">
+                                     <div className="card-header card-header-transparent d-flex align-items-center">
+                                         <h4>Associate</h4>
+                                     </div>
+                                     <div className="card-body">
+                                        <div className='col-lg-12 col-md-12 col-sm-12'>
+                                            <div className="row">
+                                            {memberItem!==[0]?memberItem.map((item,idx)=><MemberView 
+                                                key={idx} 
+                                                stkhId={item.stakeholder_id}  
+                                                stakehType={item.stakeh_type}                                     
+                                                fullName={item.full_name}
+                                                typeName={item.stakeh_type_name}
+                                                setActivePage={this.setPageView} />):"No Member Items" }  
                                             </div>
                                         </div>
                                      </div>
                                  </div>
                              </div>
 
-                             <div className="col-lg-12 col-md-12 col-sm-12">
+                            <div className="col-lg-12 col-md-12 col-sm-12">
                                  <div className="card bg-light flex-column">
                                      <div className="card-header card-header-transparent d-flex align-items-center">
                                          <h4>Access Control</h4>
@@ -275,7 +302,7 @@ class ViewDetail extends Component {
                                          </div>
                                      </div>                                     
                                  </div>                                 
-                             </div>
+                            </div>
                              {/* <div className="col-lg-12 col-md-12 col-sm-12">
                                  <div className="card bg-light flex-column">
                                      <div className="card-header card-header-transparent d-flex align-items-center">

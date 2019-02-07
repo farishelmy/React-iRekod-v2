@@ -70,7 +70,7 @@ const updSecBtn=(e)=>{
                     </span>
                 </li>
 
-                <li className= "fab-buttons-item">
+                {/* <li className= "fab-buttons-item">
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
@@ -79,9 +79,9 @@ const updSecBtn=(e)=>{
                              <img name="group" data-wizardpage="group" src={require('../../img/share.svg')} alt='group' className='img-fluid' onClick={updSecBtn}  /> 
                         </Tooltip>
                     </span>
-                </li>
+                </li> */}
 
-                <li className= "fab-buttons-item">
+                {/* <li className= "fab-buttons-item">
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
@@ -90,9 +90,9 @@ const updSecBtn=(e)=>{
                              <img name="access" data-wizardpage="access" src={require('../../img/access.svg')} alt='access' className='img-fluid' onClick={updSecBtn}  /> 
                         </Tooltip>
                     </span>
-                </li>
+                </li> */}
 
-                <li className= "fab-buttons-item">
+                {/* <li className= "fab-buttons-item">
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
@@ -101,15 +101,15 @@ const updSecBtn=(e)=>{
                              <img name="security" data-wizardpage="security" src={require('../../img/padlock.svg')} alt='security' className='img-fluid' onClick={updSecBtn}  /> 
                         </Tooltip>
                     </span>
-                </li> 
+                </li>  */}
 
                 <li className= "fab-buttons-item">
                     <span className="fab-buttons-link">
                         <Tooltip
                             placement="left"
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Basic Info</div>}
+                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Edit</div>}
                             arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                             <img name="basic" data-wizardpage="basic" src={require('../../img/information.svg')} alt='basic' className='img-fluid' onClick={updBasicBtn}  /> 
+                             <img name="basic" data-wizardpage="basic" src={require('../../img/fab-update.svg')} alt='basic' className='img-fluid' onClick={updBasicBtn}  /> 
                         </Tooltip>
                     </span>
                 </li> 

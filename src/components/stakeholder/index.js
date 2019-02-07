@@ -6,12 +6,12 @@ import {setActivePage} from '../../actions/layoutInitAction'
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
-import {showMultiFab} from '../../actions/fabAction'
- 
+import {showMultiFab} from '../../actions/fabAction' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
+import Dropdown from './Dropdown'
 import BreadCrumb from '../layouts/BreadcrumbStakeh'
 import CardRow from '../stakeholder/CardRow'  
 import DetailCard from '../stakeholder/DetailCard'
@@ -331,10 +331,12 @@ class index extends Component {
                 <section>
                     <div className="container-fluid">
                         <header>
-                        <div className="d-flex align-items-center justify-content-between mb-2">
-                            <h1 className="h3 display"><strong>{pageTitle}</strong></h1>  
-                       
-                                <div className="d-flex align-items-center">                          
+                        <div className="d-flex bd-highlight">
+                            <h1 className="h3 display p-2 flex-grow-1 bd-highlight"><strong>{pageTitle}</strong></h1>                        
+                          
+                            <div className="p-2 bd-highlight col-md-3"><Dropdown/></div> 
+                         
+                                <div className="p-2 bd-highlight d-flex align-items-center">                          
 
                                     <Tooltip
                                         placement="top"
@@ -384,7 +386,7 @@ class index extends Component {
  
                                 </div>
                         </div>
-                        </header>               
+                        </header>          
                             <div className="row">    
                             
                                 {stakeholderlistType.map(item=>stakehView?

@@ -1,4 +1,4 @@
-import {STAKEHOLDER_LIST} from '../types'
+import {STAKHOLDER_TYPE_LIST,STAKEHOLDER_LIST} from '../types'
 import {biorisUrl} from '../../config/appConf'
 
 //Stakeholder List
@@ -9,7 +9,8 @@ export const setStakehList = (param) => dispatch =>{
         .then(res=>res.json())
         .then(res=>{
             dispatch({
-                type:STAKEHOLDER_LIST,payload:res.results
+                type:STAKEHOLDER_LIST,
+                payload:res.results
             })
         })
 }
@@ -21,3 +22,4 @@ export const newStakehList=(param)=>{
         payload:param
     }
 }
+ 

@@ -1,3 +1,3 @@
-const biorisUrl = 'http://192.168.0.196'
+const biorisUrl = 'http://localhost:8000/api'
 
 export{biorisUrl}
