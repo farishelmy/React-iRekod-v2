@@ -1,14 +1,48 @@
 import React, { Component, Fragment } from 'react'
+import posed, {PoseGroup} from 'react-pose'
+
+import Dashboard from '../components/dashboard/Dashboard'
+import addStakeholder from '../components/stakeholder/add/AddStakeholder' 
+import index from '../components/stakeholder/index'
+import ViewDetail from '../components/stakeholder/view/ViewDetail'
+import UpdateDetail from '../components/stakeholder/update/UpdateDetail'
+import MainMulti from '../components/stakeholder/multi/MainMulti'
+import addChild from '../components/stakeholder/addChild/AddStakeholder'
+import search from '../components/stakeholder/search/search'
+// import ListWorkflow from './workflow/ListWorkflow'  
+// import NewActivity from './workflow/create/NewActivity'
+// import WorkflowDetails from './workflow/update/WorkflowDetails'
+// import Log from './auditTrail/auditLog/index'
+// import PrintPage from './auditTrail/auditLog/PrintPage'
+// import PrintReport from './auditTrail/modal/PrintReport'
+// import PrintUsage from './auditTrail/modal/PrintUsage'
+// import PrintStatistic from './auditTrail/modal/PrintStatistic';
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setNavToggle,setPageClass, setSideNavClass} from '../actions/layoutInitAction'
+import {Footer, SideNav, TopNav} from '../components/layouts'
 
-import {Footer, SideNav, TopNav} from '../components/layout'
 
-class Home extends Component {
+const RouteContainer = posed.div({
+    enter: {
+        y: 0,
+        opacity: 1,
+        delay: 300,
+        transition: {
+          y: { type: 'spring', stiffness: 1000, damping: 15 },
+          default: { duration: 300 }
+        }
+      },
+      exit: {
+        y: 50,
+        opacity: 0,
+        transition: { duration: 150 }
+      },
+  })
 
+class Home extends Component {    
 
     componentDidMount() {
         window.addEventListener("resize", this.updateDimensions)
@@ -23,24 +57,52 @@ class Home extends Component {
 
         this.props.setNavToggle(false, pageClass, navClass)
     }
-  render() {
-      const {pageClass}=this.props.layout
+
+    components={
+        'dashboard' : Dashboard,
+
+        //stakeholder
+        'addStakeholder' : addStakeholder,                
+        'index' : index,
+        'viewStakeh': ViewDetail,
+        'edit': UpdateDetail, 
+        'deleteMulti': MainMulti,
+        'addChild': addChild,  
+        'search': search,   
+
+        //workflow
+        // 'listOfWorkflow':ListWorkflow,
+        // 'createNewAct': NewActivity,
+        // 'viewActivity': WorkflowDetails,
+        // 'createNewAct': NewActivity,
+        // 'view': WorkflowDetails,
+
+        //auditTrail
+        // 'log':Log,        
+        // 'print' : PrintPage,
+        // 'printReport': PrintReport,
+        // 'printUsage': PrintUsage,
+        // 'printStat' : PrintStatistic,
+        
+        
+    }
+     
+
+  render() {       
+      const {pageClass,activePage:pName}=this.props.layout                
+      const Page=this.components[pName]
     return (
         <Fragment>
             <SideNav/>
-            <div className={pageClass}>
-                <TopNav/>
-            {/* <Switch>
-                <Route path ="/helper/:type/:navObj/:itmObj" component={MainHelper} />
-                <Route path ="/details/:type/:tab/:sub/:navObj/:itmObj" component={Wizard} />
-                <Route path ="/log" component={Log} />
-                <Route path ="/upload" component={UploaderMain} />
-                <Route path ="/search/:page" component={RecExplorerMain} />
-                <Route path ="/" component={DashPage} />
-            </Switch> */}
-
-            <Footer/>
-        </div>
+                <div className={pageClass}>
+                    <TopNav/>
+                        {/* <PoseGroup>
+                            <RouteContainer key={pName}> */}
+                                <Page/>
+                            {/* </RouteContainer>
+                        </PoseGroup> */}
+                    <Footer/>
+                </div>
     </Fragment>
     )
   }

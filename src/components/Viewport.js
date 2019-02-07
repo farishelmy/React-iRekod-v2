@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import Login from '../components/Login'
 import Home from '../components/Home'
 
-class Viewport extends Component {
+class ViewPort extends Component {
   render() {
     const {isAuth} = this.props.session
     return (
@@ -17,10 +17,10 @@ class Viewport extends Component {
   }
 }
 
-Viewport.propTypes={
+ViewPort.propTypes={
   session: PropTypes.object.isRequired
 }
 const mapStateToProps= state =>({
   session:state.session
 })
-export default connect(mapStateToProps)(Viewport)
+export default connect(mapStateToProps)(ViewPort)
