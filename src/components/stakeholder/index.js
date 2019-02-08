@@ -27,15 +27,18 @@ class index extends Component {
     constructor() {
         super();     
         this.state = {
-            stakeholderlistType:[],
+            stakeholderlistType:[],            
             stakehSelect:null,    
             fabMenu:null,        
         };
     }   
 
     componentWillMount(){
-        const {stakehType} = this.props.stakeholderlistType
-        this.setState({stakeholderlistType:stakehType})
+        const {stakehType} = this.props.stakeholderlistType              
+        this.setState({
+            stakeholderlistType:stakehType,             
+        })
+       
     }
 
     componentDidUpdate(prevProps,prevState){
@@ -308,9 +311,9 @@ class index extends Component {
     
     render() {
         
-        const {stakehView,showFab,stakehNumb}=this.props.stakeholderlistType
-        const {pageTitle}=this.props.layout
-        const {stakeholderlistType}=this.state  
+        const {stakehView,showFab,stakehNumb,stakehLabel}=this.props.stakeholderlistType
+        // const {pageTitle}=this.props.layout
+        const {stakeholderlistType}=this.state        
         // const {stakeholder_Detail}=this.props.stakeholderView 
         // console.log(fabMenu)
         
@@ -322,7 +325,7 @@ class index extends Component {
                     <div className="container-fluid">
                         <div className="breadcrumb">
                             <div className="breadcrumb-item"><a href='/' onClick={this.pageBreadCrumb} data-pagename="dashboard">Home</a></div>
-                            <div className="breadcrumb-item">{pageTitle}</div>
+                            <div className="breadcrumb-item">{stakehLabel}</div>
                             
                         </div>
                     </div>
@@ -332,7 +335,7 @@ class index extends Component {
                     <div className="container-fluid">
                         <header>
                         <div className="d-flex bd-highlight">
-                            <h1 className="h3 display p-2 flex-grow-1 bd-highlight"><strong>{pageTitle}</strong></h1>                        
+                            <h1 className="h3 display p-2 flex-grow-1 bd-highlight"><strong>{stakehLabel}</strong></h1>                        
                           
                             <div className="p-2 bd-highlight col-md-3"><Dropdown/></div> 
                          

@@ -1,4 +1,4 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../types'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEH_LABEL} from '../types'
 import {biorisUrl} from '../../config/appConf'
 
 //Set Stakeholder Type Func
@@ -10,7 +10,8 @@ export const setStakehType = (param) => dispatch =>{
         .then(res=>{
             // console.log(res.results)
             dispatch({
-                type:STAKEH_TYPE,payload:res.results
+                type:STAKEH_TYPE,
+                payload:res.results
             })
         })
 }
@@ -50,6 +51,14 @@ export const setStakehViewFalse=(param)=>{
 export const setShowFab=(param)=>{
     return {
         type:SHOW_FAB,
+        payload:param
+    }
+}
+
+//Stakeh Label Type
+export const setStakehLabel=(param)=>{
+    return {
+        type:STAKEH_LABEL,
         payload:param
     }
 }

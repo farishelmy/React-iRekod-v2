@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {setStakehSel,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction'
 // import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
 import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
-import {setStakehType,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
+import {setStakehType,setStakehNumb,setStakehLabel} from '../../actions/stakeholderAction/stakehTypeAction'
 // import {setListWorkFlow,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
 import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 // import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
@@ -52,18 +52,18 @@ class SideNav extends React.Component {
       const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
-      this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
+      // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       this.props.setStakehNumb(e.target.getAttribute('data-id'))
       // console.log(e.target.getAttribute('data-pageTitle'))     
 
-      const stakehObj={
-        stakeholder_id:bId,
-        bio_access_id:idAccess,
-        action:'ITEM_LIST_TYPE',
-        stakeh_type: parseInt(e.target.getAttribute('data-id')),
-      }
+      // const stakehObj={
+      //   stakeholder_id:bId,
+      //   bio_access_id:idAccess,
+      //   action:'ITEM_LIST_TYPE',
+      //   stakeh_type: parseInt(e.target.getAttribute('data-id')),
+      // }
 
-      this.props.setStakehType(stakehObj) 
+      // this.props.setStakehType(stakehObj) 
 
       this.props.bcIndex(true)  // Breadcrumb in index page   
       this.props.bcDet(false)   // Breadcrumb in detail page
@@ -81,6 +81,13 @@ class SideNav extends React.Component {
       //   action:'ITEM_DETAIL',            
       // }
       // this.props.setStakeholderItemDetail(stakehDet)  
+
+      const stakehList={
+        action: "ITEM_LIST",
+        bio_access_id: idAccess       
+      }
+      this.props.setStakehType(stakehList)
+      this.props.setStakehLabel(e.target.getAttribute('data-label'))
 
 
       ///////////////////////////////workflow////////////////////////////////////
@@ -196,7 +203,7 @@ class SideNav extends React.Component {
             </li>
 
             {/* Stakeholder */}
-            <li>
+            {/* <li>
               <a href="/" aria-expanded={this.state.stakehToggle} data-toggle="collapse" name="stakeholder" className={this.state.stakehToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
               <div className="userIcon"><img src={require('../../img/employee.svg')} alt="employee" className="img-fluid p-1"/></div>Stakeholder </a>
               <ul id="chartsDropdown" className={this.state.stakehToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
@@ -243,8 +250,17 @@ class SideNav extends React.Component {
                       </a>
                 </li>       
               </ul>
-            </li> 
+            </li>  */}
 
+            <li>
+            <a href="/" onClick={this.setActivePage} data-pagename="index" data-id="All" data-label="All Locations">
+              <div className="userIcon" data-pagename="index">
+                <img src={require('../../img/employee.svg')} alt="employee" className="img-fluid mr-1" data-pagename="index"/>
+              </div>Stakeholder
+            </a>
+          </li>
+
+             
                 {/* Audit Trail */}
 
                 <li>
@@ -300,7 +316,7 @@ SideNav.propTypes={
     // setSelWorkFlow: PropTypes.func.isRequired,
     bcIndex: PropTypes.func.isRequired,
     bcDet: PropTypes.func.isRequired,
-     
+    setStakehLabel: PropTypes.func.isRequired,
     
 
   }
@@ -328,6 +344,7 @@ SideNav.propTypes={
     // setSelWorkFlow,
     bcIndex,
     bcDet,
+    setStakehLabel,
     
     
   })

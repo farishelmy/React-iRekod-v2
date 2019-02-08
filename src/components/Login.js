@@ -52,9 +52,37 @@ class Login extends Component {
     this.state={
         onUsrFocus:false,
         onPssFocus:false,
-        redirectToReferrer: false
+        redirectToReferrer: false,
+        btnTxt: "Login",
+        btnCls: "btn-primary"
     }
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.session.authLoading !== this.props.session.authLoading) {
+      const { authLoading } = this.props.session
+      if (authLoading) {
+        this.setState({
+          btnTxt: "Validating...",
+          btnCls: "btn-info"
+        })
+      } else {
+        if (!this.props.session.isAuth) {
+          this.setState({
+            btnTxt: "Login error : BIO-001: Login failed",
+            btnCls: "btn-danger"
+          })
+        } else {
+          this.setState({
+            btnTxt: "Login",
+            btnCls: "btn-primary"
+          })
+        }
+      }
+    }
+    //
+  }
+
   setUserState(usrData){
     const jsonResult = usrData.results[0]
       if(usrData.success && usrData.code===200){
@@ -86,35 +114,24 @@ class Login extends Component {
           repoName = usrInput.substr(saperatorIdx+1)
 
     const loginObj={
+      _action:"login",
       username:usrName,
       password:e.target.loginPassword.value,
-      repository_id:repoName,
-      language_id:"en_US"
+      datasetid:repoName
     }
     this.props.login(loginObj)    
-    // let url = '../bioris-web/Login?param='+JSON.stringify(loginObj)
-    // fetch(url ,{
-    // headers:{
-    //     'Content-Type':'application/json'
-    // },
-    //   method:'GET',
-    //   credentials: 'same-origin'
-    // })
-    // .then(res=>res.json())
-    // .then((data)=>{
-    //       data.code===200?
-    //       this.setUserState(data)
-    //       :
-    //       Alert.error(data.message, {
-    //         position: 'bottom-right',
-    //         effect: 'jelly',
-    //         beep: failed,
-    //         timeout: 3000
-    //       })
-
-    //     })
   }
+
+  changeBtnText = () => {
+    this.setState({
+      btnTxt: "Login",
+      btnCls: "btn-primary"
+    })
+  }
+
   render() {
+    
+    const { btnTxt, btnCls } = this.state
 
     return (
         <div className="page login-page" style={styles.header}>
@@ -130,10 +147,10 @@ class Login extends Component {
                 <input style={styles.input} type="text" name="loginUsername" className="form-control" placeholder="Username"/>
             </div>
             <div className="form-group">
-                <input style={styles.input} type="password" name="loginPassword" className="form-control" placeholder="Password"/>
+                <input style={styles.input} type="password" name="loginPassword" className="form-control" placeholder="Password" onClick={this.changeBtnText} />
             </div>
             <div className="form-group">
-            <button type="submit" style={styles.input} className="btn btn-primary btn-block">Login</button>
+            <button type="submit" style={styles.input} className={`btn ${btnCls} btn-block`}>{btnTxt}</button>
             </div>
             </form>
             <div className="align-items-center">

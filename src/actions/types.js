@@ -36,6 +36,7 @@ export const STAKEH_TYPE = 'STAKEH_TYPE'
 export const STAKEH_SEL = 'STAKEH_SEL'
 export const STAKEH_VIEW = 'STAKEH_VIEW'
 export const SHOW_FAB = 'SHOW_FAB'
+export const STAKEH_LABEL = 'STAKEH_LABEL'
 export const STAKEH_NUMB = 'STAKEH_NUMB'
 export const DELETE_STAKEHOLDER = 'DELETE_STAKEHOLDER'
 

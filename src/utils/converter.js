@@ -4,4 +4,4 @@ const converter = obj => {
       .join("&")
     return queryString
   }
-  export {converter}
+export {converter}

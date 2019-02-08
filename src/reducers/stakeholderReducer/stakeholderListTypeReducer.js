@@ -1,4 +1,4 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB} from '../../actions/types'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_LABEL,STAKEH_NUMB} from '../../actions/types'
 
 
 const initialState={ 
@@ -6,6 +6,7 @@ const initialState={
     stakehSel:'null',   //Select Stakeholder
     stakehView: false, //layout card to grid
     showFab:false,  //Fab
+    stakehLabel: null, //Stakeh Label
     stakehNumb: null, //Stakeh Number Type  
       
 
@@ -33,6 +34,11 @@ export default function(state = initialState, action){
             ...state,
             showFab:action.payload
         } 
+        case STAKEH_LABEL:
+        return {
+            ...state,
+            stakehLabel:action.payload
+        }    
         case STAKEH_NUMB:
         return {
             ...state,
