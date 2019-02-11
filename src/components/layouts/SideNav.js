@@ -49,11 +49,11 @@ class SideNav extends React.Component {
       e.preventDefault()
 
       /////////////////////////////stakeholder////////////////////////////////////
-      const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
+      const {user:{_id:bId}} = this.props.session
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-      this.props.setStakehNumb(e.target.getAttribute('data-id'))
+      // this.props.setStakehNumb(e.target.getAttribute('data-id'))
       // console.log(e.target.getAttribute('data-pageTitle'))     
 
       // const stakehObj={
@@ -83,8 +83,8 @@ class SideNav extends React.Component {
       // this.props.setStakeholderItemDetail(stakehDet)  
 
       const stakehList={
-        action: "ITEM_LIST",
-        bio_access_id: idAccess       
+        _action: "LISTLOCATION",
+        _id:bId,        
       }
       this.props.setStakehType(stakehList)
       this.props.setStakehLabel(e.target.getAttribute('data-label'))
@@ -151,8 +151,8 @@ class SideNav extends React.Component {
   render() {
 
       const {navBarClass}=this.props.layout
-      const {user:{stakeholder_name:stakehName,roles:[{title}]}}=this.props.session
-
+      const {user:{sortname:name,usertype:role}}=this.props.session
+       
     return (
     <nav className={navBarClass}>
 
@@ -162,8 +162,8 @@ class SideNav extends React.Component {
 
           <div className="sidenav-header-inner text-center">
             <img src={require('../../img/user.svg')} alt="user" className="img-fluid "/>
-            <h2 className="h5">{stakehName}</h2>
-            <span>{title}</span>
+            <h2 className="h5">{name}</h2>
+            <span>{role}</span>
           </div>
 
           <div className="sidenav-header-logo">
@@ -179,16 +179,16 @@ class SideNav extends React.Component {
           <ul id="side-main-menu" className="side-menu list-unstyled">
 
           {/* Dashboard */}
-          <li>
+          {/* <li>
             <a href="/" onClick={this.setActivePage} data-pagename="dashboard">
               <div className="userIcon" data-pagename="dashboard">
                 <img src={require('../../img/StakeType/Dashboard.svg')} alt="dashboard" className="img-fluid mr-1" data-pagename="dashboard"/>
               </div>Dashboard
             </a>
-          </li>
+          </li> */}
 
              {/* List Of WorkFlow */}
-            <li>
+            {/* <li>
               <a href="/" aria-expanded={this.state.workFlowToggle} data-toggle="collapse" name="workflow" className={this.state.workFlowToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
               <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
               <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
@@ -200,7 +200,7 @@ class SideNav extends React.Component {
                       </a>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* Stakeholder */}
             {/* <li>
@@ -263,7 +263,7 @@ class SideNav extends React.Component {
              
                 {/* Audit Trail */}
 
-                <li>
+                {/* <li>
                   <a href="/" aria-expanded={this.state.auditTrailToggle} data-toggle="collapse" name="auditTrail" className={this.state.auditTrailToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
                   <div className="userIcon"><img src={require('../../img/folder.svg')} alt="audit" className="img-fluid p-1"/></div>Audit Log </a>
                   <ul id="chartsDropdown" className={this.state.auditTrailToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
@@ -282,7 +282,7 @@ class SideNav extends React.Component {
                         </a>
                     </li>
                   </ul>
-                </li>
+                </li> */}
 
 
 

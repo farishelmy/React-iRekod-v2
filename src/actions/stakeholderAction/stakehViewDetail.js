@@ -1,16 +1,18 @@
 import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC,DELETE_STAKEHOLDER} from '../types'
 import {biorisUrl} from '../../config/appConf'
+import {converter} from '../../utils/converter'
 
 //Call stkh Detail
 export const setStakeholderItemDetail = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+    const url=biorisUrl+converter(param)
         fetch(url)
         .then(res=>res.json())
         .then(res=>{
-            // console.log(res)           
+            console.log(res.data)           
             dispatch({
-                type:STAKEHOLDER_VIEW,payload:res.results
+                type:STAKEHOLDER_VIEW,
+                payload:res.data
             })
         })
 }

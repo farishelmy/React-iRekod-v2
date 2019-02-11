@@ -34,7 +34,7 @@ class index extends Component {
     }   
 
     componentWillMount(){
-        const {stakehType} = this.props.stakeholderlistType              
+        const {stakehType} = this.props.stakeholderlistType      
         this.setState({
             stakeholderlistType:stakehType,             
         })
@@ -67,7 +67,7 @@ class index extends Component {
             const{stakeholderlistType}=this.state
             // console.log(stakeholderlistType)
             if(isMultiSel){
-                const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({stakeholder_id:itm.stakeholder_id,full_name:itm.full_name}))
+                const listSelStakeh=stakeholderlistType.filter(itm => itm.isSel === true).map(itm=>({uri:itm.uri,full_name:itm.Name}))
                 this.props.setStakehSel(listSelStakeh)
             }
             else
@@ -75,9 +75,9 @@ class index extends Component {
                 const selStakeh=stakeholderlistType.find(itm => itm.isSel === true)
                 // console.log(selStakeh)
                 if(selStakeh!==undefined){
-                    const {stakeholder_id:stakeholder_id} = selStakeh
+                    const {uri:uri} = selStakeh
                     this.props.setStakehSel({
-                        stakeholder_id:stakeholder_id                       
+                        uri:uri                       
                     })                   
                 }
             }
@@ -91,7 +91,7 @@ class index extends Component {
              
     }
 
-    //Selection 
+    // Selection 
     markOnSel=(sId)=>{
         
         this.props.setStakehSel(sId)     
@@ -100,9 +100,9 @@ class index extends Component {
         const{isMultiSel}=this.props.fab
         const {stakeholderlistType} = this.state
         // console.log(stakeholderlistType)
-        const itmIdx = stakeholderlistType.findIndex(itm=>itm.stakeholder_id === sId),
+        const itmIdx = stakeholderlistType.findIndex(itm=>itm.uri === sId),
             desIdx = stakeholderlistType.findIndex(itm=>itm.isSel===true),
-            {isSel:selStakehIsSel}=stakeholderlistType.find(itm=>itm.stakeholder_id===sId)
+            {isSel:selStakehIsSel}=stakeholderlistType.find(itm=>itm.uri===sId)
       
         // console.log(itmIdx)
         // console.log(desIdx)
@@ -138,7 +138,7 @@ class index extends Component {
         })
     }
 
-    //BreadCrumb
+    BreadCrumb
     pageBreadCrumb=(e)=>{
         e.preventDefault()
         this.props.setActivePage(e.target.getAttribute('data-pagename'))
@@ -148,9 +148,9 @@ class index extends Component {
     //Fab View Detail
     setActivePage=(param)=>{    
             
-        const {stakehSel:{stakeholder_id}} = this.props.stakeholderlistType
+        const {stakehSel:{uri}} = this.props.stakeholderlistType
         const {user:{bio_access_id:idAccess}} = this.props.session
-        // console.log(stakeholder_id)
+        // console.log(uri)
 
         this.props.bcIndex(false) //breadcrumb Index page 
         this.props.bcDet(true) //breadcrumb Detail page 
@@ -160,24 +160,24 @@ class index extends Component {
 
         //stkh Detail
         const stakehDet={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
         this.props.setStakeholderItemDetail(stakehDet)    
         
         //Member
        const stakehMember={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
        }
        this.props.viewStakehMember(stakehMember)
 
        //Group
        const stakehGroup={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
        }
        this.props.viewStakehGroup(stakehGroup)
@@ -239,35 +239,35 @@ class index extends Component {
         // console.log(param)
 
         const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType  
-        // console.log(stakeholder_id)      
+        const {stakehSel:{uri},stakehNumb} = this.props.stakeholderlistType  
+        // console.log(uri)      
        
         //Role List
         const RoleObj={
             action: "ITEM_LIST",
-            bio_access_id: idAccess      
+            // bio_access_id: idAccess      
         }
         this.props.setRoleStore(RoleObj)
         
           //Stakeholder List
         const stakehList={
             action:"ITEM_LIST",
-            bio_access_id:idAccess
+            // bio_access_id:idAccess
         }
         this.props.setStakehList(stakehList)
 
           //stkh Detail
         const stakehDet={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_DETAIL',            
         }
         this.props.setStkhAccDetail(stakehDet)   
 
         //Ancestor Group
         const listAncestor={
-            bio_access_id: idAccess,
-            stakeholder_id: stakeholder_id,
+            // bio_access_id: idAccess,
+            uri: uri,
             action: "ITEM_LIST_ANCESTOR",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -275,8 +275,8 @@ class index extends Component {
 
         //Descendant Member
         const listDescendant={
-            bio_access_id: idAccess,
-            stakeholder_id: stakeholder_id,
+            // bio_access_id: idAccess,
+            uri: uri,
             action: "ITEM_LIST_DESCENDANT",
             stakeh_type: parseInt(stakehNumb)      
         }
@@ -285,22 +285,22 @@ class index extends Component {
         //Security Level
          const SecurityObj={
             action: "ITEM_LIST",
-            bio_access_id: idAccess      
+            // bio_access_id: idAccess      
         }
         this.props.setSecLevel(SecurityObj)
 
         //List Group
         const stakehGroup={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
         }
         this.props.viewStakehGroup(stakehGroup)
 
          //Member
         const stakehMember={
-            stakeholder_id:stakeholder_id,
-            bio_access_id:idAccess,
+            uri:uri,
+            // bio_access_id:idAccess,
             action:'ITEM_LIST_MEMBER',             
         }
         this.props.viewStakehMember(stakehMember)         
@@ -315,7 +315,8 @@ class index extends Component {
         // const {pageTitle}=this.props.layout
         const {stakeholderlistType}=this.state        
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        // console.log(fabMenu)
+        
+        
         
         return (
             <Fragment>  
@@ -395,18 +396,18 @@ class index extends Component {
                                 {stakeholderlistType.map(item=>stakehView?
                                  
                                     <DetailCard                                         
-                                        key={item.stakeholder_id} 
-                                        stakehId={item.stakeholder_id}
-                                        name={item.first_name}
-                                        typeName={item.stakeh_type_name}
+                                        key={item.uri} 
+                                        stakehId={item.uri}
+                                        name={item.Name}
+                                        typeName={item.iconCls}
                                         isSel={item.isSel}
                                         markOnSel={this.markOnSel} />:
 
                                     <CardRow                                         
-                                        key={item.stakeholder_id} 
-                                        stakehId={item.stakeholder_id}
-                                        name={item.first_name}
-                                        typeName={item.stakeh_type_name}
+                                        key={item.uri} 
+                                        stakehId={item.uri}
+                                        name={item.Name}
+                                        typeName={item.iconCls}
                                         isSel={item.isSel}
                                         markOnSel={this.markOnSel} />                             
                                 )}     

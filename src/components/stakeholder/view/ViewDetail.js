@@ -27,57 +27,56 @@ class ViewDetail extends Component {
       }
   }
 
-  setPageView=(stkhId,type)=>{    
+  setPageView=(uriId,type)=>{    
      
-    const {user:{bio_access_id:idAccess}} = this.props.session
+    const {user:{_id:bId}} = this.props.session
     
-    // console.log(stkhId)
+    console.log(uriId)
     // console.log(type)
     
-    this.props.setStakehSel(stkhId) 
+    this.props.setStakehSel(uriId) 
     this.props.setStakehNumb(type)
 
     //stkh Detail
     const stakehDet={
-        stakeholder_id:stkhId,
-        bio_access_id:idAccess,
-        action:'ITEM_DETAIL',            
+        _action: "LISTLOCATION",
+        _id:bId,            
     }
     this.props.setStakeholderItemDetail(stakehDet)    
 
      //Member
      const stakehMember={
-        stakeholder_id:stkhId,
-        bio_access_id:idAccess,
+        uri:uriId,
+        // bio_access_id:idAccess,
         action:'ITEM_LIST_MEMBER',             
    }
    this.props.viewStakehMember(stakehMember)
 
     //Group
     const stakehGroup={
-            stakeholder_id:stkhId,
-            bio_access_id:idAccess,
+            stakeholder_id:uriId,
+            // bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
     }
     this.props.viewStakehGroup(stakehGroup)
   }  
 
-  componentDidUpdate(prevProps){
-      if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
-            const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView
-            this.setState({aclEntries:acl_entries})
-        }    
-    if(prevProps.stakeholderView.stakeholderGroup!==this.props.stakeholderView.stakeholderGroup){
-            const {stakeholderGroup}=this.props.stakeholderView
-            // console.log(stakeholderGroup)
-            this.setState({groupItem:stakeholderGroup})
-        }
-    if(prevProps.stakeholderView.stakeholderMember!==this.props.stakeholderView.stakeholderMember){
-            const {stakeholderMember}=this.props.stakeholderView
-            // console.log(stakeholderMember)
-            this.setState({memberItem:stakeholderMember})
-        }        
-    }  
+//   componentDidUpdate(prevProps){
+//       if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
+//             const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView
+//             this.setState({aclEntries:acl_entries})
+//         }    
+//     if(prevProps.stakeholderView.stakeholderGroup!==this.props.stakeholderView.stakeholderGroup){
+//             const {stakeholderGroup}=this.props.stakeholderView
+//             // console.log(stakeholderGroup)
+//             this.setState({groupItem:stakeholderGroup})
+//         }
+//     if(prevProps.stakeholderView.stakeholderMember!==this.props.stakeholderView.stakeholderMember){
+//             const {stakeholderMember}=this.props.stakeholderView
+//             // console.log(stakeholderMember)
+//             this.setState({memberItem:stakeholderMember})
+//         }        
+//     }  
 
   updDetail=(e)=>{
       e.preventDefault()   
@@ -161,7 +160,7 @@ class ViewDetail extends Component {
       
     return (
       <Fragment>
-            <BreadCrumb/>
+            {/* <BreadCrumb/> */}
 
         {/* <div className="breadcrumb-holder">
             <div className="container-fluid">

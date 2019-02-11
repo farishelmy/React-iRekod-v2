@@ -32,7 +32,7 @@ return (
     
         <div className={isSel?"card mb-3 bg-primary":"card mb-3"} onClick={sendStakehId}>
             <div className="p-2 d-flex justify-content-between align-items-center">
-                <img src={require('../../img/StakeType/'+typeName+'.svg')} alt={typeName} className="p-2 img-fluid img-scale" />
+                <img src={require('../../img/Icon/'+typeName+'.svg')} alt={typeName} className="p-2 img-fluid img-scale" />
                     <div className="mr-auto p-2">                     
                         <p className={isSel?"card-title mb-1 font-weight-bold text-light":"card-title mb-1 font-weight-bold text-muted"}>{decodeURIComponent(name)}</p>
                         <p className="card-text text-truncate"><small className={isSel?'text-light':'text-muted'}><img className="userIcon mr-2" src={require('../../img/gear.svg')}/>Type: {decodeURIComponent(typeName)}</small></p>

@@ -12,57 +12,46 @@ class Dropdown extends Component {
         this.state = {
             dropdownOpen: false,
             selectedStakeh: [],
-            optionStakeh : null
+            optionStakeh:[
+                { value: "All", label:"All Locations"},
+                { value: "organization", label:"Organization"},
+                { value: "Position", label:"Position"},
+                { value: "Person", label:"Person"},
+                { value: "Unknown", label:"Unknown"},                 
+            ],             
         }
     }      
 
     componentDidUpdate(prevProps){
-        if(prevProps.stakeholderlistType.stakehType !== this.props.stakeholderlistType.stakehType){
-            const {stakehNumb} = this.props.stakeholderlistType
-            const {optionStakeh} = this.state
-            const listType = optionStakeh.filter(itm => itm.value === stakehNumb)          
-
+        if(prevProps.stakeholderlistType.stakehType !== this.props.stakeholderlistType.stakehType){            
+            const {stakehLabel,stakehNumb} = this.props.stakeholderlistType 
+            const value = ({value:stakehNumb, label:stakehLabel})
+            
             this.setState({
-                selectedStakeh: listType
+                selectedStakeh: value
             })
         }
     }
 
     componentWillMount(){
-        // const {stakehLabel,stakehNumb} = this.props.stakeholderlistType      
+        const {stakehLabel,stakehNumb} = this.props.stakeholderlistType 
+        const value = ({value:stakehNumb, label:stakehLabel})
 
-        this.setState({
-            optionStakeh:[
-                { value: "All", label:"All Locations"},
-                { value: "0", label:"Group"},
-                { value: "1", label:"Organization"},
-                { value: "2", label:"Branch"},
-                { value: "3", label:"Department"},
-                { value: "4", label:"Designation"},
-                { value: "5", label:"User"}
-            ]
+        this.setState({        
+            selectedStakeh: value
         })   
     }
-
-    // getWorkFlow=(e)=>{
-    //     console.log('111')
-    //     const {listWrkFlwObj}=this.props.listWrkFlw
-    //     const nameworkflow = e.target.getAttribute('data-name')        
-    //     const listSub = listWrkFlwObj.filter(itm => itm.subject === nameworkflow)
-    //     // this.props.stakeholderList(listSub)
-    // }
 
     handleChange = (value) => {
         // console.log(value.value)
         this.setState({ selectedStakeh: value.value})
 
-        const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
+        const {user:{_id:bId}} = this.props.session
 
         const stakehObj={
-            stakeholder_id:bId,
-            bio_access_id:idAccess,
-            action:'ITEM_LIST_TYPE',
-            stakeh_type: parseInt(value.value),
+            _action:'LISTLOCATION',
+            _id:bId,                        
+            filterType: value.value,
         }
       
         this.props.setStakehType(stakehObj) 
@@ -71,8 +60,8 @@ class Dropdown extends Component {
 
         if (value.value === "All"){
             const stakehList={
-                action: "ITEM_LIST",
-                bio_access_id: idAccess       
+                _action: "LISTLOCATION",
+                _id: bId       
             }
             this.props.setStakehType(stakehList)
         }
@@ -84,8 +73,8 @@ class Dropdown extends Component {
         }))
     }
 
-  render() {
-    
+  render() {   
+
     
     return (
  
