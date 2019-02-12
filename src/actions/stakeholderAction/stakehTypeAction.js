@@ -1,4 +1,4 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEH_LABEL} from '../types'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_SEL_OBJ,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEH_LABEL} from '../types'
 import {biorisUrl} from '../../config/appConf'
 import {converter} from '../../utils/converter'
  
@@ -26,11 +26,19 @@ export const newStakehType=(param)=>{
     }
 }
 
-//Select stakeholder
+//Select Uri stakeholder
 export const setStakehSel=(stakehSel)=>{
     return {
         type:STAKEH_SEL,
         payload:stakehSel
+    }
+}
+
+//Select Name stakeholder
+export const stakehSelObj=(param)=>{
+    return {
+        type:STAKEH_SEL_OBJ,
+        payload:param
     }
 }
 

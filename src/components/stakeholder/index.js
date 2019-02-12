@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
-import {setStakehSel,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
+import {setStakehSel,stakehSelObj,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
 import {setActivePage} from '../../actions/layoutInitAction'  
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
@@ -29,7 +29,8 @@ class index extends Component {
         this.state = {
             stakeholderlistType:[],            
             stakehSelect:null,    
-            fabMenu:null,        
+            fabMenu:null,       
+            loading:true, 
         };
     }   
 
@@ -37,9 +38,10 @@ class index extends Component {
         const {stakehType} = this.props.stakeholderlistType      
         this.setState({
             stakeholderlistType:stakehType,             
-        })
-       
+        })       
     }
+
+   
 
     componentDidUpdate(prevProps,prevState){
         if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){                   
@@ -47,10 +49,14 @@ class index extends Component {
             // console.log(stakehType)   
             const liststakeh = stakehType.map(res=>({...res,isSel:false}))
             // console.log(liststakeh)
-            
+
             this.setState({
                 stakeholderlistType:liststakeh
             })
+           
+                if(stakehType.length!== 0 ){
+                    this.setState({loading: false})
+                }           
         }
         
         else if(prevProps.fab.isSelAll===!this.props.fab.isSelAll){
@@ -92,10 +98,15 @@ class index extends Component {
     }
 
     // Selection 
-    markOnSel=(sId)=>{
+    markOnSel=(sId,name,typeName)=>{
+
+        const val = ({sId,name,typeName}) 
         
-        this.props.setStakehSel(sId)     
-        // console.log(sId)
+        this.props.setStakehSel(sId) // URI 
+        this.props.stakehSelObj(val)  //Obj 
+         
+
+        // console.log(name)
         
         const{isMultiSel}=this.props.fab
         const {stakeholderlistType} = this.state
@@ -148,47 +159,34 @@ class index extends Component {
     //Fab View Detail
     setActivePage=(param)=>{    
             
-        const {stakehSel:{uri}} = this.props.stakeholderlistType
-        const {user:{bio_access_id:idAccess}} = this.props.session
-        // console.log(uri)
+        const {stakehSel,stakehObj} = this.props.stakeholderlistType
+        // const {user:{bio_access_id:idAccess}} = this.props.session
+        // console.log(stakehObj)
 
         this.props.bcIndex(false) //breadcrumb Index page 
         this.props.bcDet(true) //breadcrumb Detail page 
        
         this.props.setActivePage(param)  //direct page to viewDetail
-        // console.log(param)
+        // console.log(param)       
 
-        //stkh Detail
-        const stakehDet={
-            uri:uri,
-            // bio_access_id:idAccess,
-            action:'ITEM_DETAIL',            
-        }
-        this.props.setStakeholderItemDetail(stakehDet)    
+        const val = 
+        //stkh Detail        
+        this.props.setStakeholderItemDetail(stakehObj)    
         
         //Member
        const stakehMember={
-            uri:uri,
-            // bio_access_id:idAccess,
+            uri:stakehSel,
+             
             action:'ITEM_LIST_MEMBER',             
        }
        this.props.viewStakehMember(stakehMember)
 
        //Group
        const stakehGroup={
-            uri:uri,
-            // bio_access_id:idAccess,
+            uri:stakehSel,             
             action:'ITEM_LIST_GROUP',             
        }
-       this.props.viewStakehGroup(stakehGroup)
-
-    //    //Access Control
-    //    const stakehAcc={
-    //         stakeholder_id:bId,
-    //         bio_access_id:idAccess,
-    //         action:'ITEM_ACCESS',             
-    //     }
-    //     this.props.viewStakehAccess(stakehAcc)   
+       this.props.viewStakehGroup(stakehGroup)   
       
     } 
 
@@ -315,6 +313,8 @@ class index extends Component {
         // const {pageTitle}=this.props.layout
         const {stakeholderlistType}=this.state        
         // const {stakeholder_Detail}=this.props.stakeholderView 
+        const {loading} = this.state
+        
         
         
         
@@ -392,7 +392,29 @@ class index extends Component {
                         </div>
                         </header>          
                             <div className="row">    
-                            
+                                
+                                {/* Preloaders */}
+                                {loading===false?<div className="display-none"/>
+                                :<div className="container-fluid">
+                                    <div className="d-flex justify-content-center mb-5">
+                                        <div className="sk-circle">
+                                            <div className="sk-circle1 sk-child"/>
+                                            <div className="sk-circle2 sk-child"/>
+                                            <div className="sk-circle3 sk-child"/>
+                                            <div className="sk-circle4 sk-child"/>
+                                            <div className="sk-circle5 sk-child"/>
+                                            <div className="sk-circle6 sk-child"/>
+                                            <div className="sk-circle7 sk-child"/>
+                                            <div className="sk-circle8 sk-child"/>
+                                            <div className="sk-circle9 sk-child"/>
+                                            <div className="sk-circle10 sk-child"/>
+                                            <div className="sk-circle11 sk-child"/>
+                                            <div className="sk-circle12 sk-child"/>
+                                        </div>
+                                    </div>
+                                </div>}
+
+
                                 {stakeholderlistType.map(item=>stakehView?
                                  
                                     <DetailCard                                         
@@ -462,6 +484,7 @@ index.propTypes={
     setDescendant: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,   
     showMultiFab: PropTypes.func.isRequired,
+    stakehSelObj: PropTypes.func.isRequired,     
     
 }
 
@@ -495,5 +518,6 @@ export default connect(mapStateToProps,{
     setDescendant,
     setSecLevel,    
     showMultiFab,
+    stakehSelObj
    
 })(index)

@@ -34,6 +34,7 @@ export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
 //Stakeholder List Type
 export const STAKEH_TYPE = 'STAKEH_TYPE'
 export const STAKEH_SEL = 'STAKEH_SEL'
+export const STAKEH_SEL_OBJ = 'STAKEH_SEL_OBJ' 
 export const STAKEH_VIEW = 'STAKEH_VIEW'
 export const SHOW_FAB = 'SHOW_FAB'
 export const STAKEH_LABEL = 'STAKEH_LABEL'

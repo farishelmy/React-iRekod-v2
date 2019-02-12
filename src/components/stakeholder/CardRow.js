@@ -4,7 +4,7 @@ import posed from 'react-pose'
 
 export default function CardRow({stakehId,name,typeName,isSel,markOnSel}) {
   const sendStakehId=()=>{
-    markOnSel(stakehId)       
+    markOnSel(stakehId,name,typeName)       
   }
    
    

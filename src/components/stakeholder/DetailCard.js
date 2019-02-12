@@ -4,7 +4,7 @@ import posed from 'react-pose'
 
 export default function DetailCard({stakehId,name,typeName,isSel,markOnSel,email}) {
     const sendStakehId=()=>{
-        markOnSel(stakehId)
+        markOnSel(stakehId,name,typeName)
     }
 
     const Card = posed.div({

@@ -153,7 +153,7 @@ class ViewDetail extends Component {
     const {pageTitle}=this.props.layout
     const {stakeholderDetail,stakeholderMember} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
-    // console.log(groupItem)
+    // console.log(stakeholderDetail.name)
     // console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(aclEntries)    
@@ -170,16 +170,13 @@ class ViewDetail extends Component {
                     {stakeholderDetail.map((item,idx)=><div key={idx} className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>)}
                 </div>
             </div>
-        </div>   */}
+        </div>   */}   
 
-    {/* iterate */}
-    {stakeholderDetail.map((item,idx)=>      
-
-        <div key={idx} className="container-fluid mt-3"> 
+        <div   className="container-fluid mt-3"> 
              <header>
                  <div className="row">
                      <div className="col-auto mr-auto">
-                         <h1 className="h3 display">{decodeURIComponent(item.full_name)}</h1>
+                         <h1 className="h3 display">{stakeholderDetail.name}</h1>
                      </div>
                      <div className="col-auto mr-4">                        
                         <span>
@@ -200,38 +197,23 @@ class ViewDetail extends Component {
                      <div className="col-lg-4 col-md-4 col-sm-4">
                          <div className="card card-user">
                              <div className="card-image">
-                                <img src={require('../../../img/ImgBackground/'+ item.stakeh_type_name +'.jpg')} alt={item.stakeh_type_name} />
+                                <img src={require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')} alt={stakeholderDetail.typeName} />
                              </div>
                              <div className="card-body">
                                  <div className="author">
                                      <span>                                        
-                                        <img src={require('../../../img/StakeType/'+ item.stakeh_type_name +'.svg')} className="avatar border-gray" alt="..."/>
-                                        <h5 className="title">{decodeURIComponent(item.initials)} {decodeURIComponent(item.full_name)}</h5>
+                                        <img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="avatar border-gray" alt="..."/>
+                                        <h5 className="title">{stakeholderDetail.name}</h5>
                                      </span>
                                  </div>
                                  <div> 
                                     <hr/>
                                  </div>
-                                 <p className="description text-center">
+                                 <p className="description text-center">                                    
                                     <br/>
-                                    <label><img className="userIcon mr-2" src={require('../../../img/email.svg')} alt="email"/>{item.email===""?"N/A":decodeURIComponent(item.email)} </label>
-                                    <br/>
-                                    <label><img className="userIcon mr-2" src={require('../../../img/event.svg')} alt="date_of_birth"/>{item.date_of_birth===null?"N/A":decodeURIComponent(item.date_of_birth)} </label>
-                                    <br/>
-                                    <label><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="role"/>{item.role_value===""?"N/A":decodeURIComponent(item.role_value)} </label>
+                                    <label><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>{stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </label>
                                     <label ></label>
-                                 </p>
-                                 {/* <div> 
-                                    <hr/>
-                                 </div>
-                                 <h5 className="title text-center">Associate</h5>                                    
-                                    {memberItem!==[0]?memberItem.map((item,idx)=><MemberView 
-                                        key={idx} 
-                                        stkhId={item.stakeholder_id}  
-                                        stakehType={item.stakeh_type}                                     
-                                        fullName={item.full_name}
-                                        typeName={item.stakeh_type_name}
-                                        setActivePage={this.setPageView} />):"No Member Items" }  */}                                         
+                                 </p>                                                                        
                              </div>
                          </div>
                      </div>
@@ -301,26 +283,12 @@ class ViewDetail extends Component {
                                          </div>
                                      </div>                                     
                                  </div>                                 
-                            </div>
-                             {/* <div className="col-lg-12 col-md-12 col-sm-12">
-                                 <div className="card bg-light flex-column">
-                                     <div className="card-header card-header-transparent d-flex align-items-center">
-                                         <h4>Custom Field</h4>
-                                     </div>
-                                     <div className="card-body">
-                                        <div className="col-lg-12 col-md-12 col-sm-12">                                        
-                                            <div className="row">                                                                                                           
-                                                
-                                            </div>
-                                         </div>
-                                     </div>                                     
-                                 </div>                                 
-                             </div>                             */}
+                            </div>                            
                          </form>
                      </div> 
                  </div>              
              </div> 
-        </div>)}
+        </div>
       </Fragment>
     )
   }
