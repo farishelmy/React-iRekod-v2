@@ -160,8 +160,8 @@ class index extends Component {
     setActivePage=(param)=>{    
             
         const {stakehSel,stakehObj} = this.props.stakeholderlistType
-        // const {user:{bio_access_id:idAccess}} = this.props.session
-        // console.log(stakehObj)
+        const  {user:{_id:bId}} = this.props.session
+        // console.log(stakehSel.uri)
 
         this.props.bcIndex(false) //breadcrumb Index page 
         this.props.bcDet(true) //breadcrumb Detail page 
@@ -169,15 +169,16 @@ class index extends Component {
         this.props.setActivePage(param)  //direct page to viewDetail
         // console.log(param)       
 
-        const val = 
         //stkh Detail        
         this.props.setStakeholderItemDetail(stakehObj)    
         
         //Member
        const stakehMember={
-            uri:stakehSel,
-             
-            action:'ITEM_LIST_MEMBER',             
+            _action:'LISTLOCATION',   
+            _id: bId, 
+            URI:stakehSel.uri, 
+            ANODE:"A"            
+                    
        }
        this.props.viewStakehMember(stakehMember)
 

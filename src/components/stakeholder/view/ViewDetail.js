@@ -10,6 +10,7 @@ import {setRoleStore,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} fro
 import BreadCrumb from '../../layouts/BreadcrumbStakeh'
 import {bcDet,bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
+
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -61,24 +62,28 @@ class ViewDetail extends Component {
     this.props.viewStakehGroup(stakehGroup)
   }  
 
-//   componentDidUpdate(prevProps){
-//       if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
-//             const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView
-//             this.setState({aclEntries:acl_entries})
-//         }    
-//     if(prevProps.stakeholderView.stakeholderGroup!==this.props.stakeholderView.stakeholderGroup){
-//             const {stakeholderGroup}=this.props.stakeholderView
-//             // console.log(stakeholderGroup)
-//             this.setState({groupItem:stakeholderGroup})
-//         }
-//     if(prevProps.stakeholderView.stakeholderMember!==this.props.stakeholderView.stakeholderMember){
-//             const {stakeholderMember}=this.props.stakeholderView
-//             // console.log(stakeholderMember)
-//             this.setState({memberItem:stakeholderMember})
-//         }        
-//     }  
+  componentDidUpdate(prevProps){     
+    //   if(prevProps.stakeholderView.stakeholderDetail!==this.props.stakeholderView.stakeholderDetail){
+    //         const {stakeholderDetail:[{acl_entries}]}=this.props.stakeholderView
+    //         this.setState({aclEntries:acl_entries})
+    //     }    
+    // if(prevProps.stakeholderView.stakeholderGroup!==this.props.stakeholderView.stakeholderGroup){
+    //         const {stakeholderGroup}=this.props.stakeholderView
+    //         // console.log(stakeholderGroup)
+    //         this.setState({groupItem:stakeholderGroup})
+    //     }
+    // if(prevProps.stakeholderView.stakeholderMember!==this.props.stakeholderView.stakeholderMember){
+    //         const {stakeholderMember}=this.props.stakeholderView
+    //         console.log(stakeholderMember)
+    //         this.setState({memberItem:stakeholderMember})
+    //     }        
+    }  
 
-  updDetail=(e)=>{
+    
+
+     
+
+    updDetail=(e)=>{
       e.preventDefault()   
 
       this.props.bcUpd(true)  //breadcrumb condition
@@ -156,11 +161,18 @@ class ViewDetail extends Component {
     // console.log(stakeholderDetail.name)
     // console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
-    // console.log(aclEntries)    
+    // console.log(stakeholderMember)    
       
     return (
       <Fragment>
-            {/* <BreadCrumb/> */}
+        <div className="breadcrumb-holder">
+        <div className="container-fluid">
+          <ul className="breadcrumb">
+            <li className="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li className="breadcrumb-item active">Profile       </li>
+          </ul>
+        </div>
+      </div>
 
         {/* <div className="breadcrumb-holder">
             <div className="container-fluid">
@@ -172,7 +184,7 @@ class ViewDetail extends Component {
             </div>
         </div>   */}   
 
-        <div   className="container-fluid mt-3"> 
+        <div className="container-fluid mt-3"> 
              <header>
                  <div className="row">
                      <div className="col-auto mr-auto">
@@ -188,37 +200,45 @@ class ViewDetail extends Component {
                         </span>                         
                      </div>                     
                  </div>
-             </header>
-         
-               <div className="content">
+             </header>        
+               
+                <div className="row">  
 
-                 <div className="row">                       
-        
-                     <div className="col-lg-4 col-md-4 col-sm-4">
-                         <div className="card card-user">
-                             <div className="card-image">
-                                <img src={require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')} alt={stakeholderDetail.typeName} />
-                             </div>
-                             <div className="card-body">
-                                 <div className="author">
-                                     <span>                                        
-                                        <img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="avatar border-gray" alt="..."/>
-                                        <h5 className="title">{stakeholderDetail.name}</h5>
-                                     </span>
-                                 </div>
-                                 <div> 
-                                    <hr/>
-                                 </div>
-                                 <p className="description text-center">                                    
-                                    <br/>
-                                    <label><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>{stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </label>
-                                    <label ></label>
-                                 </p>                                                                        
-                             </div>
-                         </div>
-                     </div>
+                <div className="col-lg-4 ">
+                <div className="card card-profile">
+                <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
+                <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
+                  <h3 className="mb-3">{stakeholderDetail.name}</h3>
+                  <hr/>
+                  <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>                  
+                </div>
+              </div>
+             
 
-                     <div className="col-lg-8 col-md-8 col-sm-8">
+              <div className="card">
+                <div className="card-header d-flex align-items-center">
+                  <h3>Associates</h3>
+                </div>       
+                <div className="card-body row">   
+                 
+                <div className="row">  
+                    {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
+                        key={idx} 
+                        stkhId={item.uri}  
+                        stakehType={item.iconCls}                                     
+                        fullName={item.Name}
+                        typeName={item.iconCls}
+                        setActivePage={this.setPageView} />):"No Member Items" } 
+                        </div> 
+                         
+                </div> 
+              </div>
+              </div>
+
+
+                
+
+                     <div className="col-lg-8 ">
 
                          <form id="simpleform" name="simpleform">
 
@@ -236,7 +256,7 @@ class ViewDetail extends Component {
                                                 fullName={item.full_name}
                                                 typeName={item.stakeh_type_name}
                                                 stakehType={item.stakeh_type}  
-                                                setActivePage={this.setPageView}/>):"No Group Items"} 
+                                                setActivePage={this.setPageView}/>):""} 
                                             </div>
                                         </div>
                                      </div>
@@ -286,8 +306,7 @@ class ViewDetail extends Component {
                             </div>                            
                          </form>
                      </div> 
-                 </div>              
-             </div> 
+                 </div>            
         </div>
       </Fragment>
     )

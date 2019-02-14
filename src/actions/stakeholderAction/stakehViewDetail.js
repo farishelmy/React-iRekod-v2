@@ -28,13 +28,13 @@ export const setStakeholderItemDetail = (param) => {
 //Call member 
 export const viewStakehMember = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/stakeholder?param=${JSON.stringify(param)}`
+    const url= biorisUrl+ converter(param)    
         fetch(url)
         .then(res=>res.json())
         .then(res=>{
-            // console.log(res)
+            // console.log(res.data)
             dispatch({
-                type:STAKEHOLDER_MEMBER,payload:res.results
+                type:STAKEHOLDER_MEMBER,payload:res.data
             })
         })
 }
