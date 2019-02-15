@@ -202,111 +202,68 @@ class ViewDetail extends Component {
                  </div>
              </header>        
                
-                <div className="row">  
+             <div className="row"> 
+                <div className="col-lg-4">
+                  <div className="card card-profile">
+                    <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
+                      <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
+                        <h3 className="mb-3">{stakeholderDetail.name}</h3>
+                          <hr/>
+                            <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>                  
+                      </div>
+                  </div>             
 
-                <div className="col-lg-4 ">
-                <div className="card card-profile">
-                <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
-                <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
-                  <h3 className="mb-3">{stakeholderDetail.name}</h3>
-                  <hr/>
-                  <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>                  
-                </div>
-              </div>
-             
+               
+                  <div className={stakeholderMember.length===0?"d-none":"card"}>
+                    <div className={stakeholderMember.length!==0?"card-header":"d-none"}>
+                      <h3>Associates</h3>
+                    </div>       
+                      <div className="card-body row">                    
+                        <div className="col">  
+                            {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
+                                key={idx} 
+                                stkhId={item.uri}  
+                                stakehType={item.iconCls}                                     
+                                fullName={item.Name}
+                                typeName={item.iconCls}
+                                setActivePage={this.setPageView} />):"No Member Items" } 
+                        </div>                          
+                      </div> 
+                    </div>                               
+                </div>                
 
-              <div className="card">
-                <div className="card-header d-flex align-items-center">
-                  <h3>Associates</h3>
-                </div>       
-                <div className="card-body row">   
-                 
-                <div className="row">  
-                    {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
-                        key={idx} 
-                        stkhId={item.uri}  
-                        stakehType={item.iconCls}                                     
-                        fullName={item.Name}
-                        typeName={item.iconCls}
-                        setActivePage={this.setPageView} />):"No Member Items" } 
-                        </div> 
-                         
-                </div> 
-              </div>
-              </div>
+              <div className="col-lg-8">
+                <form id="simpleform" name="simpleform" >
 
-
-                
-
-                     <div className="col-lg-8 ">
-
-                         <form id="simpleform" name="simpleform">
-
-                            <div className="col-lg-12 col-md-12 col-sm-12">
-                                 <div className="card bg-light">
-                                     <div className="card-header card-header-transparent d-flex align-items-center">
-                                         <h4>Group</h4>
-                                     </div>
-                                     <div className="card-body">
-                                        <div className='col-lg-12 col-md-12 col-sm-12'>
-                                            <div className="row">
-                                            {groupItem!==null?groupItem.map((item,idx)=><GroupView 
-                                                key={idx} 
-                                                stkhId={item.stakeholder_id}                                       
-                                                fullName={item.full_name}
-                                                typeName={item.stakeh_type_name}
-                                                stakehType={item.stakeh_type}  
-                                                setActivePage={this.setPageView}/>):""} 
-                                            </div>
-                                        </div>
-                                     </div>
-                                 </div>
-                            </div>
-
-                            <div className="col-lg-12 col-md-12 col-sm-12">
-                                 <div className="card bg-light">
-                                     <div className="card-header card-header-transparent d-flex align-items-center">
-                                         <h4>Associate</h4>
-                                     </div>
-                                     <div className="card-body">
-                                        <div className='col-lg-12 col-md-12 col-sm-12'>
-                                            <div className="row">
-                                            {memberItem!==[0]?memberItem.map((item,idx)=><MemberView 
-                                                key={idx} 
-                                                stkhId={item.stakeholder_id}  
-                                                stakehType={item.stakeh_type}                                     
-                                                fullName={item.full_name}
-                                                typeName={item.stakeh_type_name}
-                                                setActivePage={this.setPageView} />):"No Member Items" }  
-                                            </div>
-                                        </div>
-                                     </div>
-                                 </div>
-                             </div>
-
-                            <div className="col-lg-12 col-md-12 col-sm-12">
-                                 <div className="card bg-light flex-column">
-                                     <div className="card-header card-header-transparent d-flex align-items-center">
-                                         <h4>Access Control</h4>
-                                     </div>
-                                     <div className="card-body">
-                                        <div className="col-lg-12 col-md-12 col-sm-12">                                        
-                                            <div className="row">                                                                                                           
-                                                {aclEntries!==undefined?aclEntries.map((item,idx)=><AccessView
-                                                    key={idx} 
-                                                    stkhId={item.stakeholder_id}                                       
-                                                    fullName={item.stakeholder_name}
-                                                    typeName={item.stakeholder_type_id}                                                      
-                                                    setActivePage={this.setPageView}                                   
-                                                />):''}
-                                            </div>
-                                         </div>
-                                     </div>                                     
-                                 </div>                                 
-                            </div>                            
-                         </form>
-                     </div> 
-                 </div>            
+                <div className="card">
+                  <div className="card-body">
+                    <h3 className="card-title">Edit Profile</h3>
+                    <div className="row"> 
+                      <div className="col-sm-12 col-md-12">
+                        <div className="form-group mb-4">
+                          <label className="form-label">Full Name</label>
+                          <input type="text" placeholder="First name" className="form-control"/>
+                        </div>
+                      </div>
+                      <div className="col-sm-12 col-md-12">
+                        <div className="form-group mb-4">
+                          <label className="form-label">User Type</label>
+                          <input type="text" placeholder="User Type" className="form-control"/>
+                        </div>
+                      </div>  
+                      <div className="col-sm-12 col-md-12">
+                        <div className="form-group mb-4">
+                          <label className="form-label">Login ID</label>
+                          <input type="text" placeholder="ID" className="form-control"/>
+                        </div>
+                      </div>                               
+                    </div>
+                  </div>
+                </div>      
+                                                              
+              </form>
+            </div> 
+          </div>            
         </div>
       </Fragment>
     )

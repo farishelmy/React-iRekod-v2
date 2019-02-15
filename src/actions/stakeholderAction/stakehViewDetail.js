@@ -32,7 +32,7 @@ export const viewStakehMember = (param) => dispatch =>{
         fetch(url)
         .then(res=>res.json())
         .then(res=>{
-            // console.log(res.data)
+            // console.log( res.data)
             dispatch({
                 type:STAKEHOLDER_MEMBER,payload:res.data
             })

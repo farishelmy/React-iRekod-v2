@@ -177,8 +177,7 @@ class index extends Component {
             _action:'LISTLOCATION',   
             _id: bId, 
             URI:stakehSel.uri, 
-            ANODE:"A"            
-                    
+            ANODE:"A"           
        }
        this.props.viewStakehMember(stakehMember)
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function MemberView({stkhId,fullName,typeName,setActivePage,stakehType}) {
-console.log(fullName)
+
   const pageBtn=(e)=>{
     e.preventDefault()
     setActivePage(stkhId,stakehType)    
@@ -14,7 +14,7 @@ console.log(fullName)
     // old view
     <div>
        <div id={stkhId} name={fullName} className="col-lg-12 col-md-12 col-sm-12 mt-2 mb-2">
-            <div className="d-flex justify-content-start align-items-center" >
+            <div className="d-flex justify-content-start align-items-center">
                 <img src={require('../../../img/Icon/'+ typeName +'.svg')} alt="person" className="img-list" />              
                 <p className="ml-1 text-truncate btn btn-link" data-id={stkhId} onClick={pageBtn} >{decodeURIComponent(fullName)}</p>                                        
             </div>
