@@ -9,9 +9,9 @@ import UpdateDetail from '../components/stakeholder/update/UpdateDetail'
 import MainMulti from '../components/stakeholder/multi/MainMulti'
 import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
-// import ListWorkflow from './workflow/ListWorkflow'  
-// import NewActivity from './workflow/create/NewActivity'
-// import WorkflowDetails from './workflow/update/WorkflowDetails'
+import ListWorkflow from './workflow/ListWorkflow'  
+import NewActivity from './workflow/create/NewActivity'
+import WorkflowDetails from './workflow/update/WorkflowDetails'
 // import Log from './auditTrail/auditLog/index'
 // import PrintPage from './auditTrail/auditLog/PrintPage'
 // import PrintReport from './auditTrail/modal/PrintReport'
@@ -71,11 +71,11 @@ class Home extends Component {
         'search': search,   
 
         //workflow
-        // 'listOfWorkflow':ListWorkflow,
-        // 'createNewAct': NewActivity,
-        // 'viewActivity': WorkflowDetails,
-        // 'createNewAct': NewActivity,
-        // 'view': WorkflowDetails,
+        'listOfWorkflow':ListWorkflow,
+        'createNewAct': NewActivity,
+        'viewActivity': WorkflowDetails,
+        'createNewAct': NewActivity,
+        'view': WorkflowDetails,
 
         //auditTrail
         // 'log':Log,        

@@ -8,7 +8,6 @@ import fabReducer from './MainFabReducer'
 import breadcrumbReducer from './breadcrumbReducer'
 
 //stakeholder
-import stakeholderBreadCrumb from '../reducers/stakeholderReducer/stakeholderBreadCrumbReducer'
 import stakeholderList from '../reducers/stakeholderReducer/stakeholderListReducer'
 import stakeholderReducer from './stakeholderReducer/stakeholderListTypeReducer'
 import stakeholderView from './stakeholderReducer/stakeholderViewReducer'
@@ -16,7 +15,7 @@ import stakeholderUpdate from './stakeholderReducer/stakeholderUpdateReducer'
 import stakeholderAdd from './stakeholderReducer/stakeholderAddReducer'
 
 //workflow
-// import listWorkFlowReducer from './workflowReducer/listWorkFlowReducer'
+import listWorkFlowReducer from './workflowReducer/listWorkflowReducer'
 // import workFlowDetailsReducer from './workflowReducer/workflowDetailReducer'
 // import createNewReducer from './workflowReducer/createNewActReducer'
 // import updateActReducer from './workflowReducer/updateActReducer'
@@ -44,7 +43,6 @@ const appReducer = combineReducers({
 
    
     //stakeholder
-    stakeholderBreadCrumb:stakeholderBreadCrumb,
     stakeholderList:stakeholderList,
     stakeholderlistType:stakeholderReducer,    
     stakeholderView:stakeholderView,
@@ -52,7 +50,7 @@ const appReducer = combineReducers({
     stakeholderAdd:stakeholderAdd,
 
     //workflow
-    // listWrkFlw: listWorkFlowReducer,
+    listWorkflow: listWorkFlowReducer,
     // workflowDetail: workFlowDetailsReducer,
     // crtNewReducer: createNewReducer,
     // updActReducer: updateActReducer,

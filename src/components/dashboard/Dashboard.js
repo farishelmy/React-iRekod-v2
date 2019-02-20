@@ -31,14 +31,7 @@ class Dashboard extends Component {
     
 
   return (
-      <Fragment>
-         <div className="breadcrumb-holder">
-            <div className="container-fluid">        
-              <div className="breadcrumb">           
-                <h4 className="text-primary"><strong>DASHBOARD</strong></h4>  
-              </div>
-            </div>
-        </div>           
+      <Fragment>           
              
         
 

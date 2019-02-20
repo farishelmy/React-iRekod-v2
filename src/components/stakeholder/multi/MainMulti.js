@@ -5,7 +5,7 @@ import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,se
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
-import BreadCrumb from '../../layouts/BreadcrumbStakeh' 
+import BreadCrumb from '../../layouts/Breadcrumb' 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'

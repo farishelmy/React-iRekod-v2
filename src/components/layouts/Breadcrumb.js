@@ -82,6 +82,7 @@ class Breadcrumb extends Component {
     console.log(navId)
     const selNavIdx = breadList.findIndex(list => list.id === navId)
     console.log(selNavIdx)
+
     if (selNavIdx !== 0) {
       const filterBread = breadList.slice(0, selNavIdx + 1)
       const newNav = update(filterBread, {
@@ -92,6 +93,7 @@ class Breadcrumb extends Component {
       this.props.setBread(newNav)
       this.props.resetNav()
       const selNav = breadList.find(nav => nav.id === navId)
+      
       if (selNavIdx === 1) {
         const { page, start, limit, pageTitle, parameter, activePage } = selNav
 
@@ -113,7 +115,32 @@ class Breadcrumb extends Component {
         }
         this.props.setStakehType(stakehObj)
         
-      } else {
+      } 
+      else if (selNavIdx >= 2) {
+        const { page, start, limit, pageTitle, parameter, activePage } = selNav
+
+        // this.props.getAdvSearch(parameter, {
+        //   page: page,
+        //   start: start,
+        //   limit: limit
+        // })
+        
+        this.props.setActivePage(activePage)
+        // this.props.setPageTitle(pageTitle)
+
+        const {user:{_id:bId}} = this.props.session
+        const {stakehLabel,stakehSel} = this.props.stakeholderlistType
+        const selNav = breadList.find(nav => nav.id === selNavIdx)
+        const stakehObj={
+          _action:'LISTLOCATION',
+          _id:bId, 
+          URI:stakehSel,                         
+          ANODE: "A",
+        }
+        console.log(stakehObj)
+        this.props.setStakehType(stakehObj)
+        
+      }else {
         const { pageTitle, activeEditor, activePage } = selNav
         // this.props.setActivePage(activePage)
         if (activeEditor === "child") {

@@ -9,7 +9,7 @@ import {setStakehType,setStakehNumb,setStakehLabel} from '../../actions/stakehol
 import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 // import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 // import {toggleErr} from '../../actions/auditTrailAction/modalAction'
-import {backPrev,setNewBread} from '../../actions/breadcrumbAction'
+import {setNewBread} from '../../actions/breadcrumbAction'
 
 
  
@@ -20,7 +20,7 @@ class SideNav extends React.Component {
     this.state = {
       workFlowToggle: false,
       stakehToggle: false,
-      auditTrailToggle: false,
+      activityToggle: false,
       // documentToggle: false,
       // uploadToggle:false,     
     };
@@ -31,15 +31,15 @@ class SideNav extends React.Component {
     switch(e.target.name){
       case 'stakeholder':
         const stakehState = this.state.stakehToggle
-        this.setState({ stakehToggle: !stakehState, workFlowToggle:false,auditTrailToggle:false})
+        this.setState({ stakehToggle: !stakehState, workFlowToggle:false,activityToggle:false})
         break
       case 'workflow':
         const workflowState = this.state.workFlowToggle
-        this.setState({ workFlowToggle: !workflowState, stakehToggle:false,auditTrailToggle:false})        
+        this.setState({ workFlowToggle: !workflowState, stakehToggle:false,activityToggle:false})        
       break 
-      case 'auditTrail': 
-        const auditTrailState = this.state.auditTrailToggle
-        this.setState({ auditTrailToggle: !auditTrailState, stakehToggle:false, workFlowToggle:false})        
+      case 'activity': 
+        const activityState = this.state.activityToggle
+        this.setState({ activityToggle: !activityState, stakehToggle:false, workFlowToggle:false})        
       break 
       default:
     }
@@ -49,59 +49,28 @@ class SideNav extends React.Component {
       e.preventDefault()
 
       /////////////////////////////stakeholder////////////////////////////////////
-      const {user:{_id:bId}} = this.props.session
-
-      this.props.setActivePage(e.target.getAttribute('data-pagename'))
-      // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-      this.props.setStakehNumb(e.target.getAttribute('data-label'))
-      // console.log(e.target.getAttribute('data-pageTitle'))     
-
-      // const stakehObj={
-      //   stakeholder_id:bId,
-      //   bio_access_id:idAccess,
-      //   action:'ITEM_LIST_TYPE',
-      //   stakeh_type: parseInt(e.target.getAttribute('data-id')),
-      // }
-
-      // this.props.setStakehType(stakehObj) 
-
-      
-      this.props.setStakehSel(null)  // ID stakeholder select to null
-      this.props.setShowFab(false) // Fab True false
-      // this.props.setSelWorkFlow(null)  //ID select for workflow             
-
-
-      // console.log(stakehObj)      
-
-      // //stkh Detail
-      // const stakehDet={
-      //   stakeholder_id:bId,
-      //   bio_access_id:idAccess,
-      //   action:'ITEM_DETAIL',            
-      // }
-      // this.props.setStakeholderItemDetail(stakehDet)  
+      const {user:{_id:bId}} = this.props.session       
 
       const stakehList={
         _action: "LISTLOCATION",
         _id:bId,        
       }
-      this.props.setStakehType(stakehList)
-      this.props.setStakehLabel(e.target.getAttribute('data-label'))
-
+      this.props.setStakehType(stakehList)   
     
       this.props.setNewBread(true,{
           id:'index', 
-          label:`Stakeholder`, 
+          label:`Locations`, 
           activePage:'index', 
           isActive:true,
-      })
-      
+      })  
 
-      // this.props.backPrev(true)
-      
-
-
-
+      // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
+      this.props.setActivePage(e.target.getAttribute('data-pagename'))
+      this.props.setStakehLabel(e.target.getAttribute('data-label'))
+      this.props.setStakehNumb(e.target.getAttribute('data-label'))     
+      this.props.setStakehSel(null)  // ID stakeholder select to null
+      this.props.setShowFab(false) // Fab True false
+      // this.props.setSelWorkFlow(null)  //ID select for workflow     
 
       ///////////////////////////////workflow////////////////////////////////////
 
@@ -109,32 +78,33 @@ class SideNav extends React.Component {
       //   action: 'ITEM_LIST',
       //   bio_access_id: idAccess
       // }
-    //   const listofSubjectObj ={
-    //     action: 'LIST_ITEM_SUBJECT',
-    //     bio_access_id: idAccess
-    //   }
+
+      // const listofSubjectObj ={
+      //   action: 'LIST_ITEM_SUBJECT',
+      //   bio_access_id: idAccess
+      // }
   
-    //   const stakehList={
-    //     action: "ITEM_LIST",
-    //     bio_access_id: idAccess       
-    //   }
+      // const stakehList={
+      //   action: "ITEM_LIST",
+      //   bio_access_id: idAccess       
+      // }
   
-    //   const customFieldObj={
-    //     action: "ITEM_LIST_BY_OBJECT",
-    //     bio_access_id: idAccess,
-    //     object_id:"STKH"    
-    // }
+      // const customFieldObj={
+      //   action: "ITEM_LIST_BY_OBJECT",
+      //   bio_access_id: idAccess,
+      //   object_id:"STKH"    
+      // }
    
-    //   const pageSubject= ""
-    //   this.props.setStakehList(stakehList)
-    //   // this.props.setListWorkFlow(listWrkFlwObj)
-    //   this.props.setListofSubject(listofSubjectObj)
-    //   this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-    //   this.props.setCustomField(customFieldObj)
-    //   this.props.setPageSubject(pageSubject)
-    //   this.props.setStakehSel(null)    // ID stakeholder select
-    //   this.props.setShowFab(false)  // Fav True False
-    //   this.props.setSelWorkFlow(null)     //ID select for workflow  
+      const pageSubject= ""
+      // this.props.setStakehList(stakehList)
+      // this.props.setListWorkFlow(listWrkFlwObj)
+      // this.props.setListofSubject(listofSubjectObj)
+      this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
+      // this.props.setCustomField(customFieldObj)
+      this.props.setPageSubject(pageSubject)
+      this.props.setStakehSel(null)    // ID stakeholder select
+      this.props.setShowFab(false)  // Fav True False
+      // this.props.setSelWorkFlow(null)     //ID select for workflow  
 
 
     //   ////////////////////////////////Audit Trail////////////////////////////////////
@@ -192,28 +162,66 @@ class SideNav extends React.Component {
           <ul id="side-main-menu" className="side-menu list-unstyled">
 
           {/* Dashboard */}
-          {/* <li>
+          <li>
             <a href="/" onClick={this.setActivePage} data-pagename="dashboard">
               <div className="userIcon" data-pagename="dashboard">
                 <img src={require('../../img/StakeType/Dashboard.svg')} alt="dashboard" className="img-fluid mr-1" data-pagename="dashboard"/>
               </div>Dashboard
             </a>
-          </li> */}
+          </li>
+
+          {/* Locations */}
+          <li>
+            <a href="/" onClick={this.setActivePage} data-pagename="index" data-id="All" data-label="All Locations">
+              <div className="userIcon" data-pagename="index">
+                <img src={require('../../img/employee.svg')} alt="employee" className="img-fluid mr-1" data-pagename="index"/>
+              </div>Locations
+            </a>
+          </li>
 
              {/* List Of WorkFlow */}
-            {/* <li>
+            <li>
               <a href="/" aria-expanded={this.state.workFlowToggle} data-toggle="collapse" name="workflow" className={this.state.workFlowToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
               <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
               <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
                       <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
-                      <img src={require('../../img/management.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
+                      <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
                       </div>List of Workflow
                       </a>
                 </li>
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="SearchWorkflow" data-pagetitle="Search Workflow" >
+                      <div className="userIcon" data-pagename="listOfWorkflow">
+                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="SearchWorkflow" name="Search Workflow" />
+                      </div>Search Workflow
+                      </a>
+                </li>
               </ul>
-            </li> */}
+            </li>
+
+            {/* List Of Activity */}
+            <li>
+              <a href="/" aria-expanded={this.state.activityToggle} data-toggle="collapse" name="activity" className={this.state.activityToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
+              <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Activity </a>
+              <ul id="chartsDropdown" className={this.state.activityToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="listOfActivity" data-pagetitle="List Activity" >
+                      <div className="userIcon" data-pagename="listOfActivity">
+                      <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfActivity" name="List Activity" />
+                      </div>List of Activity
+                      </a>
+                </li>
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="SearchActivity" data-pagetitle="Search Activity" >
+                      <div className="userIcon" data-pagename="SearchActivity">
+                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="SearchActivity" name="Search Activity" />
+                      </div>Search Activity
+                      </a>
+                </li>
+              </ul>
+            </li>
 
             {/* Stakeholder */}
             {/* <li>
@@ -263,44 +271,8 @@ class SideNav extends React.Component {
                       </a>
                 </li>       
               </ul>
-            </li>  */}
+            </li>  */}       
 
-            <li>
-            <a href="/" onClick={this.setActivePage} data-pagename="index" data-id="All" data-label="All Locations">
-              <div className="userIcon" data-pagename="index">
-                <img src={require('../../img/employee.svg')} alt="employee" className="img-fluid mr-1" data-pagename="index"/>
-              </div>Stakeholder
-            </a>
-          </li>
-
-             
-                {/* Audit Trail */}
-
-                {/* <li>
-                  <a href="/" aria-expanded={this.state.auditTrailToggle} data-toggle="collapse" name="auditTrail" className={this.state.auditTrailToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
-                  <div className="userIcon"><img src={require('../../img/folder.svg')} alt="audit" className="img-fluid p-1"/></div>Audit Log </a>
-                  <ul id="chartsDropdown" className={this.state.auditTrailToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
-                    <li>
-                        <a href="/" data-pagename="log" onClick={this.setActivePage}>
-                        <div className="userIcon" data-pagename="log">
-                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="log"/>
-                        </div>Search
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/" data-pagename="print" onClick={this.setActivePage}>
-                        <div className="userIcon" data-pagename="print">
-                        <img src={require('../../img/folder.svg')} alt="doc"  data-pagename="print"/>
-                        </div>Print Report
-                        </a>
-                    </li>
-                  </ul>
-                </li> */}
-
-
-
-            
-                     
           </ul>
         </div>
       </div>
@@ -329,7 +301,7 @@ SideNav.propTypes={
     // setSelWorkFlow: PropTypes.func.isRequired,    
     setStakehLabel: PropTypes.func.isRequired,
 
-    backPrev: PropTypes.func.isRequired,
+    
     setNewBread: PropTypes.func.isRequired,
     
 
@@ -357,7 +329,7 @@ SideNav.propTypes={
     setShowFab,
     // setSelWorkFlow,     
     setStakehLabel,
-    backPrev,
+  
     setNewBread
     
     

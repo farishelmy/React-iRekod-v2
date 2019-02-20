@@ -194,8 +194,8 @@ class ViewDetail extends Component {
                   <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
                     <h3 className="mb-3">{stakeholderDetail.name}</h3>
                       <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>  
-                        <hr/>  
                         <div className={stakeholderMember.length!==0?"card-title text-center":"d-none"}>
+                          <hr/> 
                           <h3>Associates</h3>
                         </div>                                       
                           <div className={stakeholderMember.length!==0?"card-body":"d-none"}>                   
@@ -245,30 +245,23 @@ class ViewDetail extends Component {
               <form id="simpleform" name="simpleform" >
 
               <div className="card">
-                <div className="card-body">
-                  <h3 className="card-title">Edit Profile</h3>
-                  <div className="row"> 
-                    <div className="col-sm-12 col-md-12">
-                      <div className="form-group mb-4">
-                        <label className="form-label">Full Name</label>
-                        <input type="text"   placeholder="First name" className="form-control"/>
-                      </div>
-                    </div>
-                    <div className="col-sm-12 col-md-12">
-                      <div className="form-group mb-4">
-                        <label className="form-label">User Type</label>
-                        <input type="text"  placeholder="User Type" className="form-control"/>
-                      </div>
-                    </div>  
-                    <div className="col-sm-12 col-md-12">
-                      <div className="form-group mb-4">
-                        <label className="form-label">Login ID</label>
-                        <input type="text" placeholder="ID" className="form-control"/>
-                      </div>
-                    </div>                               
-                  </div>
+                <div className="card-header">
+                  <h3 className="card-title">My Profile</h3>
                 </div>
-              </div>      
+                <div className="card-body">                   
+                  <div className="form-group">
+                    <label className="form-label">Full Name</label>
+                    <input type="text" value={stakeholderDetail.name} placeholder="First name" className="form-control"/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">User Type</label>
+                    <input type="text" value={stakeholderDetail.typeName} placeholder="User Type" className="form-control"/>
+                  </div>               
+                </div>
+                <div className="card-footer text-right">
+                  <button className="btn btn-primary">Save</button>
+                </div>
+              </div>           
                                                             
             </form>
           </div> 
