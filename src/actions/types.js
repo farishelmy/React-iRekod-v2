@@ -21,12 +21,15 @@ export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
 export const SET_SEL_ALL = 'SET_SEL_ALL'
 export const SHOW_MULTIFAB = 'SHOW_MULTIFAB'
 
-/////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
+//Breadcrumb 
+export const SET_BREADCRUMB = "SET_BREADCRUMB"
+export const INSERT_NEW_BREADCRUMB = "INSERT_NEW_BREADCRUMB"
+export const SET_BREAD_IS_PARENT = "SET_BREAD_IS_PARENT"
+export const CLEAR_NEWBREAD = "CLEAR_NEWBREAD"
+export const PREV_NAV = "PREV_NAV"
+export const RELOAD_PAGE = "RELOAD_PAGE"
 
-//Stakeholder BreadCrumb
-export const BC_DETAIL = 'BC_DETAIL'
-export const BC_UPDATE = 'BC_UPDATE'
-export const BC_INDEX = 'BC_INDEX'
+/////////////////////////////////////////////////////Stakeholder/////////////////////////////////////////////////////
 
 //Stakeholder List
 export const STAKEHOLDER_LIST = 'STAKEHOLDER_LIST'
@@ -70,8 +73,8 @@ export const LIST_OF_SUBJECT = 'LIST_OF_SUBJECT'
 export const LIST_OF_CHILDSUBJECT = 'LIST_OF_CHILDSUBJECT'
 
 //breadcrumb action and reducer link
-export const SET_BREADCRUMB = 'SET_BREADCRUMB'
-export const INSERT_NEW_BREADCRUMB = 'INSERT_NEW_BREADCRUMB'
+// export const SET_BREADCRUMB = 'SET_BREADCRUMB'
+// export const INSERT_NEW_BREADCRUMB = 'INSERT_NEW_BREADCRUMB'
 
 //listworkflow action and reducer link
 export const SET_CARD_VIEW = 'SET_CARD_VIEW'

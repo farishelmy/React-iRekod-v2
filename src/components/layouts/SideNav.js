@@ -9,7 +9,7 @@ import {setStakehType,setStakehNumb,setStakehLabel} from '../../actions/stakehol
 import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 // import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
 // import {toggleErr} from '../../actions/auditTrailAction/modalAction'
-import {bcIndex,bcDet} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+import {backPrev,setNewBread} from '../../actions/breadcrumbAction'
 
 
  
@@ -53,7 +53,7 @@ class SideNav extends React.Component {
 
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-      // this.props.setStakehNumb(e.target.getAttribute('data-id'))
+      this.props.setStakehNumb(e.target.getAttribute('data-label'))
       // console.log(e.target.getAttribute('data-pageTitle'))     
 
       // const stakehObj={
@@ -65,9 +65,8 @@ class SideNav extends React.Component {
 
       // this.props.setStakehType(stakehObj) 
 
-      this.props.bcIndex(true)  // Breadcrumb in index page   
-      this.props.bcDet(false)   // Breadcrumb in detail page
-      this.props.setStakehSel(null)  // ID stakeholder select
+      
+      this.props.setStakehSel(null)  // ID stakeholder select to null
       this.props.setShowFab(false) // Fab True false
       // this.props.setSelWorkFlow(null)  //ID select for workflow             
 
@@ -88,6 +87,20 @@ class SideNav extends React.Component {
       }
       this.props.setStakehType(stakehList)
       this.props.setStakehLabel(e.target.getAttribute('data-label'))
+
+    
+      this.props.setNewBread(true,{
+          id:'index', 
+          label:`Stakeholder`, 
+          activePage:'index', 
+          isActive:true,
+      })
+      
+
+      // this.props.backPrev(true)
+      
+
+
 
 
       ///////////////////////////////workflow////////////////////////////////////
@@ -313,10 +326,11 @@ SideNav.propTypes={
     // toggleErr: PropTypes.func.isRequired,
     setStakehSel: PropTypes.func.isRequired,
     setShowFab: PropTypes.func.isRequired, 
-    // setSelWorkFlow: PropTypes.func.isRequired,
-    bcIndex: PropTypes.func.isRequired,
-    bcDet: PropTypes.func.isRequired,
+    // setSelWorkFlow: PropTypes.func.isRequired,    
     setStakehLabel: PropTypes.func.isRequired,
+
+    backPrev: PropTypes.func.isRequired,
+    setNewBread: PropTypes.func.isRequired,
     
 
   }
@@ -341,10 +355,10 @@ SideNav.propTypes={
     // toggleErr,
     setStakehSel,
     setShowFab,
-    // setSelWorkFlow,
-    bcIndex,
-    bcDet,
+    // setSelWorkFlow,     
     setStakehLabel,
+    backPrev,
+    setNewBread
     
     
   })

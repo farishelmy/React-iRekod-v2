@@ -9,7 +9,7 @@ import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,se
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
-import BreadCrumb from '../../layouts/BreadcrumbStakeh' 
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -121,8 +121,7 @@ class UpdateDetail extends Component {
          
         <Fragment>
 
-        <BreadCrumb/>    
-
+       
        {stakeholderDetail.map((item,idx)=>
         <section key={idx} className="forms">
            <div className="container-fluid">

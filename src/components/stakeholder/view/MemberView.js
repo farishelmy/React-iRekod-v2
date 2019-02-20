@@ -4,7 +4,7 @@ export default function MemberView({stkhId,fullName,typeName,setActivePage,stake
 
   const pageBtn=(e)=>{
     e.preventDefault()
-    setActivePage(stkhId,stakehType)    
+    setActivePage(stkhId,fullName,stakehType)    
     // console.log(e.target.getAttribute('data-id'))
    
     

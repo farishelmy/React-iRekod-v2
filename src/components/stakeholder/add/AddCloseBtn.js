@@ -5,16 +5,13 @@ import PropTypes from 'prop-types'
 
 import {setActivePage,setPageTitle} from '../../../actions/layoutInitAction' 
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction' 
-import {bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 
 class AddCloseBtn extends Component {
 
     ActivePage=(e)=>{
         e.preventDefault()   
-        
-        this.props.bcUpd(false) //Breadcrumb Condition
-        
+         
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
         const {stakehSel:stakeholder_id,stakehNumb} = this.props.stakeholderlistType
         const {pageTitle} = this.props.layout
@@ -54,7 +51,6 @@ AddCloseBtn.propTypes={
     stakeholderView: PropTypes.object.isRequired,
     stakeholderBreadCrumb: PropTypes.object.isRequired,   
     setStakehType: PropTypes.func.isRequired,   
-    bcUpd: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     
   }
@@ -71,7 +67,7 @@ AddCloseBtn.propTypes={
   export default connect(mapStateToProps,{
       setActivePage,
       setStakehType, 
-      bcUpd,
+ 
       setPageTitle,
       
       

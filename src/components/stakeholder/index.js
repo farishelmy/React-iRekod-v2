@@ -4,7 +4,7 @@ import Pagination from 'rc-pagination'
 import {setStakehSel,stakehSelObj,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
 import {setActivePage} from '../../actions/layoutInitAction'  
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
-import {bcDet,bcIndex} from '../../actions/stakeholderAction/stakehBreadCrumbAction'
+import {setNewBread} from '../../actions/breadcrumbAction'
 import {setRoleStore,setStakehList,setStkhAccDetail,setAncestor,setDescendant,setSecLevel,setWizardPage} from '../../actions/stakeholderAction/stakehUpdateAction'
 import {showMultiFab} from '../../actions/fabAction' 
 
@@ -12,7 +12,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Dropdown from './Dropdown'
-import BreadCrumb from '../layouts/BreadcrumbStakeh'
+import Breadcrumb from '../layouts/Breadcrumb'
 import CardRow from '../stakeholder/CardRow'  
 import DetailCard from '../stakeholder/DetailCard'
 import Fab from '../fab/FabStakeholder'
@@ -38,12 +38,14 @@ class index extends Component {
         const {stakehType} = this.props.stakeholderlistType      
         this.setState({
             stakeholderlistType:stakehType,             
-        })       
+        })           
+              
     }
 
    
 
     componentDidUpdate(prevProps,prevState){
+
         if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){                   
             const {stakehType}=this.props.stakeholderlistType 
             // console.log(stakehType)   
@@ -53,11 +55,13 @@ class index extends Component {
             this.setState({
                 stakeholderlistType:liststakeh
             })
-           
+            
                 if(stakehType.length!== 0 ){
                     this.setState({loading: false})
                 }           
-        }
+
+       
+    }
         
         else if(prevProps.fab.isSelAll===!this.props.fab.isSelAll){
             const{isSelAll}=this.props.fab
@@ -105,6 +109,7 @@ class index extends Component {
         this.props.setStakehSel(sId) // URI 
         this.props.stakehSelObj(val)  //Obj 
          
+       
 
         // console.log(name)
         
@@ -149,25 +154,25 @@ class index extends Component {
         })
     }
 
-    BreadCrumb
-    pageBreadCrumb=(e)=>{
-        e.preventDefault()
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
-        
-    }
+     
 
     //Fab View Detail
     setActivePage=(param)=>{    
             
         const {stakehSel,stakehObj} = this.props.stakeholderlistType
         const  {user:{_id:bId}} = this.props.session
-        // console.log(stakehSel.uri)
+        // console.log(stakehObj)
 
-        this.props.bcIndex(false) //breadcrumb Index page 
-        this.props.bcDet(true) //breadcrumb Detail page 
+        //Breadcrumb
+        this.props.setNewBread(false,{
+            id:stakehObj.uri, 
+            label:stakehObj.name, 
+            activePage:'viewStakeh', 
+            isActive:true,
+        })
        
         this.props.setActivePage(param)  //direct page to viewDetail
-        // console.log(param)       
+         
 
         //stkh Detail        
         this.props.setStakeholderItemDetail(stakehObj)    
@@ -181,12 +186,12 @@ class index extends Component {
        }
        this.props.viewStakehMember(stakehMember)
 
-       //Group
-       const stakehGroup={
-            uri:stakehSel,             
-            action:'ITEM_LIST_GROUP',             
-       }
-       this.props.viewStakehGroup(stakehGroup)   
+    //    //Group
+    //    const stakehGroup={
+    //         uri:stakehSel,             
+    //         action:'ITEM_LIST_GROUP',             
+    //    }
+    //    this.props.viewStakehGroup(stakehGroup)   
       
     } 
 
@@ -314,23 +319,20 @@ class index extends Component {
         const {stakeholderlistType}=this.state        
         // const {stakeholder_Detail}=this.props.stakeholderView 
         const {loading} = this.state
+        // console.log(loading)
         
         
         
         
         return (
             <Fragment>  
-                {/* <BreadCrumb/> */}
-                
-                 <div className="breadcrumb-holder">
+                <div className="breadcrumb-holder">
                     <div className="container-fluid">
-                        <div className="breadcrumb">
-                            <div className="breadcrumb-item"><a href='/' onClick={this.pageBreadCrumb} data-pagename="dashboard">Home</a></div>
-                            <div className="breadcrumb-item">{stakehLabel}</div>
-                            
-                        </div>
+                        <Breadcrumb/>
                     </div>
-                </div>             
+                </div>
+                
+                
 
                 <section>
                     <div className="container-fluid">
@@ -461,6 +463,7 @@ class index extends Component {
 }
 index.propTypes={
     session: PropTypes.object.isRequired,
+    breadcrumb: PropTypes.object.isRequired,
     stakeholderlistType: PropTypes.object.isRequired,
     stakeholderView: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired, 
@@ -473,9 +476,7 @@ index.propTypes={
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,
     viewStakehAccess: PropTypes.func.isRequired,    
-    setDelBtn: PropTypes.func.isRequired,   
-    bcDet: PropTypes.func.isRequired,
-    bcIndex: PropTypes.func.isRequired,
+    setDelBtn: PropTypes.func.isRequired,  
     setWizardPage: PropTypes.func.isRequired,
     setRoleStore: PropTypes.func.isRequired,
     setStakehList: PropTypes.func.isRequired,
@@ -484,7 +485,8 @@ index.propTypes={
     setDescendant: PropTypes.func.isRequired,
     setSecLevel: PropTypes.func.isRequired,   
     showMultiFab: PropTypes.func.isRequired,
-    stakehSelObj: PropTypes.func.isRequired,     
+    stakehSelObj: PropTypes.func.isRequired,   
+    setNewBread: PropTypes.func.isRequired,  
     
 }
 
@@ -494,6 +496,7 @@ const mapStateToProps= state =>({
         layout:state.layout,
         stakeholderView: state.stakeholderView,
         fab: state.fab,
+        breadcrumb: state.breadcrumb
        
 })
     
@@ -508,8 +511,6 @@ export default connect(mapStateToProps,{
     viewStakehGroup,
     viewStakehAccess,    
     setDelBtn,
-    bcDet,
-    bcIndex,
     setWizardPage, 
     setRoleStore,
     setStakehList,
@@ -518,6 +519,7 @@ export default connect(mapStateToProps,{
     setDescendant,
     setSecLevel,    
     showMultiFab,
-    stakehSelObj
+    stakehSelObj,
+    setNewBread
    
 })(index)

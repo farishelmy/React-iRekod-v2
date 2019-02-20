@@ -5,6 +5,7 @@ import authReducer from './authReducer'
 import layoutInitReducer from './layoutInitReducer'
 import searchReducer from './searchReducer'
 import fabReducer from './MainFabReducer'
+import breadcrumbReducer from './breadcrumbReducer'
 
 //stakeholder
 import stakeholderBreadCrumb from '../reducers/stakeholderReducer/stakeholderBreadCrumbReducer'
@@ -39,6 +40,8 @@ const appReducer = combineReducers({
     layout:layoutInitReducer,
     fab:fabReducer,
     searchConf:searchReducer,
+    breadcrumb:breadcrumbReducer,
+
    
     //stakeholder
     stakeholderBreadCrumb:stakeholderBreadCrumb,

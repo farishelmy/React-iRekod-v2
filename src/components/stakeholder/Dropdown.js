@@ -30,7 +30,7 @@ class Dropdown extends Component {
             this.setState({
                 selectedStakeh: value
             })
-        }
+        }         
     }
 
     componentWillMount(){
@@ -65,6 +65,8 @@ class Dropdown extends Component {
             }
             this.props.setStakehType(stakehList)
         }
+
+
     }
     
     toggle() {
@@ -93,6 +95,7 @@ class Dropdown extends Component {
 Dropdown.propTypes={
     session: PropTypes.object.isRequired, 
     stakeholderlistType: PropTypes.object.isRequired, 
+    breadcrumb: PropTypes.object.isRequired, 
     setStakehType: PropTypes.func.isRequired,   
     setStakehLabel: PropTypes.func.isRequired,
     setStakehNumb: PropTypes.func.isRequired,    
@@ -100,7 +103,8 @@ Dropdown.propTypes={
   }
   const mapStateToProps= state =>({
     session:state.session, 
-    stakeholderlistType:state.stakeholderlistType,    
+    stakeholderlistType:state.stakeholderlistType,   
+    breadcrumb: state.breadcrumb 
     
   })
 export default connect(mapStateToProps,{

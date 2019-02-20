@@ -7,7 +7,6 @@ import {setActivePage} from '../../../actions/layoutInitAction'
 import {setStakehType} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {setStkhAccDetail,setAncestor,setDescendant} from '../../../actions/stakeholderAction/stakehUpdateAction'
 import {viewStakehGroup,viewStakehMember} from '../../../actions/stakeholderAction/stakehViewDetail'
-import {bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
 
 
 class UpdateCloseBtn extends Component {
@@ -15,8 +14,7 @@ class UpdateCloseBtn extends Component {
     ActivePage=(e)=>{
         e.preventDefault()   
         
-        this.props.bcUpd(false) //Breadcrumb Condition
-        
+       
         const {user:{stakeholder_id:bId,bio_access_id:idAccess}} = this.props.session
         const {stakehSel:{stakeholder_id},stakehNumb} = this.props.stakeholderlistType
         // console.log(stakehNumb)   
@@ -102,7 +100,7 @@ UpdateCloseBtn.propTypes={
     setDescendant: PropTypes.func.isRequired,
     viewStakehMember: PropTypes.func.isRequired,
     viewStakehGroup: PropTypes.func.isRequired,   
-    bcUpd: PropTypes.func.isRequired,
+    
     
   }
   const mapStateToProps= state =>({
@@ -123,7 +121,7 @@ UpdateCloseBtn.propTypes={
       setDescendant,
       viewStakehMember,
       viewStakehGroup,      
-      bcUpd,
+   
       
       
 

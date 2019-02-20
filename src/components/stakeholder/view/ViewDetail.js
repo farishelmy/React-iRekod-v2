@@ -5,11 +5,10 @@ import GroupView from '../../stakeholder/view/GroupView'
 import AccessView from '../../stakeholder/view/AccessView'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
-import {setStakehType,setStakehSel,setStakehNumb} from '../../../actions/stakeholderAction/stakehTypeAction'
+import {setStakehType,setStakehSel,setStakehNumb,stakehSelObj} from '../../../actions/stakeholderAction/stakehTypeAction'
 import {setRoleStore,setStkhAccDetail,setAncestor,setDescendant,setSecLevel} from '../../../actions/stakeholderAction/stakehUpdateAction'
-import BreadCrumb from '../../layouts/BreadcrumbStakeh'
-import {bcDet,bcUpd} from '../../../actions/stakeholderAction/stakehBreadCrumbAction'
-
+import Breadcrumb from '../../layouts/Breadcrumb'
+import {setNewBread} from '../../../actions/breadcrumbAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -28,38 +27,53 @@ class ViewDetail extends Component {
       }
   }
 
-  setPageView=(uriId,type)=>{    
+  setPageView=(sId,name,typeName)=>{    
      
     const {user:{_id:bId}} = this.props.session
+    const val = ({sId,typeName,name})  
     
-    console.log(uriId)
-    // console.log(type)
+    this.props.setNewBread(false,{
+      id:sId, 
+      label:name, 
+      activePage:'viewStakeh', 
+      isActive:true,
+  })
     
-    this.props.setStakehSel(uriId) 
-    this.props.setStakehNumb(type)
+    // console.log(sId)
+    // console.log(stakehObj)
+    
+    this.props.setStakehSel(sId) 
+    this.props.setStakehNumb(typeName)
 
-    //stkh Detail
-    const stakehDet={
-        _action: "LISTLOCATION",
-        _id:bId,            
-    }
-    this.props.setStakeholderItemDetail(stakehDet)    
+    //stkh Detail     
+    this.props.setStakeholderItemDetail(val)       
+
+    //Stakeh Obj
+   
+    this.props.stakehSelObj(val)
 
      //Member
      const stakehMember={
-        uri:uriId,
-        // bio_access_id:idAccess,
-        action:'ITEM_LIST_MEMBER',             
-   }
-   this.props.viewStakehMember(stakehMember)
+      _action:'LISTLOCATION',   
+      _id: bId, 
+      URI: sId, 
+      ANODE:"A"             
+    }
+    this.props.viewStakehMember(stakehMember)
 
     //Group
     const stakehGroup={
-            stakeholder_id:uriId,
+            stakeholder_id:sId,
             // bio_access_id:idAccess,
             action:'ITEM_LIST_GROUP',             
     }
     this.props.viewStakehGroup(stakehGroup)
+
+
+
+
+
+
   }  
 
   componentDidUpdate(prevProps){     
@@ -77,17 +91,13 @@ class ViewDetail extends Component {
     //         console.log(stakeholderMember)
     //         this.setState({memberItem:stakeholderMember})
     //     }        
-    }  
-
-    
+    }    
 
      
-
     updDetail=(e)=>{
       e.preventDefault()   
 
-      this.props.bcUpd(true)  //breadcrumb condition
-    //   this.props.bcDet(false) //breadcrumb condition
+      
       this.props.setActivePage(e.target.getAttribute('data-pagename'))
       //console.log(('data-pagename'))
 
@@ -158,113 +168,112 @@ class ViewDetail extends Component {
     const {pageTitle}=this.props.layout
     const {stakeholderDetail,stakeholderMember} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
-    // console.log(stakeholderDetail.name)
+    // console.log(stakeholderDetail)
     // console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(stakeholderMember)    
       
     return (
       <Fragment>
-        <div className="breadcrumb-holder">
-        <div className="container-fluid">
-          <ul className="breadcrumb">
-            <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li className="breadcrumb-item active">Profile       </li>
-          </ul>
-        </div>
-      </div>
-
-        {/* <div className="breadcrumb-holder">
+         <div className="breadcrumb-holder">
             <div className="container-fluid">
-                <div className="breadcrumb">
-                    <div className="breadcrumb-item"><a href='/' onClick={this.setActivePage} data-pagename="dashboard">Home</a></div>
-                    <div className="breadcrumb-item"><a className="breadcrumb-item" href='/' data-pagename="index" onClick={this.setActivePage}>{pageTitle}</a></div>
-                    {stakeholderDetail.map((item,idx)=><div key={idx} className="breadcrumb-item active">{decodeURIComponent(item.full_name)}</div>)}
-                </div>
+              <Breadcrumb/>
             </div>
-        </div>   */}   
+        </div>        
 
         <div className="container-fluid mt-3"> 
-             <header>
-                 <div className="row">
-                     <div className="col-auto mr-auto">
-                         <h1 className="h3 display">{stakeholderDetail.name}</h1>
-                     </div>
-                     <div className="col-auto mr-4">                        
-                        <span>
-                        <Tooltip                            
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Update Details</div>}
-                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                            <img src={require('../../../img/fab-update.svg')} alt="Edit Details" data-pagename="edit" className='btn btn-link' onClick={this.updDetail}/>
-                        </Tooltip>
-                        </span>                         
-                     </div>                     
-                 </div>
-             </header>        
-               
-             <div className="row"> 
-                <div className="col-lg-4">
-                  <div className="card card-profile">
-                    <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
-                      <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
-                        <h3 className="mb-3">{stakeholderDetail.name}</h3>
-                          <hr/>
-                            <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>                  
-                      </div>
-                  </div>             
+          <header>                                   
+            <h1 className="h3 display mb-3">{stakeholderDetail.name}</h1>                                                      
+          </header>        
+            
+            <div className="row"> 
 
-               
-                  <div className={stakeholderMember.length===0?"d-none":"card"}>
-                    <div className={stakeholderMember.length!==0?"card-header":"d-none"}>
-                      <h3>Associates</h3>
-                    </div>       
-                      <div className="card-body row">                    
-                        <div className="col">  
+              <div className="col-lg-4">
+                <div className="card card-profile">
+                  <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
+                  <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
+                    <h3 className="mb-3">{stakeholderDetail.name}</h3>
+                      <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>  
+                        <hr/>  
+                        <div className={stakeholderMember.length!==0?"card-title text-center":"d-none"}>
+                          <h3>Associates</h3>
+                        </div>                                       
+                          <div className={stakeholderMember.length!==0?"card-body":"d-none"}>                   
                             {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
                                 key={idx} 
                                 stkhId={item.uri}  
                                 stakehType={item.iconCls}                                     
                                 fullName={item.Name}
                                 typeName={item.iconCls}
-                                setActivePage={this.setPageView} />):"No Member Items" } 
-                        </div>                          
-                      </div> 
-                    </div>                               
-                </div>                
-
-              <div className="col-lg-8">
-                <form id="simpleform" name="simpleform" >
-
-                <div className="card">
-                  <div className="card-body">
-                    <h3 className="card-title">Edit Profile</h3>
-                    <div className="row"> 
-                      <div className="col-sm-12 col-md-12">
-                        <div className="form-group mb-4">
-                          <label className="form-label">Full Name</label>
-                          <input type="text" placeholder="First name" className="form-control"/>
-                        </div>
-                      </div>
-                      <div className="col-sm-12 col-md-12">
-                        <div className="form-group mb-4">
-                          <label className="form-label">User Type</label>
-                          <input type="text" placeholder="User Type" className="form-control"/>
-                        </div>
-                      </div>  
-                      <div className="col-sm-12 col-md-12">
-                        <div className="form-group mb-4">
-                          <label className="form-label">Login ID</label>
-                          <input type="text" placeholder="ID" className="form-control"/>
-                        </div>
-                      </div>                               
+                                setActivePage={this.setPageView} />):"No Member Items" }                                               
+                          </div>
+                  </div>                            
+                </div>
+              </div>
+            
+              {/* <div className="col-lg-4">
+                <div className="card card-profile">
+                  <div style={{backgroundImage: `url(${require('../../../img/Background/'+ stakeholderDetail.typeName +'.jpg')})` }} className="card-header"></div>
+                    <div className="card-body text-center"><img src={require('../../../img/Icon/'+ stakeholderDetail.typeName +'.svg')} className="card-profile-img"/>
+                      <h3 className="mb-3">{stakeholderDetail.name}</h3>
+                        <hr/>
+                          <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>                  
                     </div>
+                </div>             
+
+              
+                <div className={stakeholderMember.length===0?"d-none":"card"}>
+                  <div className={stakeholderMember.length!==0?"card-header":"d-none"}>
+                    <h3>Associates</h3>
+                  </div>       
+                    <div className="card-body row">                    
+                      <div className="col">  
+                          {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
+                              key={idx} 
+                              stkhId={item.uri}  
+                              stakehType={item.iconCls}                                     
+                              fullName={item.Name}
+                              typeName={item.iconCls}
+                              setActivePage={this.setPageView} />):"No Member Items" } 
+                      </div>                          
+                    </div> 
+                  </div>  
+
+              </div>                 */}
+
+            <div className="col-lg-8">
+              <form id="simpleform" name="simpleform" >
+
+              <div className="card">
+                <div className="card-body">
+                  <h3 className="card-title">Edit Profile</h3>
+                  <div className="row"> 
+                    <div className="col-sm-12 col-md-12">
+                      <div className="form-group mb-4">
+                        <label className="form-label">Full Name</label>
+                        <input type="text"   placeholder="First name" className="form-control"/>
+                      </div>
+                    </div>
+                    <div className="col-sm-12 col-md-12">
+                      <div className="form-group mb-4">
+                        <label className="form-label">User Type</label>
+                        <input type="text"  placeholder="User Type" className="form-control"/>
+                      </div>
+                    </div>  
+                    <div className="col-sm-12 col-md-12">
+                      <div className="form-group mb-4">
+                        <label className="form-label">Login ID</label>
+                        <input type="text" placeholder="ID" className="form-control"/>
+                      </div>
+                    </div>                               
                   </div>
-                </div>      
-                                                              
-              </form>
-            </div> 
-          </div>            
-        </div>
+                </div>
+              </div>      
+                                                            
+            </form>
+          </div> 
+        </div>            
+      </div>
       </Fragment>
     )
   }
@@ -287,8 +296,8 @@ ViewDetail.propTypes={
   setAncestor: PropTypes.func.isRequired,
   setDescendant: PropTypes.func.isRequired,
   setSecLevel: PropTypes.func.isRequired,
-  bcDet: PropTypes.func.isRequired,
-  bcUpd: PropTypes.func.isRequired,
+  stakehSelObj: PropTypes.func.isRequired,
+  setNewBread: PropTypes.func.isRequired,
   
   
 }
@@ -314,8 +323,8 @@ export default connect(mapStateToProps,{
     setAncestor,
     setDescendant,
     setSecLevel,
-    bcDet,
-    bcUpd
+    stakehSelObj,
+    setNewBread
     
 
 })(ViewDetail)
