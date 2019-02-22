@@ -1,17 +1,19 @@
-import {BASIC_SEARCH,STAKEH_LIST} from './types'
+import {BASIC_SEARCH,STAKEH_LIST,SEARCH_STATUS} from './types'
 import {biorisUrl} from '../config/appConf'
+import {converter} from '../utils/converter'
 
 
 //Stakeh List
 export const stakehList = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/stakeholder?param=${encodeURIComponent(JSON.stringify(param))}`
-        fetch(url,{method:'GET'})
+    const url=biorisUrl+converter(param)
+        fetch(url)
         .then(res=>res.json())
         .then(res=>{ 
             // console.log(res)
             dispatch({
-                type:STAKEH_LIST,payload:res.results
+                type:STAKEH_LIST,
+                payload:res.data
             })             
         })   
 }
@@ -23,6 +25,15 @@ export const basicSearch=(searchKey)=>{
        payload:searchKey
    }
 }
+
+
+//Search Status
+export const searchStatus=(param)=>{
+    return {
+        type:SEARCH_STATUS,
+        payload:param
+    }
+ }
 
 
 

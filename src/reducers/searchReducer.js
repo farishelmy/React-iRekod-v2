@@ -1,9 +1,10 @@
-import {BASIC_SEARCH,STAKEH_LIST} from '../actions/types'
+import {BASIC_SEARCH,STAKEH_LIST,SEARCH_STATUS} from '../actions/types'
 
 
 const initialState={
     stakehList:[],
     basicKey:null,
+    searchStatus:false,
 
 
 }
@@ -17,6 +18,10 @@ export default function(state = initialState, action){
         case BASIC_SEARCH:
         return {...state,
             basicKey:action.payload,
+        }  
+        case SEARCH_STATUS:
+        return {...state,
+            searchStatus:action.payload,
         }       
         default:
         return state

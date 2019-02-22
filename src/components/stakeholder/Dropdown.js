@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setStakehType,setStakehLabel,setStakehNumb} from '../../actions/stakeholderAction/stakehTypeAction'
+import {searchStatus} from '../../actions/searchAction'
 
 class Dropdown extends Component {
     constructor(props) {
@@ -53,10 +54,12 @@ class Dropdown extends Component {
             _id:bId,                        
             filterType: value.value,
         }
-      
+        
         this.props.setStakehType(stakehObj) 
         this.props.setStakehNumb(value.value)
         this.props.setStakehLabel(value.label)
+        this.props.searchStatus(false)
+
 
         if (value.value === "All"){
             const stakehList={
@@ -99,6 +102,7 @@ Dropdown.propTypes={
     setStakehType: PropTypes.func.isRequired,   
     setStakehLabel: PropTypes.func.isRequired,
     setStakehNumb: PropTypes.func.isRequired,    
+    searchStatus:  PropTypes.func.isRequired, 
    
   }
   const mapStateToProps= state =>({
@@ -110,5 +114,7 @@ Dropdown.propTypes={
 export default connect(mapStateToProps,{
     setStakehType,
     setStakehNumb,
-    setStakehLabel
+    setStakehLabel,
+    searchStatus
+
 })(Dropdown)

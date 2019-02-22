@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setNavToggle,setActivePage,setPageTitle} from '../../actions/layoutInitAction'
-import {basicSearch,stakehList} from '../../actions/searchAction'
+import {setStakehLabel} from '../../actions/stakeholderAction/stakehTypeAction'
+import {setNewBread} from '../../actions/breadcrumbAction'
+import {basicSearch,stakehList,searchStatus} from '../../actions/searchAction'
 import {logout} from '../../actions/authAction' 
 
 class TopNav extends Component {
@@ -12,17 +14,27 @@ class TopNav extends Component {
     event.preventDefault()   
     const target = event.target;
     const {stakehType}=this.props.stakeholderlistType 
-    const {user:{bio_access_id:idAccess}} = this.props.session    
+    const {user:{_id:bId}} = this.props.session  
+    
+    //Breadcrumb
+    this.props.setNewBread(false,{
+      id:'index', 
+      label:'Locations', 
+      activePage:'index', 
+      isActive:true,
+    })
     
     const stakehListObj = {
-      action: "ITEM_LIST",
-      bio_access_id: idAccess
+      _action: "LISTLOCATION",
+      _id:bId,        
     }
 
     this.props.stakehList(stakehListObj)
     this.props.basicSearch(target.searchTxt.value)
     this.props.setActivePage('search')
-    this.props.setPageTitle('Search Results : '+target.searchTxt.value )
+    this.props.setStakehLabel('Search Results : '+target.searchTxt.value )
+    this.props.searchStatus(true)
+    // this.props.setPageTitle('Search Results : '+target.searchTxt.value )
   }  
 
   doParentToggleFromChild=(e)=>{
@@ -101,6 +113,9 @@ TopNav.propTypes={
     stakehList: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     basicSearch: PropTypes.func.isRequired,
+    setStakehLabel: PropTypes.func.isRequired,
+    setNewBread: PropTypes.func.isRequired,
+    searchStatus: PropTypes.func.isRequired,
     
   }
   const mapStateToProps= state =>({
@@ -109,4 +124,4 @@ TopNav.propTypes={
     session:state.session,
     stakeholderlistType: state.stakeholderlistType
   })
-  export default connect(mapStateToProps,{setNavToggle,setActivePage,logout,stakehList,setPageTitle,basicSearch})(TopNav)
+  export default connect(mapStateToProps,{setNavToggle,setActivePage,logout,stakehList,setPageTitle,basicSearch,setStakehLabel,setNewBread,searchStatus})(TopNav)

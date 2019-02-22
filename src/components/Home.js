@@ -10,6 +10,7 @@ import MainMulti from '../components/stakeholder/multi/MainMulti'
 import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
+import SearchWorkflow from './workflow/searchWorkflow/modal/SearchWorkflow'
 import NewActivity from './workflow/create/NewActivity'
 import WorkflowDetails from './workflow/update/WorkflowDetails'
 // import Log from './auditTrail/auditLog/index'
@@ -72,6 +73,8 @@ class Home extends Component {
 
         //workflow
         'listOfWorkflow':ListWorkflow,
+        'searchWorkflow': SearchWorkflow,
+
         'createNewAct': NewActivity,
         'viewActivity': WorkflowDetails,
         'createNewAct': NewActivity,

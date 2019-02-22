@@ -1,6 +1,7 @@
 import{LIST_WORKFLOW,
     LIST_OF_SUBJECT, 
     LIST_OF_CHILDSUBJECT, 
+    WORKFLOW_TEMPLATE,
     SET_CARD_VIEW,  
     CHANGE_ISMULTI,
     WORKFLOW_SEL,
@@ -10,7 +11,8 @@ import{LIST_WORKFLOW,
     SELECT_SEL} from '../../actions/types'
 
 const initialState={
-    listWrkFlwObj : [],
+    ListWorkflowTemplate : [],
+    workflowTemplate: null,
     listofSubjectObj : [],
     listSub:[],
     cardView:true,
@@ -29,13 +31,19 @@ export default function(state = initialState, action){
         case LIST_WORKFLOW:
         return {
             ...state,
-            listWrkFlwObj:action.payload,
+            ListWorkflowTemplate:action.payload,
         }
 
         case LIST_OF_SUBJECT:
         return {
             ...state,
             listofSubjectObj:action.payload,
+        }
+
+        case WORKFLOW_TEMPLATE:
+        return {
+            ...state,
+            workflowTemplate:action.payload,
         }
 
         case LIST_OF_CHILDSUBJECT:

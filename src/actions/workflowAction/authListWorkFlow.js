@@ -1,6 +1,7 @@
 import { LIST_WORKFLOW, 
     LIST_OF_SUBJECT, 
-    LIST_OF_CHILDSUBJECT, 
+    LIST_OF_CHILDSUBJECT,
+    WORKFLOW_TEMPLATE, 
     SET_CARD_VIEW, 
     WORKFLOW_SEL,
     SHOW_FAB,
@@ -11,14 +12,15 @@ import { LIST_WORKFLOW,
     import {converter} from '../../utils/converter'
 
 
-export const setListWorkFlow=(listWrkFlwObj)=>dispatch=>{
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(listWrkFlwObj)}`    
+export const ListWorkflowTemplate=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)  
     fetch(url)
     .then(res=>res.json())
-    .then(res=>{ console.log(res)
+    .then(res=>{ 
+        // console.log(res)
         dispatch({           
             type: LIST_WORKFLOW,
-            payload: res.results
+            payload: res.data
         })
     })
 
@@ -32,16 +34,23 @@ export const setListofSubject=(listofSubjectObj)=>dispatch=>{
         dispatch({
             type: LIST_OF_SUBJECT,
             payload: res.results
-            })
-            })
+        })
+    })
 
 }
 
-export const listWorkFlowSub=(listSub)=>dispatch=>{
+export const workflowTemplate=(param)=>dispatch=>{
+    dispatch({
+        type: WORKFLOW_TEMPLATE,
+        payload: param
+    })
+}
+
+export const listWorkFlowSub=(param)=>dispatch=>{
     dispatch({
         type: LIST_OF_CHILDSUBJECT,
-        payload: listSub
-        })
+        payload: param
+    })
 }
 
 

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import ListSubject from './ListSubject'
+import ListTemplate from './ListTemplate'
 
 
 import Breadcrumb from '../layouts/Breadcrumb'
@@ -173,7 +173,7 @@ class ListWorkflow extends Component {
 
         const itemDeleted = listSub.filter(itm => itm.task_id !== wrkflSel)
         // console.log(vv)
-        this.props.listWorkFlowSub(itemDeleted)
+        // this.props.listWorkFlowSub(itemDeleted)
 
         alert("Successful Deleted")
   
@@ -219,10 +219,9 @@ class ListWorkflow extends Component {
           <div className="container-fluid">
           <header>
                     <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h1 className="h3 display"><strong>Activity</strong></h1>  
+                        <h1 className="h3 display"><strong>Workflow Template</strong></h1>  
                        
-                            <div className="d-flex align-items-center">
-                           
+                            <div className="d-flex align-items-center">                          
 
                             <Tooltip
                                 placement="top"
@@ -259,7 +258,7 @@ class ListWorkflow extends Component {
                         </div>
 
                     </div>
-                    <ListSubject /> 
+                    <ListTemplate /> 
         </header>
         
         <div className="row">

@@ -15,6 +15,7 @@ export const PAGE_SUBJECT = 'PAGE_SUBJECT'
 //search action and reducer link
 export const BASIC_SEARCH = 'BASIC_SEARCH'
 export const STAKEH_LIST = 'STAKEH_LIST'
+export const SEARCH_STATUS = 'SEARCH_STATUS'
 
 //Main Fab action and reducer link 
 export const CHANGE_ISMULTI = 'CHANGE_ISMULTI'
@@ -71,6 +72,7 @@ export const BASIC_DET = 'BASIC_DET'
 export const LIST_WORKFLOW = 'LIST_WORKFLOW'
 export const LIST_OF_SUBJECT = 'LIST_OF_SUBJECT'
 export const LIST_OF_CHILDSUBJECT = 'LIST_OF_CHILDSUBJECT'
+export const WORKFLOW_TEMPLATE = 'WORKFLOW_TEMPLATE'
 
 //breadcrumb action and reducer link
 // export const SET_BREADCRUMB = 'SET_BREADCRUMB'
@@ -117,6 +119,7 @@ export const SELECTED_RECIPIENTS = 'SELECTED_RECIPIENTS'
 export const LIST_EMAIL_RECIPIENTS = 'LIST_EMAIL_RECIPIENTS'
 export const SELECTED_INC_STAKEH = 'SELECTED_INC_STAKEH'
 export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
+
 
 /////////////////////////////////////////////////////AuditTrail//////////////////////////////////////////////////////
 

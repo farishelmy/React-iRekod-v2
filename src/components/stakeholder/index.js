@@ -58,10 +58,8 @@ class index extends Component {
             
                 if(stakehType.length!== 0 ){
                     this.setState({loading: false})
-                }           
-
-       
-    }
+                }         
+        }
         
         else if(prevProps.fab.isSelAll===!this.props.fab.isSelAll){
             const{isSelAll}=this.props.fab

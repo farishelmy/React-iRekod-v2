@@ -108,6 +108,7 @@ class Breadcrumb extends Component {
 
         const {user:{_id:bId}} = this.props.session
         const {stakehLabel} = this.props.stakeholderlistType
+        
         const stakehObj={
           _action:'LISTLOCATION',
           _id:bId,                        
