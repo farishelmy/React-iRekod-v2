@@ -11,13 +11,8 @@ import addChild from '../components/stakeholder/addChild/AddStakeholder'
 import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
 import SearchWorkflow from './workflow/searchWorkflow/modal/SearchWorkflow'
-import NewActivity from './workflow/create/NewActivity'
-import WorkflowDetails from './workflow/update/WorkflowDetails'
-// import Log from './auditTrail/auditLog/index'
-// import PrintPage from './auditTrail/auditLog/PrintPage'
-// import PrintReport from './auditTrail/modal/PrintReport'
-// import PrintUsage from './auditTrail/modal/PrintUsage'
-// import PrintStatistic from './auditTrail/modal/PrintStatistic';
+import WorkflowDetails from './workflow/listWorkflow/WorkflowDetails'
+
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -46,48 +41,39 @@ const RouteContainer = posed.div({
 class Home extends Component {    
 
     componentDidMount() {
-        window.addEventListener("resize", this.updateDimensions)
+      window.addEventListener("resize", this.updateDimensions)
     }
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updateDimensions)
+      window.removeEventListener("resize", this.updateDimensions)
     }
     updateDimensions=()=>{
-        const windowWidth=window.innerWidth
-        const pageClass = windowWidth > 1194 ? 'page active' : 'page active-sm'
-        const navClass =  windowWidth > 1194 ? 'side-navbar shrink' : 'side-navbar show-sm'
+      const windowWidth=window.innerWidth
+      const pageClass = windowWidth > 1194 ? 'page active' : 'page active-sm'
+      const navClass =  windowWidth > 1194 ? 'side-navbar shrink' : 'side-navbar show-sm'
 
-        this.props.setNavToggle(false, pageClass, navClass)
+      this.props.setNavToggle(false, pageClass, navClass)
     }
 
     components={
-        'dashboard' : Dashboard,
+      'dashboard' : Dashboard,
 
-        //stakeholder
-        'addStakeholder' : addStakeholder,                
-        'index' : index,
-        'viewStakeh': ViewDetail,
-        'edit': UpdateDetail, 
-        'deleteMulti': MainMulti,
-        'addChild': addChild,  
-        'search': search,   
+      //stakeholder
+      'addStakeholder' : addStakeholder,                
+      'index' : index,
+      'viewStakeh': ViewDetail,
+      'edit': UpdateDetail, 
+      'deleteMulti': MainMulti,
+      'addChild': addChild,  
+      'search': search,   
 
-        //workflow
-        'listOfWorkflow':ListWorkflow,
-        'searchWorkflow': SearchWorkflow,
-
-        'createNewAct': NewActivity,
-        'viewActivity': WorkflowDetails,
-        'createNewAct': NewActivity,
-        'view': WorkflowDetails,
-
-        //auditTrail
-        // 'log':Log,        
-        // 'print' : PrintPage,
-        // 'printReport': PrintReport,
-        // 'printUsage': PrintUsage,
-        // 'printStat' : PrintStatistic,
-        
-        
+      //workflow
+      'listOfWorkflow':ListWorkflow,
+      'searchWorkflow': SearchWorkflow,        
+      'viewDetails': WorkflowDetails,    
+      
+      //activity
+      
+      
     }
      
 

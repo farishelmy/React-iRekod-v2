@@ -1,24 +1,41 @@
-import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_EMAIL_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, TASK_RESULT_DETAIL,
-        LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS
-    } from '../types'
+import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_RECORD_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, TASK_RESULT_DETAIL,
+        LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS } from '../types'
 
 import {biorisUrl} from '../../config/appConf'
+import {converter} from '../../utils/converter'
 
-//Set Activity Detail
-export const setListActivityDetails=(activityDet)=>dispatch=>{
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(activityDet)}`
+
+//Get workflow details
+export const setListActivity=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)
     fetch(url)
     .then(res=>res.json())
     .then(res=>{  
         dispatch({
             type: LIST_ACTIVITY,
-            payload: res.results
+            payload: res.data
         })
     })
 
 }
 
+//Get Record
+export const setRecordStore = (param) => dispatch =>{
+    // console.log(param)
+    const url=biorisUrl+converter(param)
+    // console.log(url)
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            // console.log(res)
+            dispatch({
+                type:SET_RECORD_STORE,
+                payload:res.data
+            })
+        })
+}
 
+//Set Wizard Page Name
 export const setWizardPage=(param)=>{
     return {
         type:WIZARD_PAGE,
@@ -26,6 +43,7 @@ export const setWizardPage=(param)=>{
     }
 }
 
+//Set Container Line
 export const setContinerLine=(param)=>{
     return {
         type:SET_CONTAINER_LINE,
@@ -68,19 +86,7 @@ export const setActivityStore = (param) => dispatch =>{
         })
 }
 
-export const setEmailStore = (param) => dispatch =>{
-    // console.log(param)
-    const url=`${biorisUrl}/emailTemplate?param=${JSON.stringify(param)}`
-        fetch(url,{method:'GET'})
-        .then(res=>res.json())
-        .then(res=>{
-            // console.log(res)
-            dispatch({
-                type:SET_EMAIL_STORE,
-                payload:res.results
-            })
-        })
-}
+
 
 export const setItemListSubject = (itemListSubject) => dispatch =>{
     // console.log(param)

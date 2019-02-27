@@ -71,7 +71,7 @@ export const BASIC_DET = 'BASIC_DET'
 //list workflow action and reducer link
 export const LIST_WORKFLOW = 'LIST_WORKFLOW'
 export const LIST_OF_SUBJECT = 'LIST_OF_SUBJECT'
-export const LIST_OF_CHILDSUBJECT = 'LIST_OF_CHILDSUBJECT'
+export const POPULATE_WORKFLOW= 'POPULATE_WORKFLOW'
 export const WORKFLOW_TEMPLATE = 'WORKFLOW_TEMPLATE'
 
 //breadcrumb action and reducer link
@@ -85,13 +85,14 @@ export const SET_CARD_VIEW = 'SET_CARD_VIEW'
 export const WORKFLOW_SEL = 'WORKFLOW_SEL'
 // export const SHOW_FAB = 'SHOW_FAB'
 export const SELECT_SEL = 'SELECT_SEL'
+export const WORKFLOW_NAME = 'WORKFLOW_NAME'
 
 //listworkflowdetails action and reducer link
 export const LIST_ACTIVITY = 'SET_ACTIVITY'
 export const LIST_EMAIL = 'LIST_EMAIL'
 export const WIZARD_PAGE = 'WIZARD_PAGE'
 export const SET_ACTIVITY_STORE = 'SET_ACTIVITY_STORE'
-export const SET_EMAIL_STORE = 'SET_EMAIL_STORE'
+export const SET_RECORD_STORE = 'SET_RECORD_STORE'
 export const LIST_ACTIVITY_DETAIL = 'LIST_ACTIVITY_DETAIL'
 export const LIST_SUBJECT_ITEM = 'LIST_SUBJECT_ITEM'
 export const SET_CONTAINER_LINE = 'SET_CONTAINER_LINE'

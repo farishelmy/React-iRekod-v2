@@ -1,17 +1,18 @@
 import { LIST_WORKFLOW, 
     LIST_OF_SUBJECT, 
-    LIST_OF_CHILDSUBJECT,
+    POPULATE_WORKFLOW,
     WORKFLOW_TEMPLATE, 
     SET_CARD_VIEW, 
     WORKFLOW_SEL,
     SHOW_FAB,
     LIST_ACTIVITY_DETAIL,
+    WORKFLOW_NAME
     } from '../types'
     
     import {biorisUrl} from '../../config/appConf'
     import {converter} from '../../utils/converter'
 
-
+//List Option Workflow
 export const ListWorkflowTemplate=(param)=>dispatch=>{
     const url=biorisUrl+converter(param)  
     fetch(url)
@@ -39,6 +40,7 @@ export const setListofSubject=(listofSubjectObj)=>dispatch=>{
 
 }
 
+//Workflow Template
 export const workflowTemplate=(param)=>dispatch=>{
     dispatch({
         type: WORKFLOW_TEMPLATE,
@@ -46,22 +48,39 @@ export const workflowTemplate=(param)=>dispatch=>{
     })
 }
 
-export const listWorkFlowSub=(param)=>dispatch=>{
-    dispatch({
-        type: LIST_OF_CHILDSUBJECT,
-        payload: param
+// List of Workflow based on Template
+export const populateWorkflow=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)  
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{ 
+        // console.log(res)
+        dispatch({           
+            type: POPULATE_WORKFLOW,
+            payload: res.data
+        })
     })
 }
 
+//Set Workflow Name
+export const setWorkflowName=(param)=>{
+    return {
+        type:WORKFLOW_NAME,
+        payload:param
+    }
+}
 
- export const setCardView=(cardStatus)=>{
-    console.log(cardStatus)
+
+//Set Card View
+export const setCardView=(cardStatus)=>{
+    // console.log(cardStatus)
    return {
        type:SET_CARD_VIEW,
        payload:cardStatus
    }
 }
 
+//Set Workflow URI
 export const setSelWorkFlow=(wrkflSel)=>{
     return {
         type:WORKFLOW_SEL,
@@ -76,18 +95,17 @@ export const setShowFab=(param)=>{
     }
 }
 
-export const setSelDetails=(selDetails)=>dispatch=>{
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(selDetails)}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(res=>{ 
-        dispatch({
-            type: LIST_ACTIVITY_DETAIL,
-            payload: res.results
-        })
-    })
+//Get Activity form workflow
+export const getDetails=(param)=>{
+    return {
+        type:LIST_ACTIVITY_DETAIL,
+        payload:param
+    }
 
 }
+
+
+
  
 
  

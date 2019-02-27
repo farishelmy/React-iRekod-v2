@@ -57,11 +57,12 @@ class SideNav extends React.Component {
       }
       this.props.setStakehType(stakehList)   
     
+      //Breadcrumb
       this.props.setNewBread(true,{
-          id:'index', 
-          label:`Locations`, 
-          activePage:'index', 
-          isActive:true,
+          id: 'index', 
+          label: e.target.getAttribute('data-pageTitle'), 
+          activePage: 'index', 
+          isActive: true,
       })  
 
       // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
@@ -101,7 +102,7 @@ class SideNav extends React.Component {
       // this.props.setListofSubject(listofSubjectObj)
       this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
       // this.props.setCustomField(customFieldObj)
-      this.props.setPageSubject(pageSubject)
+      // this.props.setPageSubject(pageSubject)
       // this.props.setStakehSel(null)    // ID stakeholder select
       this.props.setShowFab(false)  // Fav True False
       // this.props.setSelWorkFlow(null)     //ID select for workflow  
@@ -172,7 +173,7 @@ class SideNav extends React.Component {
 
           {/* Locations */}
           <li>
-            <a href="/" onClick={this.setActivePage} data-pagename="index" data-id="All" data-label="All Locations">
+            <a href="/" onClick={this.setActivePage} data-pagename="index" data-id="All" data-label="All Locations" data-pagetitle="Locations">
               <div className="userIcon" data-pagename="index">
                 <img src={require('../../img/employee.svg')} alt="employee" className="img-fluid mr-1" data-pagename="index"/>
               </div>Locations
@@ -185,7 +186,7 @@ class SideNav extends React.Component {
               <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Workflow </a>
               <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
-                      <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List Workflow" >
+                      <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List of Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
                       <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
                       </div>List of Workflow

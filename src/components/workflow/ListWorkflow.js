@@ -6,10 +6,11 @@ import ListTemplate from './ListTemplate'
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
-import {setCardView, setSelWorkFlow, setShowFab, setSelDetails,  listWorkFlowSub} from '../../actions/workflowAction/authListWorkFlow'
-import {setItemListSubject, setEmailStore, setListActivityDetails,setDelBtn, setTaskResult} from '../../actions/workflowAction/workflowDetailAction'
+import {setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName} from '../../actions/workflowAction/authListWorkFlow'
+import {setItemListSubject, setRecordStore, setListActivity,setDelBtn, setTaskResult} from '../../actions/workflowAction/workflowDetailAction'
 import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
 import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
+import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
 
@@ -31,10 +32,10 @@ class ListWorkflow extends Component {
 
 
     componentDidUpdate(prevProps){
-        if(prevProps.listWorkflow.listSub!==this.props.listWorkflow.listSub){
-            const {listSub}=this.props.listWorkflow  
-            // console.log(listSub)
-            const listWkflw = listSub.map(res=>({...res,isSel:false}))
+        if(prevProps.listWorkflow.listWorkflow!==this.props.listWorkflow.listWorkflow){
+            const {listWorkflow}=this.props.listWorkflow  
+            // console.log(listWorkflow)
+            const listWkflw = listWorkflow.map(res=>({...res,isSel:false}))
             //  console.log(listWkflw)
             this.setState({
                 workList:listWkflw
@@ -44,93 +45,91 @@ class ListWorkflow extends Component {
 
     //Direct Page To WorkFlow Detail
     setActivePage=(FabRec)=>{
-        // e.preventDefault()
-        // console.log(FabRec)
-        const {user:{bio_access_id:bId}}=this.props.session
-        const {wrkflSel, selDetails}=this.props.listWorkflow
-        const pageSubject = selDetails.map(itm => itm.subject)
-        this.props.setPageSubject(pageSubject)
+         
+        const {user:{_id:bId}}=this.props.session
+        const {wrkflSel, workflowTemplate, workflowName}=this.props.listWorkflow          
+
+        // this.props.setPageSubject(workflowTemplate)
         this.props.setActivePage(FabRec)
         
-        //Activity Detail
-        const activityDet={
-            task_id:wrkflSel,
-            bio_access_id:bId,
-            action:'ITEM_DETAIL',            
+        //Activity Wizard
+        const workflowDet={
+            _action:'SEARCHACTIVITY',         
+            workflowUri:wrkflSel,
+            _id:bId,               
+        } 
+
+        this.props.setListActivity(workflowDet)
+
+        //Record Wizard    
+        const recordDet = {
+            _id: bId,
+            _action: "SEARCHRECORD",
+            jsonQuery: JSON.stringify([{"op":"EQUALS","field":"%26%26Related+Records+of+Workflow","value1":workflowName}]),
+            searchOrder: "0"
         }
+        // console.log(recordDet)
+        this.props.setRecordStore(recordDet)        
+      
+        // this.props.setActivityDetailsUpdate(workflowDet)  
+        // this.props.setTaskResult(taskResulStatusObj)   
 
-        //Email Detail
-        const emailObj={
-            action: "ITEM_LIST",
-            bio_access_id: bId      
-        }
+        //Breadcrumb
+        this.props.setNewBread(false,{
+            id: 'viewDetails', 
+            label: workflowName, 
+            activePage: 'viewDetails', 
+            isActive: true,
+        })  
+         
 
-        //Task Detail
-        const taskResulStatusObj={
-            action: "LIST_TASK_RESULT",
-            bio_access_id: bId      
-        }
-
-        // const taskResultVar={
-
-        // }
-
-
-        this.props.setListActivityDetails(activityDet)
-        this.props.setActivityDetailsUpdate(activityDet)  
-        this.props.setEmailStore(emailObj)
-        this.props.setTaskResult(taskResulStatusObj)        
     }
 
-    createNewActivity=(e)=>{
-        const page = e.target.getAttribute('data-pagename')
-        const pageTitle = e.target.getAttribute('data-name')
-        const {user:{bio_access_id:bId}}=this.props.session
+    //Create new Workflow
+    // createNewActivity=(e)=>{
+    //     const page = e.target.getAttribute('data-pagename')
+    //     const pageTitle = e.target.getAttribute('data-name')
+    //     const {user:{bio_access_id:bId}}=this.props.session
 
-        this.props.setActivePage(page)
+    //     this.props.setActivePage(page)
 
-        const emailObj={
-        action: "ITEM_LIST",
-        bio_access_id: bId      
-            }
-        this.props.setEmailStoreNew(emailObj)
-        this.props.setPageTitle(pageTitle)
-    }
+    //     const emailObj={
+    //     action: "ITEM_LIST",
+    //     bio_access_id: bId      
+    //         }
+    //     this.props.setEmailStoreNew(emailObj)
+    //     this.props.setPageTitle(pageTitle)
+    // }
 
-    changeToViewCard=(e)=>{
-        const{cardView}=this.props.listWorkflow
-          this.props.setCardView(!cardView)
-    }
+   
 
-    markOnSel=(taskId, subject)=>{
-        const {user:{bio_access_id:bId}}=this.props.session
+    //Selection
+    markOnSel=(workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority)=>{
+        
+        const {user:{_id:bId}}=this.props.session
+        const val = [{workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority}]
 
-        this.props.setSelWorkFlow(taskId)     
-
-        const selDetails={
-            task_id: taskId,
-            action: "ITEM_DETAIL",
-            bio_access_id: bId       
-        }
-        this.props.setSelDetails(selDetails)
-
+        this.props.getDetails(val) //Set Workflow Details
+        this.props.setSelWorkFlow(workflowUri)  //Set Workflow Uri
+        this.props.setWorkflowName(workflowName)  //Set Workflow Name
+    
         // const stakehList={
         //     action: "ITEM_LIST",
         //     bio_access_id: bId       
         // }
         // this.props.setStakehList(stakehList)
 
-        const itemListSubject={
-            action: "ITEM_LIST_BY_SUBJECT",
-            bio_access_id: bId,
-            subject: subject     
-        }
+        // const itemListSubject={
+        //     action: "ITEM_LIST_BY_SUBJECT",
+        //     bio_access_id: bId,
+        //     subject: subject     
+        // }
         // console.log(subject)
-        this.props.setItemListSubject(itemListSubject)
+        // this.props.setItemListSubject(itemListSubject)
 
         const {workList} = this.state
         // console.log({workList} )
-        const itmIdx = workList.findIndex(itm=>itm.task_id === taskId)
+        const itmIdx = workList.findIndex(itm=>itm.workflowUri === workflowUri)
         const desIdx = workList.findIndex(itm=>itm.isSel===true)
 
         const newWrkfwList = desIdx === -1?
@@ -144,7 +143,8 @@ class ListWorkflow extends Component {
         // // select
         if (itmIdx===desIdx){
             this.props.setShowFab(false)
-            this.props.setSelWorkFlow(null)                 
+            this.props.setSelWorkFlow(null) 
+                      
          
         }
         else{
@@ -157,10 +157,13 @@ class ListWorkflow extends Component {
         })
       }
 
+
+      
+      //Delete Btn
       delBtn=()=>{
         // const {wrkflowSelect} = this.state
-        const {user:{bio_access_id:bId}} = this.props.session  
-        const {wrkflSel, listSub}=this.props.listWorkflow 
+        const {user:{_id:bId}} = this.props.session  
+        const {wrkflSel, listWorkflow}=this.props.listWorkflow 
           
         //  console.log(wrkflSel)       
 
@@ -171,13 +174,19 @@ class ListWorkflow extends Component {
         }
         this.props.setDelBtn(wrkflowObj)
 
-        const itemDeleted = listSub.filter(itm => itm.task_id !== wrkflSel)
+        const itemDeleted = listWorkflow.filter(itm => itm.task_id !== wrkflSel)
         // console.log(vv)
         // this.props.listWorkFlowSub(itemDeleted)
 
         alert("Successful Deleted")
   
     } 
+
+    //Change view Card and List
+    changeToViewCard=(e)=>{
+        const{cardView}=this.props.listWorkflow
+        this.props.setCardView(!cardView)
+    }
 
 
 
@@ -186,23 +195,32 @@ class ListWorkflow extends Component {
     const{cardView, showFab}=this.props.listWorkflow
     
     const{workList}=this.state
+    // console.log(workList)
     
     const rec = workList.map(itm=>cardView?
         <CardView
-            key={itm.task_id}
-            title={itm.title}
-            taskId={itm.task_id}
-            markOnSel={this.markOnSel}
-            subject={itm.subject}
+            key={itm.workflowUri}
+            workflowName={itm.workflowName}
+            workflowUri={itm.workflowUri}
+            icon={itm.iconCls}
+            markOnSel={this.markOnSel}            
             isSel={itm.isSel}
+            supervisor={itm.supervisor}
+            dateStart={itm.dateStarted}
+            dateDue={itm.dateDue}
+            jobNo={itm.jobNumber}
+            priority={itm.priority}
         /> :
         <ListView
-            key={itm.task_id}
-            title={itm.title}
-            taskId={itm.task_id}
-            markOnSel={this.markOnSel}
-            subject={itm.subject}
+            key={itm.workflowUri}
+            workflowName={itm.workflowName}
+            workflowUri={itm.workflowUri}
+            markOnSel={this.markOnSel}             
             isSel={itm.isSel}
+            dateStart={itm.dateStarted}
+            dateDue={itm.dateDue}
+            jobNo={itm.jobNumber}
+            priority={itm.priority}
         />
         )
        
@@ -262,7 +280,23 @@ class ListWorkflow extends Component {
         </header>
         
         <div className="row">
-           {rec}
+           {cardView===false?<div className="row">
+            <div className="col-12">                
+                <div className="d-flex justify-content-between align-items-center">
+                <div className="p-2 img-fluid img-scale"/>
+                    <div className="col p-2">
+                        <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
+                    </div>
+                    <div className="col p-2">
+                        <p className="card-title mb-1 font-weight-bold text-muted">Date Start</p>
+                    </div>
+                    <div className="col p-2">
+                        <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
+                    </div>
+                </div>               
+            </div>
+                {rec} 
+            </div>:rec}
         </div> 
 
         {showFab?<Fab 
@@ -283,23 +317,24 @@ ListWorkflow.propTypes={
     setCardView:PropTypes.func.isRequired,
     setSelWorkFlow:PropTypes.func.isRequired,
     setShowFab:PropTypes.func.isRequired,
-    setListActivityDetails:PropTypes.func.isRequired,
-    setSelDetails: PropTypes.func.isRequired,
+    setListActivity:PropTypes.func.isRequired,
+    getDetails: PropTypes.func.isRequired,
     // setStakehList:PropTypes.func.isRequired,
     setItemListSubject:PropTypes.func.isRequired,
-    setEmailStore:PropTypes.func.isRequired,
+    setRecordStore:PropTypes.func.isRequired,
     setEmailStoreNew:PropTypes.func.isRequired,
     setDelBtn:PropTypes.func.isRequired,
     setTaskResult: PropTypes.func.isRequired,
     setPageTitle:PropTypes.func.isRequired,
     setActivityDetailsUpdate: PropTypes.func.isRequired,
     setPageSubject:PropTypes.func.isRequired,
-    listWorkFlowSub:PropTypes.func.isRequired,
-
+    setWorkflowName: PropTypes.func.isRequired,
+    setNewBread: PropTypes.func.isRequired,
+    
 }
 const mapStateToProps= state =>({
-    session:state.session,
-    listWorkflow:state.listWorkflow,
+    session: state.session,
+    listWorkflow: state.listWorkflow,    
     
 })
 export default connect(mapStateToProps,
@@ -308,15 +343,18 @@ export default connect(mapStateToProps,
     setCardView, 
     setSelWorkFlow, 
     setShowFab, 
-    setListActivityDetails, 
-    setSelDetails, 
-    // setStakehList,
+    setListActivity, 
+    getDetails, 
+    setNewBread,
     setItemListSubject,
-    setEmailStore, setEmailStoreNew, setDelBtn, setTaskResult,
+    setRecordStore,
+    setEmailStoreNew,
+    setDelBtn, 
+    setTaskResult,
     setPageTitle,
     setActivityDetailsUpdate,
     setPageSubject,
-    listWorkFlowSub
+    setWorkflowName
 
 })(ListWorkflow)
 

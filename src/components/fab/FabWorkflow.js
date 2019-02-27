@@ -27,7 +27,7 @@ const deleteBtn=()=>{
                 overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Edit Details</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                  >
-                 <img name="viewActivity" src={require('../../img/fab-update.svg')} alt='view' className='img-fluid' onClick={sendActive}   />
+                 <img name="viewDetails" src={require('../../img/fab-update.svg')} alt='view' className='img-fluid' onClick={sendActive}   />
             </Tooltip>
         </span>
 

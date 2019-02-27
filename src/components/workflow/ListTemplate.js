@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {workflowTemplate} from '../../actions/workflowAction/authListWorkFlow'
+import {workflowTemplate,populateWorkflow} from '../../actions/workflowAction/authListWorkFlow'
 import Select from 'react-select'
 
 class ListTemplate extends Component {
@@ -63,18 +63,27 @@ class ListTemplate extends Component {
       }
 
       handeleTemplateChange=(value)=>{
+        const {user:{_id:bId}}=this.props.session
+
         this.setState({ selectedOption:value})
         // console.log(value)
         // const {ListWorkflowTemplate} = this.props.listWorkflow
         // const workflowTemplate = ListWorkflowTemplate.filter(itm => itm.template === value.label)
         // console.log(workflowTemplate.template)
         this.props.workflowTemplate(value.label)
+
+        const temp ={
+          template : value.label,
+          _action : "SEARCHWORKFLOW",
+          _id : bId
+        }
+        this.props.populateWorkflow(temp)
     }
 
   render() {
-      const {listofSubjectObj,ListWorkflowTemplate} = this.props.listWorkflow
+      const {listofSubjectObj,listWorkflowTemplate} = this.props.listWorkflow
       const { selectedOption } = this.state;
-      const optionSubject = ListWorkflowTemplate.map((itm => ({ value: itm.template, label: itm.template})))
+      const optionSubject = listWorkflowTemplate.map((itm => ({ value: itm.template, label: itm.template})))
     // console.log(optionSubject[0])
  
     
@@ -83,7 +92,7 @@ class ListTemplate extends Component {
         <Select
           className="basic-single"
           onChange={this.handeleTemplateChange}
-          placeholder="Enter the Template"
+          placeholder="Please select The Template"
           options={optionSubject}
           value={selectedOption}
         />
@@ -95,6 +104,7 @@ class ListTemplate extends Component {
 ListTemplate.propTypes={
     session: PropTypes.object.isRequired,
     listWorkflow: PropTypes.object.isRequired,
+    populateWorkflow: PropTypes.func.isRequired,
    
   }
   const mapStateToProps= state =>({
@@ -102,4 +112,4 @@ ListTemplate.propTypes={
     listWorkflow:state.listWorkflow,
     
   })
-export default connect(mapStateToProps,{workflowTemplate})(ListTemplate)
+export default connect(mapStateToProps,{workflowTemplate,populateWorkflow})(ListTemplate)

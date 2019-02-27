@@ -1,6 +1,6 @@
 import{LIST_WORKFLOW,
     LIST_OF_SUBJECT, 
-    LIST_OF_CHILDSUBJECT, 
+    POPULATE_WORKFLOW, 
     WORKFLOW_TEMPLATE,
     SET_CARD_VIEW,  
     CHANGE_ISMULTI,
@@ -8,19 +8,31 @@ import{LIST_WORKFLOW,
     SHOW_FAB, 
     LIST_ACTIVITY_DETAIL,
     STAKEHOLDER_LIST,
-    SELECT_SEL} from '../../actions/types'
+    SELECT_SEL,
+    WIZARD_PAGE,
+    SET_CONTAINER_LINE,
+    LIST_ACTIVITY,
+    SET_RECORD_STORE,
+    WORKFLOW_NAME
+} from '../../actions/types'
 
 const initialState={
-    ListWorkflowTemplate : [],
+    listWorkflowTemplate : [],
     workflowTemplate: null,
+    listWorkflow:[],
+    wrkflSel:null, //URI
+    workflowName:null, //Name
+    workflowDetails:[],    
+    wizardPage:'general',
+    containerLine: true,    
+    listActivity:[],
+    recordStore:[],
+    
     listofSubjectObj : [],
-    listSub:[],
     cardView:true,
     isMultiSel:false,
-    isSelAll:false,
-    wrkflSel:null, //when cell select
+    isSelAll:false,   
     showFab:false, //show floating button
-    selDetails: [],
     stakehList:[],
     isSel:false
   
@@ -31,7 +43,7 @@ export default function(state = initialState, action){
         case LIST_WORKFLOW:
         return {
             ...state,
-            ListWorkflowTemplate:action.payload,
+            listWorkflowTemplate:action.payload,
         }
 
         case LIST_OF_SUBJECT:
@@ -46,11 +58,47 @@ export default function(state = initialState, action){
             workflowTemplate:action.payload,
         }
 
-        case LIST_OF_CHILDSUBJECT:
+        case WORKFLOW_NAME:
         return {
             ...state,
-            listSub:action.payload,
+            workflowName:action.payload,
         }
+
+        case POPULATE_WORKFLOW:
+        return {
+            ...state,
+            listWorkflow:action.payload,
+        }
+
+        case LIST_ACTIVITY_DETAIL:
+        return {
+            ...state,
+            workflowDetails:action.payload
+        } 
+
+        case LIST_ACTIVITY:
+        return {
+            ...state,
+            listActivity:action.payload
+        } 
+
+        case SET_RECORD_STORE:
+        return {
+            ...state,
+            recordStore:action.payload
+        }
+
+        case WIZARD_PAGE:
+        return {
+            ...state,
+            wizardPage:action.payload,
+        }
+
+        case SET_CONTAINER_LINE:
+        return { 
+            ...state,
+            containerLine:action.payload,
+        } 
 
         case SET_CARD_VIEW:
         return {
@@ -72,11 +120,7 @@ export default function(state = initialState, action){
             ...state,
             showFab:action.payload
         } 
-        case LIST_ACTIVITY_DETAIL:
-        return {
-            ...state,
-            selDetails:action.payload
-        } 
+       
         case STAKEHOLDER_LIST:
         return {
             ...state,
