@@ -13,12 +13,15 @@ import ListWorkflow from './workflow/ListWorkflow'
 import SearchWorkflow from './workflow/searchWorkflow/modal/SearchWorkflow'
 import WorkflowDetails from './workflow/listWorkflow/WorkflowDetails'
 
+import ListActivity from './activity/ListActivity'
+import ActivityDetails from './activity/listActivity/ActivityDetails'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import {setNavToggle,setPageClass, setSideNavClass} from '../actions/layoutInitAction'
 import {Footer, SideNav, TopNav} from '../components/layouts'
+// import ListActivity from './workflow/listWorkflow/ListActivity';
 
 
 const RouteContainer = posed.div({
@@ -72,7 +75,8 @@ class Home extends Component {
       'viewDetails': WorkflowDetails,    
       
       //activity
-      
+      'listOfActivity':ListActivity,
+      'viewAct':ActivityDetails,
       
     }
      

@@ -20,18 +20,9 @@ import listWorkFlowReducer from './workflowReducer/listWorkflowReducer'
 // import createNewReducer from './workflowReducer/createNewActReducer'
 // import updateActReducer from './workflowReducer/updateActReducer'
 
-//auditTrail
-// import dashReducer from './auditTrailReducer/dashReducer'
-// import modalReducer from './auditTrailReducer/modalReducer'
-// import stakehReducer from './auditTrailReducer/stakehReducer'
-// import eventReducer from './auditTrailReducer/eventReducer' 
-// import recReducer from './auditTrailReducer/recReducer'
-// import auditReducer from './auditTrailReducer/auditReducer'
-// import childRecReducer from './childRecReducer'
-// import editorReducer from './editorReducer'
-// import recordReducer from './recordReducer'
-// import batchLoadReducer from './batchLoadReducer'
-// import logReducer from './logReducer'
+//activity
+import listofActivityReducer from './activityReducer/activityReducer'
+ 
 
 
 const appReducer = combineReducers({
@@ -55,18 +46,10 @@ const appReducer = combineReducers({
     // crtNewReducer: createNewReducer,
     // updActReducer: updateActReducer,
 
-    //auditTrail
-    // dashConf:dashReducer,
-    // modalConf:modalReducer,
-    // stakeholder:stakehReducer,
-    // record:recReducer,    
-    // actionTy:eventReducer,     
-    // auditlog:auditReducer,
-    // batchErrLog:logReducer,
-    // batchLoad:batchLoadReducer,
-    // records:recordReducer,
-    // editor:editorReducer,
-    // childConf:childRecReducer,
+    //activity
+    listActivity:listofActivityReducer,
+
+     
     
   
  })

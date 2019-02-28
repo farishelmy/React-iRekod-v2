@@ -27,14 +27,16 @@ const initialState={
     containerLine: true,    
     listActivity:[],
     recordStore:[],
-    
-    listofSubjectObj : [],
-    cardView:true,
-    isMultiSel:false,
-    isSelAll:false,   
+
     showFab:false, //show floating button
+    cardView:true,
+    isSel:false,
+    
+    listofSubjectObj : [],   
+    isMultiSel:false,
+    // isSelAll:false,      
     stakehList:[],
-    isSel:false
+   
   
 }
 

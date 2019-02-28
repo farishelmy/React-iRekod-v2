@@ -7,8 +7,7 @@ import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutIni
 import {setStakehType,setStakehNumb,setStakehLabel} from '../../actions/stakeholderAction/stakehTypeAction'
 import {ListWorkflowTemplate,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
 import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
-// import {setCustomField} from '../../actions/workflowAction/workflowDetailAction'
-// import {toggleErr} from '../../actions/auditTrailAction/modalAction'
+import {setListActDue} from '../../actions/activityAction/listActivity/listActivityAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
 
 
@@ -108,23 +107,16 @@ class SideNav extends React.Component {
       // this.props.setSelWorkFlow(null)     //ID select for workflow  
 
 
-    //   ////////////////////////////////Audit Trail////////////////////////////////////
+    ////////////////////////////////Activity////////////////////////////////////
 
-    //   const pgName = e.target.getAttribute('data-pagename')
-    //     this.props.setActivePage(pgName)
-    //     this.props.setStakehSel(null)  // ID stakeholder select
-    //     this.props.setShowFab(false)  // Fav True False
-    //     this.props.setSelWorkFlow(null)      //ID select for workflow  
-                
-    //     if(pgName==='log')
-    //     {
-    //       this.props.toggleErr(true)
-    //     }  
+    const listAct = {
+      _action:"LISTACTDUE",
+      _id:bId
+    }
 
-    //     if(pgName==='print')
-    //     {
-    //       this.props.toggleErr(true)
-    //     }
+    this.props.setListActDue(listAct)
+
+     
 
        
   
@@ -301,8 +293,7 @@ SideNav.propTypes={
     setShowFab: PropTypes.func.isRequired, 
     // setSelWorkFlow: PropTypes.func.isRequired,    
     setStakehLabel: PropTypes.func.isRequired,
-
-    
+    setListActDue: PropTypes.func.isRequired,    
     setNewBread: PropTypes.func.isRequired,
     
 
@@ -329,9 +320,9 @@ SideNav.propTypes={
     setStakehSel,
     setShowFab,
     // setSelWorkFlow,     
-    setStakehLabel,
-  
-    setNewBread
+    setStakehLabel,  
+    setNewBread,
+    setListActDue
     
     
   })
