@@ -1,14 +1,19 @@
 import{LIST_ACTIVITY_DUE,
-    ACTIVITY_SELECT,
     SET_CARD_VIEW,
     SHOW_FAB,
-    SELECT_SEL
+    SELECT_SEL,
+    WIZARD_PAGE,
+    ACTIVITY_URI,
+    ACTIVITY_NAME,
+    ACTIVITY_DETAIL
 } from '../../actions/types'
 
 const initialState={
     listActivityDue: [],
-    activitySel: null,
-
+    activityDet: null,
+    activityUri: null,
+    activityName: null,
+    wizardPage:"general",
     cardView:true,
     showFab:null,
     isSel:false
@@ -24,10 +29,22 @@ export default function(state = initialState, action){
             listActivityDue:action.payload,
         }
         
-        case ACTIVITY_SELECT:
+        case ACTIVITY_DETAIL:
         return {
             ...state,
-            activitySel:action.payload,
+            activityDet:action.payload,
+        }
+
+        case ACTIVITY_URI:
+        return {
+            ...state,
+            activityUri:action.payload,
+        }
+
+        case ACTIVITY_NAME:
+        return {
+            ...state,
+            activityName:action.payload,
         }
 
         case SET_CARD_VIEW:
@@ -46,7 +63,13 @@ export default function(state = initialState, action){
         return {
             ...state,
             isSel:action.payload
-        }          
+        }         
+        
+        case WIZARD_PAGE:
+        return {
+            ...state,
+            wizardPage:action.payload,
+        }
 
         default:
         return state

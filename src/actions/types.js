@@ -126,7 +126,10 @@ export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
 
 //list of Activity action and reducer link
  export const LIST_ACTIVITY_DUE ='LIST_ACTIVITY_DUE'
- export const ACTIVITY_SELECT = 'ACTIVITY_SELECT'
+ export const ACTIVITY_DETAIL = 'ACTIVITY_DETAIL'
+ export const ACTIVITY_URI = 'ACTIVITY_URI'
+ export const ACTIVITY_NAME = 'ACTIVITY_NAME'
+
 
 
  

@@ -72,7 +72,7 @@ class Home extends Component {
       //workflow
       'listOfWorkflow':ListWorkflow,
       'searchWorkflow': SearchWorkflow,        
-      'viewDetails': WorkflowDetails,    
+      'viewWorkflow': WorkflowDetails,    
       
       //activity
       'listOfActivity':ListActivity,

@@ -1,5 +1,5 @@
 import React, { Component,Fragment } from 'react'
-import GeneralWizard from '../../activity/listActivity/TabActivityDet'
+import GeneralWizard from '../../activity/listActivity/GeneralWizard'
 import activityWizard from '../../workflow/listWorkflow/ActivityWizard'
 import recordWizard from '../../workflow/listWorkflow/RecordWizard'
 import FolTabHead from '../../activity/listActivity/TabActivityDet'
@@ -36,8 +36,8 @@ class ActivityDetails extends Component {
 
 render() {
 
-    const {wizardPage, containerLine} = this.props.listWorkflow
-    const {wrkflSel, workflowDetails}=this.props.listWorkflow    
+    const {wizardPage, containerLine, activityDet} = this.props.listActivity
+      
 
     
     this.components={
@@ -56,12 +56,12 @@ render() {
             </div>
         </div>   
  
-        {workflowDetails.map((item,idx) =>   
+        {activityDet.map((item,idx) =>   
 
        <section key={idx} className="forms">
            <div className="container-fluid">
                <header>
-                  <h1 className="h3 display">{item.workflowName}</h1>
+                  <h1 className="h3 display">{item.activityName}</h1>
                </header>
                <div className=" row">
                    <div className="col-lg-12">
@@ -96,14 +96,14 @@ ActivityDetails.propTypes={
   session: PropTypes.object.isRequired,  
   layout:PropTypes.object.isRequired,
   setWizardPage: PropTypes.func.isRequired,
-  listWorkflow: PropTypes.object.isRequired,
+  listActivity: PropTypes.object.isRequired,
   setListActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
       session:state.session,      
       layout:state.layout,       
-      listWorkflow:state.listWorkflow,
+      listActivity:state.listActivity,
 })
   
 export default connect(mapStateToProps, { 

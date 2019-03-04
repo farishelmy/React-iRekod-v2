@@ -4,17 +4,18 @@ import PropTypes from 'prop-types'
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
-import {setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName} from '../../actions/workflowAction/authListWorkFlow'
-import {setItemListSubject, setRecordStore, setListActivity,setDelBtn, setTaskResult} from '../../actions/workflowAction/workflowDetailAction'
-import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
-import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
+// import { setSelWorkFlow, getDetails} from '../../actions/workflowAction/authListWorkFlow'
+// import {setItemListSubject, setRecordStore, setDelBtn} from '../../actions/workflowAction/workflowDetailAction'
+import {getDetails,activityUri,activityName,setCardView,setShowFab} from '../../actions/activityAction/listActivity/listActivityAction'
+// import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
+// import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
 
 import CardView from './CardView'
 import ListView from './ListView'
-import Fab from '../../components/fab/FabWorkflow'
+import Fab from '../../components/fab/FabActivity'
 import 'rc-tooltip/assets/bootstrap.css'
 
 
@@ -108,22 +109,9 @@ class ListActivity extends Component {
         const val = [{activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}]
 
         this.props.getDetails(val) //Set Workflow Details
-        this.props.setSelWorkFlow(activityUri)  //Set Workflow Uri
-        this.props.setWorkflowName(workflowName)  //Set Workflow Name
+        this.props.activityUri(activityUri)  //Set Workflow Uri
+        this.props.activityName(workflowName)  //Set Workflow Name
     
-        // const stakehList={
-        //     action: "ITEM_LIST",
-        //     bio_access_id: bId       
-        // }
-        // this.props.setStakehList(stakehList)
-
-        // const itemListSubject={
-        //     action: "ITEM_LIST_BY_SUBJECT",
-        //     bio_access_id: bId,
-        //     subject: subject     
-        // }
-        // console.log(subject)
-        // this.props.setItemListSubject(itemListSubject)
 
         const {listAct} = this.state
         // console.log(listAct)
@@ -324,19 +312,19 @@ ListActivity.propTypes={
     setCardView:PropTypes.func.isRequired,
     setSelWorkFlow:PropTypes.func.isRequired,
     setShowFab:PropTypes.func.isRequired,
-    setListActivity:PropTypes.func.isRequired,
+    // setListActivity:PropTypes.func.isRequired,
     getDetails: PropTypes.func.isRequired,
     // setStakehList:PropTypes.func.isRequired,
-    setItemListSubject:PropTypes.func.isRequired,
-    setRecordStore:PropTypes.func.isRequired,
+    // setItemListSubject:PropTypes.func.isRequired,
+    // setRecordStore:PropTypes.func.isRequired,
     setEmailStoreNew:PropTypes.func.isRequired,
-    setDelBtn:PropTypes.func.isRequired,
-    setTaskResult: PropTypes.func.isRequired,
+    // setDelBtn:PropTypes.func.isRequired,
     setPageTitle:PropTypes.func.isRequired,
     setActivityDetailsUpdate: PropTypes.func.isRequired,
     setPageSubject:PropTypes.func.isRequired,
-    setWorkflowName: PropTypes.func.isRequired,
     setNewBread: PropTypes.func.isRequired,
+    activityUri: PropTypes.func.isRequired,
+    activityName: PropTypes.func.isRequired,
     
 }
 const mapStateToProps= state =>({
@@ -348,20 +336,20 @@ export default connect(mapStateToProps,
 {
     setActivePage,
     setCardView, 
-    setSelWorkFlow, 
+    // setSelWorkFlow, 
     setShowFab, 
-    setListActivity, 
+    // setListActivity, 
     getDetails, 
     setNewBread,
-    setItemListSubject,
-    setRecordStore,
-    setEmailStoreNew,
-    setDelBtn, 
-    setTaskResult,
+    // setItemListSubject,
+    // setRecordStore,
+    // setEmailStoreNew,
+    // setDelBtn, 
     setPageTitle,
-    setActivityDetailsUpdate,
+    // setActivityDetailsUpdate,
     setPageSubject,
-    setWorkflowName
+    activityUri,
+    activityName
 
 })(ListActivity)
 

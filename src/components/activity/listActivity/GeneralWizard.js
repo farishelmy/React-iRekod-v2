@@ -16,28 +16,33 @@ class GeneralWizard extends Component {
     constructor(){
         super()
         this.state={
-          workflowName:null,
-          workflowUri: null,
-          supervisor: null, 
-          dateStart: null,
-          dateDue: null,
-          jobNo: null,
-          priority:null
+            activityName:null,
+            activityUri:null,
+            markOnSel:null,
+            workflowName:null,
+            assignedTo:null,
+            activityDateDue:null,
+            icon:null,
+            supervisor:null,
+            priority:null,
+            estDuration:null,
 
         
         }     
     }   
     
     componentWillMount(){
-      const {workflowName,workflowUri,supervisor,icon,dateStart,dateDue,jobNo,priority} = this.props.item
+      const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.props.item
       this.setState({
+        activityName:activityName,
+        activityUri:activityUri,        
         workflowName:workflowName,
-        workflowUri:workflowUri,
+        assignedTo:assignedTo,
+        activityDateDue:activityDateDue,
+        icon:icon,
         supervisor:supervisor,
-        dateStart:dateStart,
-        dateDue:dateDue,
-        jobNo:jobNo,
-        priority:priority
+        priority:priority,
+        estDuration:estDuration,
       })
     }
 
@@ -59,48 +64,44 @@ class GeneralWizard extends Component {
     
   render() {
 
-    const {workflowName,workflowUri,supervisor,icon,dateStart,dateDue,jobNo,priority} = this.state
+    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.state
      
    
     
     
     return (
-      <Fragment>
+        <Fragment>
         <h1 className="h3 display text-primary text-center">General</h1>
-        <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
+            <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
                 <div className="row justify-content-center mb-5">
                     <div className="col-xl-3 col-lg-4 col-md-4">
                         <div className="text-center mt-5">
                             <img src={require('../../../img/management.svg')} alt="management" className=" img-dash" />
                         </div>
-                    </div>                    
-
-                    <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">                         
+                    </div>  
+                   
+                    <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
+                        <div className="form-group">
+                            <label>Activity Name</label>
+                                <input type="text" name="stakeh_type_name" className="form-control" value={activityName} disabled/>
+                        </div>
                         <div className="row">
                             <div className="col-sm-6 form-group">
-                                <label>Title</label>
-                                <input name="workflowName" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={workflowName}/> 
-                            </div>
-                            <div className="col-sm-6 form-group">
-                                <label>Job Number</label>
-                                <input name="jobNo" type="text" className="form-control" placeholder="Smith" onChange={this.handleChange} value={jobNo}   />
-                            </div>
-                            <div className="col-sm-6 form-group">
-                                <label>Priority</label>
-                                <input name="priority" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={priority}/>
+                                <label>Assigned To</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={activityName}/> 
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Supervisor</label>
-                                <input name="supervisor" type="text" className="form-control" placeholder="Smith Johnson"onChange={this.handleChange} value={supervisor}/>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith" value={activityName} onChange={this.handleChange} />
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label>Date Due</label>
-                                <input name="dateDue" type="text" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange} value={dateDue}/>
+                                <label>Estimate</label>
+                                <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={activityName}/>
                             </div>
                             <div className="col-sm-6 form-group">
-                                <label>Date Start</label>
-                                <input name="dateStart" type="text" className="form-control" placeholder="Smith@htech.com..." onChange={this.handleChange} value={dateStart}/>
-                            </div>
+                                <label>Priority</label>
+                                <input name="full_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange} value={activityName}/>
+                            </div>                            
                             {/* <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
                                 <label>Date of Birth</label>
                                 <DatePicker
@@ -122,8 +123,7 @@ class GeneralWizard extends Component {
                     <button type="submit" className="btn btn-primary">Save</button>                   
                     <button type="button" className="btn btn-secondary">Close</button>
                 </div>
-            </form>           
-
+            </form>                
       </Fragment>
     )
   }
