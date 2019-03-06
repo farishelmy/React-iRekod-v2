@@ -14,6 +14,7 @@ import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
 
+import Search from '../workflow/searchWorkflow/modal/ModalWorkflow'
 import CardView from './CardView'
 import ListView from './ListView'
 import Fab from '../../components/fab/FabWorkflow'
@@ -193,6 +194,7 @@ class ListWorkflow extends Component {
   render() {
 
     const{cardView, showFab}=this.props.listWorkflow
+    const{activePage}=this.props.layout
     
     const{workList}=this.state
     // console.log(workList)
@@ -223,6 +225,8 @@ class ListWorkflow extends Component {
             priority={itm.priority}
         />
         )
+
+  
        
     return (
       <Fragment>  
@@ -276,7 +280,13 @@ class ListWorkflow extends Component {
                         </div>
 
                     </div>
-                    <ListTemplate /> 
+
+                    {
+                        activePage==="listOfWorkflow"?<ListTemplate/>:activePage==="SearchWorkflow"?<Search/>:""
+                
+                }
+
+                  
         </header>
         
         <div className="row">
@@ -311,6 +321,7 @@ class ListWorkflow extends Component {
 }
 
 ListWorkflow.propTypes={
+    layout: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
     listWorkflow: PropTypes.object.isRequired,
     setActivePage: PropTypes.func.isRequired,
@@ -334,7 +345,8 @@ ListWorkflow.propTypes={
 }
 const mapStateToProps= state =>({
     session: state.session,
-    listWorkflow: state.listWorkflow,    
+    listWorkflow: state.listWorkflow, 
+    layout: state.layout,   
     
 })
 export default connect(mapStateToProps,

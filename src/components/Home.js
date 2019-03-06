@@ -70,9 +70,9 @@ class Home extends Component {
       'search': search,   
 
       //workflow
-      'listOfWorkflow':ListWorkflow,
-      'searchWorkflow': SearchWorkflow,        
+      'listOfWorkflow':ListWorkflow,             
       'viewWorkflow': WorkflowDetails,    
+      'SearchWorkflow': SearchWorkflow,
       
       //activity
       'listOfActivity':ListActivity,

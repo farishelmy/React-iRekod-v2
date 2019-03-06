@@ -129,7 +129,7 @@ class ListActivity extends Component {
         // // select
         if (itmIdx===desIdx){
             this.props.setShowFab(false)
-            this.props.setSelWorkFlow(null) 
+            this.props.activityUri(null) 
                       
          
         }

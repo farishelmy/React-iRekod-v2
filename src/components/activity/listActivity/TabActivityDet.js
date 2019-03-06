@@ -12,7 +12,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
       
 <div className="row colWrap justify-content-center">
 
-    <div className="col-3 colContainer">
+<div className="col-3 colContainer">
     <div className={active==='general'?'tab activeTab mx-auto':'tab mx-auto'}>
             <img
             name="general"
@@ -23,24 +23,37 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
     </div>
 
     <div className={isContainer?"col-3 colContainer":"col-3 colContainer hideLine"}>
-   <div className={active==='activity'?'tab activeTab mx-auto':'tab mx-auto'}>
+   <div className={active==='record'?'tab activeTab mx-auto':'tab mx-auto'}>
             <img
-                name="activity"
-                src={require('../../../img/mail.svg')} alt="activity"
-                className={active==='activity'?'img-fluid desaturate':'img-fluid'}
+                name="record"
+                src={require('../../../img/mail.svg')} alt="record"
+                className={active==='record'?'img-fluid desaturate':'img-fluid'}
+                onClick={sendActive} />
+        </div>
+    </div>
+
+    <div className={isContainer?"col-3 colContainer":"col-3 colContainer hideLine"}>
+   <div className={active==='escalation'?'tab activeTab mx-auto':'tab mx-auto'}>
+            <img
+                name="escalation"
+                src={require('../../../img/mail.svg')} alt="escalation"
+                className={active==='escalation'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive} />
         </div>
     </div>
 
    <div className={isContainer?"col-3 colContainer":"d-none"}>
-    <div className={active==='record'?'tab activeTab mx-auto':'tab mx-auto'}>
+    <div className={active==='email'?'tab activeTab mx-auto':'tab mx-auto'}>
                 <img
-                name="record"
-                src={require('../../../img/browser.svg')} alt="record"
-                className={active==='record'?'img-fluid desaturate':'img-fluid'}
+                name="email"
+                src={require('../../../img/mail.svg')} alt="email"
+                className={active==='email'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive} />
         </div>
     </div> 
+
+    
+    
 
 </div>
 

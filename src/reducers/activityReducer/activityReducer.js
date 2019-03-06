@@ -1,11 +1,15 @@
-import{LIST_ACTIVITY_DUE,
+import{
+    LIST_ACTIVITY_DUE,
     SET_CARD_VIEW,
     SHOW_FAB,
     SELECT_SEL,
     WIZARD_PAGE,
     ACTIVITY_URI,
     ACTIVITY_NAME,
-    ACTIVITY_DETAIL
+    ACTIVITY_DETAIL,
+    SET_CONTAINER_LINE,
+    SET_RECORD_STORE
+
 } from '../../actions/types'
 
 const initialState={
@@ -14,6 +18,8 @@ const initialState={
     activityUri: null,
     activityName: null,
     wizardPage:"general",
+    recordStore:[],
+    containerLine:true,
     cardView:true,
     showFab:null,
     isSel:false
@@ -70,6 +76,18 @@ export default function(state = initialState, action){
             ...state,
             wizardPage:action.payload,
         }
+
+        case SET_CONTAINER_LINE:
+        return { 
+            ...state,
+            containerLine:action.payload,
+        } 
+
+        case SET_RECORD_STORE:
+        return { 
+            ...state,
+            recordStore:action.payload,
+        } 
 
         default:
         return state

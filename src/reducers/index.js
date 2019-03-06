@@ -16,6 +16,7 @@ import stakeholderAdd from './stakeholderReducer/stakeholderAddReducer'
 
 //workflow
 import listWorkFlowReducer from './workflowReducer/listWorkflowReducer'
+import modalReducer from './workflowReducer/modalReducer'
 // import workFlowDetailsReducer from './workflowReducer/workflowDetailReducer'
 // import createNewReducer from './workflowReducer/createNewActReducer'
 // import updateActReducer from './workflowReducer/updateActReducer'
@@ -45,6 +46,9 @@ const appReducer = combineReducers({
     // workflowDetail: workFlowDetailsReducer,
     // crtNewReducer: createNewReducer,
     // updActReducer: updateActReducer,
+
+    //modal
+    modal:modalReducer,
 
     //activity
     listActivity:listofActivityReducer,

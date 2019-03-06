@@ -2,13 +2,15 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {setStakehSel,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction'
-// import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
+import {setSelWorkFlow} from '../../actions/workflowAction/authListWorkFlow'
 import {setActivePage,setPageTitle,setPageSubject} from '../../actions/layoutInitAction'
 import {setStakehType,setStakehNumb,setStakehLabel} from '../../actions/stakeholderAction/stakehTypeAction'
 import {ListWorkflowTemplate,setListofSubject} from '../../actions/workflowAction/authListWorkFlow'
 import {setStakehList} from '../../actions/stakeholderAction/stakehListAction'
 import {setListActDue} from '../../actions/activityAction/listActivity/listActivityAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
+import {toggleErr} from '../../actions/workflowAction/searchWorkflowAction/searchWorkflowAction'
+  
 
 
  
@@ -106,6 +108,18 @@ class SideNav extends React.Component {
       this.props.setShowFab(false)  // Fav True False
       // this.props.setSelWorkFlow(null)     //ID select for workflow  
 
+    ///////////////////////////////SearchWorkflow/////////////////////////////////////////////
+    const pgName = e.target.getAttribute('data-pagename')
+    this.props.setActivePage(pgName)
+    // this.props.setStakehSel(null)  // ID stakeholder select
+    this.props.setShowFab(false)  // Fav True False
+    this.props.setSelWorkFlow(null)      //ID select for workflow  
+            
+    if(pgName==='SearchWorkflow')
+    {
+      this.props.toggleErr(true)
+    }  
+
 
     ////////////////////////////////Activity////////////////////////////////////
 
@@ -115,6 +129,7 @@ class SideNav extends React.Component {
     }
 
     this.props.setListActDue(listAct)
+
 
      
 
@@ -181,7 +196,7 @@ class SideNav extends React.Component {
                       <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List of Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
                       <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
-                      </div>List of Workflow
+                      </div>List of Workflow Template
                       </a>
                 </li>
                 <li>
@@ -203,7 +218,7 @@ class SideNav extends React.Component {
                       <a href="/" onClick={this.setActivePage} data-pagename="listOfActivity" data-pagetitle="List Activity" >
                       <div className="userIcon" data-pagename="listOfActivity">
                       <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfActivity" name="List Activity" />
-                      </div>List of Activity
+                      </div>List of Activity Due
                       </a>
                 </li>
                 <li>
@@ -296,6 +311,7 @@ SideNav.propTypes={
     setListActDue: PropTypes.func.isRequired,    
     setNewBread: PropTypes.func.isRequired,
     
+    
 
   }
   const mapStateToProps= state =>({
@@ -316,13 +332,14 @@ SideNav.propTypes={
     setStakehList,
     // setCustomField,
     setPageSubject,
-    // toggleErr,
+    toggleErr,
     setStakehSel,
     setShowFab,
-    // setSelWorkFlow,     
+    setSelWorkFlow,     
     setStakehLabel,  
     setNewBread,
-    setListActDue
+    setListActDue,
+    
     
     
   })

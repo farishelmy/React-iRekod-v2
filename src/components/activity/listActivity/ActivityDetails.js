@@ -1,11 +1,12 @@
 import React, { Component,Fragment } from 'react'
 import GeneralWizard from '../../activity/listActivity/GeneralWizard'
-import activityWizard from '../../workflow/listWorkflow/ActivityWizard'
 import recordWizard from '../../workflow/listWorkflow/RecordWizard'
+import escalationWizard from '../../activity/listActivity/EscalationWizard'
+import emailWizard from '../../activity/listActivity/EmailWizard'
 import FolTabHead from '../../activity/listActivity/TabActivityDet'
 import Breadcrumb from '../../layouts/Breadcrumb'
-import {setWizardPage,setListActivity} from '../../../actions/workflowAction/workflowDetailAction'
- 
+
+import {setWizardPage} from '../../../actions/activityAction/listActivity/listActivityAction'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -16,7 +17,7 @@ class ActivityDetails extends Component {
     handleWizard=(wizardName)=>{
     
         const {user:{_id:bId}}=this.props.session
-        const {wrkflSel}=this.props.listWorkflow
+        
 
         this.props.setWizardPage(wizardName)
         
@@ -42,8 +43,10 @@ render() {
     
     this.components={
         general:GeneralWizard,
-        activity:activityWizard,        
         record:recordWizard,
+        escalation:escalationWizard,
+        email:emailWizard        
+
     }
     const DetailsWizard=this.components[wizardPage]
 
@@ -97,7 +100,7 @@ ActivityDetails.propTypes={
   layout:PropTypes.object.isRequired,
   setWizardPage: PropTypes.func.isRequired,
   listActivity: PropTypes.object.isRequired,
-  setListActivity: PropTypes.func.isRequired,
+//   setListActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -108,6 +111,6 @@ const mapStateToProps= state =>({
   
 export default connect(mapStateToProps, { 
     setWizardPage,
-    setListActivity
+    // setListActivity
 
 })(ActivityDetails)

@@ -29,22 +29,47 @@ const deleteBtn=()=>{
                  >
                  <img name="viewAct" src={require('../../img/fab-update.svg')} alt='view' className='img-fluid' onClick={sendActive}   />
             </Tooltip>
-        </span>
+        </span>        
 
-             <ul className="fab-buttons">
-                 <li className="fab-buttons-item">
-                     <span className="fab-buttons-link">
-                         <Tooltip
-                            placement="left"
-                            overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Delete Stakeholder</div>}
-                            arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                             <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
-                        </Tooltip>
-                    </span>
-                </li>
+            <ul className="fab-buttons">
+                <li className="fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                        placement="left"
+                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Suspend Activity</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                        >
+                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                    </Tooltip>
+                </span>
+            </li>
 
-            </ul>
+            <li className="fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                        placement="left"
+                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Reasign Activity</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                        >
+                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                    </Tooltip>
+                </span>
+            </li>
+
+            <li className="fab-buttons-item">
+                    <span className="fab-buttons-link">
+                        <Tooltip
+                        placement="left"
+                        overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Complete Activity</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                        >
+                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                    </Tooltip>
+                </span>
+            </li>
+
+
+        </ul>
     </div>
   </div>
   )

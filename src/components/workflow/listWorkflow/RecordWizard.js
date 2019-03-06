@@ -18,7 +18,7 @@ class RecordWizard extends Component {
 
   
   render() {
-    const {recordStore}  = this.props.listWorkflow
+    const {recordStore}  = this.props.listActivity
     console.log(recordStore)
    
 
@@ -34,14 +34,14 @@ class RecordWizard extends Component {
 RecordWizard.propTypes={
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,   
-  listWorkflow:PropTypes.object.isRequired, 
+  listActivity:PropTypes.object.isRequired, 
    
 }
 
 const mapStateToProps= state =>({
       session:state.session,
       layout:state.layout,       
-      listWorkflow:state.listWorkflow,
+      listActivity:state.listActivity,
 })
   
 export default connect(mapStateToProps, {

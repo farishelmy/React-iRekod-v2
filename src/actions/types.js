@@ -121,6 +121,16 @@ export const LIST_EMAIL_RECIPIENTS = 'LIST_EMAIL_RECIPIENTS'
 export const SELECTED_INC_STAKEH = 'SELECTED_INC_STAKEH'
 export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
 
+//modal action and reducer link
+export const SHOW_ADV = 'SHOW_ADV'
+export const SHOW_FORM = 'SHOW_FORM'
+export const SHOW_ERR = 'SHOW_ERR'
+export const SHOW_LOADER = 'SHOW_LOADER'
+export const SET_LOADER_TEXT = 'SET_LOADER_TEXT'
+
+
+
+
 
 /////////////////////////////////////////////////////Activity//////////////////////////////////////////////////////
 
@@ -129,6 +139,8 @@ export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
  export const ACTIVITY_DETAIL = 'ACTIVITY_DETAIL'
  export const ACTIVITY_URI = 'ACTIVITY_URI'
  export const ACTIVITY_NAME = 'ACTIVITY_NAME'
+
+
 
 
 

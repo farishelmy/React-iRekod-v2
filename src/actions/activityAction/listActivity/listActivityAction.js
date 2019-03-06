@@ -3,7 +3,8 @@ import {LIST_ACTIVITY_DUE,
     ACTIVITY_URI,
     ACTIVITY_NAME,
     SET_CARD_VIEW,
-    SHOW_FAB
+    SHOW_FAB,
+    WIZARD_PAGE
 } from '../../types'
     
 import {biorisUrl} from '../../../config/appConf'
@@ -63,6 +64,14 @@ export const setCardView=(cardStatus)=>{
 export const setShowFab=(param)=>{
     return {
         type:SHOW_FAB,
+        payload:param
+    }
+}
+
+//Set Wizard Page Name
+export const setWizardPage=(param)=>{
+    return {
+        type:WIZARD_PAGE,
         payload:param
     }
 }
