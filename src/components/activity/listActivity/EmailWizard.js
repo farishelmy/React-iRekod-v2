@@ -26,6 +26,11 @@ class EmailWizard extends Component {
             supervisor:null,
             priority:null,
             estDuration:null,
+            stakehList:[],
+            emailTo:[],
+            subject:null,
+            cc:[],
+            bcc:[],
 
         
         }     
@@ -33,6 +38,8 @@ class EmailWizard extends Component {
     
     componentWillMount(){
       const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.props.item
+      const {stakehType}=this.props.stakeholderlistType   
+      const stakehOptions = stakehType.map(itm=>({ value: itm.uri, label:itm.Name}))
       this.setState({
         activityName:activityName,
         activityUri:activityUri,        
@@ -43,6 +50,7 @@ class EmailWizard extends Component {
         supervisor:supervisor,
         priority:priority,
         estDuration:estDuration,
+        stakehList:stakehOptions,
       })
     }
 
@@ -57,14 +65,32 @@ class EmailWizard extends Component {
       })  
        // console.log(inputName)   
       //  console.log(inputVal)
-  }    
+    }    
+
+    handleTo=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({emailTo:param})
+        // console.log(param)
+    }
+
+    handleCc=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({cc:param})
+        // console.log(param)
+    }
+
+    handleBcc=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({bcc:param})
+        // console.log(param)
+    }
 
     
 
     
   render() {
 
-    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.state
+    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration,stakehList} = this.state
      
    
     
@@ -73,30 +99,49 @@ class EmailWizard extends Component {
         <Fragment>
         <h1 className="h3 display text-primary text-center">Email Notifications</h1>
             <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
-                <div className="row justify-content-start mb-5">
-                    {/* <div className="col-xl-3 col-lg-4 col-md-4">
-                        <div className="text-center mt-5">
-                            <img src={require('../../../img/management.svg')} alt="management" className=" img-dash" />
-                        </div>
-                    </div>   */}
+                <div className="text-center mt-3 mb-2">                        
+                    <img src={require('../../../img/management.svg')} alt="management" className=" img-dash" />
+                </div> 
+                <div className="row justify-content-start mb-5">                   
                    
                     <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         <div className="form-group">
                             <label>To</label>
-                                <input type="text" name="stakeh_type_name" className="form-control" value={activityName} disabled/>
+                                <Select 
+                                    name="emailTo"
+                                    options={stakehList}
+                                    onChange={this.handleTo}
+                                    className="basic-multi-select"
+                                    placeholder="Name"
+                                    isMulti
+                                /> 
                         </div>
                         <div className="form-group">
                             <label>Subject</label>
-                                <input type="text" name="stakeh_type_name" className="form-control" value={activityName} disabled/>
+                                <input type="text" name="subject" className="form-control" value={activityName} />
                         </div>
                         <div className="row">
                             <div className="col-sm-6 form-group">
                                 <label>Cc</label>
-                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={activityName}/> 
+                                <Select 
+                                    name="cc"
+                                    options={stakehList}
+                                    onChange={this.handleCc}
+                                    className="basic-multi-select"
+                                    placeholder="Name"
+                                    isMulti
+                                />  
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Bcc</label>
-                                <input name="first_name" type="text" className="form-control" placeholder="Smith" value={activityName} onChange={this.handleChange} />
+                                <Select 
+                                    name="bcc"
+                                    options={stakehList}
+                                    onChange={this.handleBcc}
+                                    className="basic-multi-select"
+                                    placeholder="Name"
+                                    isMulti
+                                /> 
                             </div>  
                             <div className="col-sm-6 form-group">
                                 <label>
@@ -127,7 +172,8 @@ class EmailWizard extends Component {
 EmailWizard.propTypes={
     session: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,      
-    listActivity:PropTypes.object.isRequired,
+    listActivity: PropTypes.object.isRequired,
+    stakeholderlistType: PropTypes.object.isRequired,
     
 }
 
@@ -135,6 +181,7 @@ const mapStateToProps= state =>({
         session:state.session,
         layout:state.layout,        
         listActivity:state.listActivity,
+        stakeholderlistType:state.stakeholderlistType,
         
 })
     

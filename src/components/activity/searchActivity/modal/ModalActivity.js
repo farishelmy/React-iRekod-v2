@@ -13,7 +13,7 @@ import { toggleErr,populateWorkflow } from '../../../../actions/workflowAction/s
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Col, Row, CardBody  } from 'reactstrap'
 
 
-class ModalWorkflow extends Component {
+class ModalActivity extends Component {
     constructor(){
         super()
         this.state={          
@@ -69,24 +69,24 @@ class ModalWorkflow extends Component {
 
     // }
 
-      toggle=()=> {
-          const{showErr}=this.props.modal
-          this.props.toggleErr(!showErr)
-        }
+    toggle=()=> {
+        const{showErr}=this.props.modal
+        this.props.toggleErr(!showErr)
+    }
 
-      //Workflow Name
-      handleChangeName=(e)=>{
-        const inputName = e.target.getAttribute('name')
-        const inputVal =  e.target.value       
-        // ===""?e.target.value=null:e.target.value  
-        // console.log(e.target.value)    
-    
-      this.setState({
-          [inputName]:inputVal
-        })  
-        //  console.log(inputName)   
-        //  console.log(inputVal)
-      }    
+    //Workflow Name
+    handleChangeName=(e)=>{
+    const inputName = e.target.getAttribute('name')
+    const inputVal =  e.target.value       
+    // ===""?e.target.value=null:e.target.value  
+    // console.log(e.target.value)    
+
+    this.setState({
+        [inputName]:inputVal
+    })  
+    //  console.log(inputName)   
+    //  console.log(inputVal)
+    }    
 
       //DATE DUE 
       handleDateDueStart = (DateDueStart) => this.handleChangeDue({ DateDueStart })
@@ -205,142 +205,20 @@ class ModalWorkflow extends Component {
       <div>
         <Modal isOpen={showErr} toggle={this.toggle} className={this.props.className}>
             <Form onSubmit={this.formSubmit}>
-            <ModalHeader toggle={this.toggle}>Search Workflow</ModalHeader>
+            <ModalHeader toggle={this.toggle}>Search Activity</ModalHeader>
             <ModalBody>
+
+                <FormGroup>
+                    <label>Activity Name</label>
+                    <input name="WorkflowName" type="text" className="form-control" placeholder="Activity Name" onChange={this.handleChangeName}  />               
+                </FormGroup>
 
                 <FormGroup>
                     <label>Workflow Name</label>
                     <input name="WorkflowName" type="text" className="form-control" placeholder="Workflow Name" onChange={this.handleChangeName}  />               
                 </FormGroup>
 
-                {/* Date Due */}
-                <Row>          
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Due Start</label>
-                        <DatePicker
-                            placeholder="Date Start"
-                            selected={this.state.DateDueStart}
-                            selectsStart
-                            startDate={this.state.DateDueStart}
-                            endDate={this.state.DateDueEnd}
-                            onChange={this.handleDateDueStart}
-                            className="form-control"
-                            dateFormat="DD/MM/YYYY"                             
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"                                                             
-                        />
-                    </FormGroup>
-                  </Col>
-
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Due End</label>
-                        <DatePicker
-                          placeholder="Date End"
-                          selected={this.state.DateDueEnd}
-                          selectsEnd
-                          startDate={this.state.DateDueStart}
-                          endDate={this.state.DateDueEnd}
-                          onChange={this.handleDateDueEnd}
-                          className="form-control"
-                          dateFormat="DD/MM/YYYY"
-                          peekNextMonth
-                          showMonthDropdown
-                          showYearDropdown
-                          dropdownMode="select"  
-                          todayButton={"Today"}  
-                        />
-                    </FormGroup>
-                  </Col>
-                </Row>                
-
-                {/* DATE STARTED */}
-                <Row>          
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Started Start</label>
-                        <DatePicker
-                            placeholder="Date Start"
-                            selected={this.state.DateStartedStart}
-                            selectsStart
-                            startDate={this.state.DateStartedStart}
-                            endDate={this.state.DateStartedEnd}
-                            onChange={this.handleDateStartedStart}
-                            className="form-control"
-                            dateFormat="DD/MM/YYYY"                            
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"                              
-                        />
-                    </FormGroup>
-                  </Col>
-
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Started End</label>
-                        <DatePicker
-                          placeholder="Date End"
-                          selected={this.state.DateStartedEnd}
-                          selectsEnd
-                          startDate={this.state.DateStartedStart}
-                          endDate={this.state.DateStartedEnd}
-                          onChange={this.handleDateStartedEnd}
-                          className="form-control"
-                          dateFormat="DD/MM/YYYY"                          
-                          showMonthDropdown
-                          showYearDropdown
-                          dropdownMode="select"                          
-                        />
-                    </FormGroup>
-                  </Col>
-                </Row>
-
-                {/* DATE COMPLETED */}
-                <Row>          
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Completed Start</label>
-                        <DatePicker
-                            placeholder="Date Start"
-                            selected={this.state.DateCompletedStart}
-                            selectsStart
-                            startDate={this.state.DateCompletedStart}
-                            endDate={this.state.DateCompletedEnd}
-                            onChange={this.handleDateCompletedStart}
-                            className="form-control"
-                            dateFormat="DD/MM/YYYY"
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select" 
-                            todayButton={"Today"}  
-                        />
-                    </FormGroup>
-                  </Col>
-
-                  <Col md={6}>
-                    <FormGroup>
-                      <label>Date Completed End</label>
-                        <DatePicker
-                          placeholder="Date End"
-                          selected={this.state.DateCompletedEnd}
-                          selectsEnd
-                          startDate={this.state.DateCompletedStart}
-                          endDate={this.state.DateCompletedEnd}
-                          onChange={this.handleDateCompletedEnd}
-                          className="form-control"
-                          dateFormat="DD/MM/YYYY"
-                          showMonthDropdown
-                          showYearDropdown
-                          dropdownMode="select" 
-                          todayButton={"Today"}  
-                        />
-                    </FormGroup>
-                  </Col>
-                </Row>
                 
-
 
 
 
@@ -359,7 +237,7 @@ class ModalWorkflow extends Component {
     )
   }
 }
-ModalWorkflow.propTypes={
+ModalActivity.propTypes={
     modal:PropTypes.object.isRequired,
     toggleErr:PropTypes.func.isRequired,
     populateWorkflow:PropTypes.func.isRequired,
@@ -384,6 +262,6 @@ export default connect(mapStateToProps,
     // getActionTypes,
     // getListAudit
 })
-    (ModalWorkflow)
+    (ModalActivity)
 
 

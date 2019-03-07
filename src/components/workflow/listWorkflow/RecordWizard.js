@@ -19,7 +19,7 @@ class RecordWizard extends Component {
   
   render() {
     const {recordStore}  = this.props.listActivity
-    console.log(recordStore)
+    // console.log(recordStore)
    
 
     return (

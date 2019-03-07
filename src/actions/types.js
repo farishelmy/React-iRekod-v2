@@ -88,7 +88,7 @@ export const SELECT_SEL = 'SELECT_SEL'
 export const WORKFLOW_NAME = 'WORKFLOW_NAME'
 
 //listworkflowdetails action and reducer link
-export const LIST_ACTIVITY = 'SET_ACTIVITY'
+// export const LIST_ACTIVITY = 'SET_ACTIVITY'
 export const LIST_EMAIL = 'LIST_EMAIL'
 export const WIZARD_PAGE = 'WIZARD_PAGE'
 export const SET_ACTIVITY_STORE = 'SET_ACTIVITY_STORE'
@@ -135,10 +135,11 @@ export const SET_LOADER_TEXT = 'SET_LOADER_TEXT'
 /////////////////////////////////////////////////////Activity//////////////////////////////////////////////////////
 
 //list of Activity action and reducer link
- export const LIST_ACTIVITY_DUE ='LIST_ACTIVITY_DUE'
- export const ACTIVITY_DETAIL = 'ACTIVITY_DETAIL'
- export const ACTIVITY_URI = 'ACTIVITY_URI'
- export const ACTIVITY_NAME = 'ACTIVITY_NAME'
+export const LIST_ACTIVITY ='LIST_ACTIVITY'
+export const LIST_ACTIVITY_DUE ='LIST_ACTIVITY_DUE'
+export const ACTIVITY_DETAIL = 'ACTIVITY_DETAIL'
+export const ACTIVITY_URI = 'ACTIVITY_URI'
+export const ACTIVITY_NAME = 'ACTIVITY_NAME'
 
 
 

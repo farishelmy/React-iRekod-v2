@@ -5,11 +5,9 @@ import ListTemplate from './ListTemplate'
 
 
 import Breadcrumb from '../layouts/Breadcrumb'
-import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
+import {setActivePage,setPageTitle} from '../../actions/layoutInitAction'
 import {setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName} from '../../actions/workflowAction/authListWorkFlow'
-import {setItemListSubject, setRecordStore, setListActivity,setDelBtn, setTaskResult} from '../../actions/workflowAction/workflowDetailAction'
-import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
-import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
+import {setRecordStore, setListActivity} from '../../actions/workflowAction/workflowDetailAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
@@ -50,7 +48,7 @@ class ListWorkflow extends Component {
         const {user:{_id:bId}}=this.props.session
         const {wrkflSel, workflowTemplate, workflowName}=this.props.listWorkflow          
 
-        // this.props.setPageSubject(workflowTemplate)
+       
         this.props.setActivePage(FabRec)
         
         //Activity Wizard
@@ -72,8 +70,6 @@ class ListWorkflow extends Component {
         // console.log(recordDet)
         this.props.setRecordStore(recordDet)        
       
-        // this.props.setActivityDetailsUpdate(workflowDet)  
-        // this.props.setTaskResult(taskResulStatusObj)   
 
         //Breadcrumb
         this.props.setNewBread(false,{
@@ -114,20 +110,6 @@ class ListWorkflow extends Component {
         this.props.setSelWorkFlow(workflowUri)  //Set Workflow Uri
         this.props.setWorkflowName(workflowName)  //Set Workflow Name
     
-        // const stakehList={
-        //     action: "ITEM_LIST",
-        //     bio_access_id: bId       
-        // }
-        // this.props.setStakehList(stakehList)
-
-        // const itemListSubject={
-        //     action: "ITEM_LIST_BY_SUBJECT",
-        //     bio_access_id: bId,
-        //     subject: subject     
-        // }
-        // console.log(subject)
-        // this.props.setItemListSubject(itemListSubject)
-
         const {workList} = this.state
         // console.log({workList} )
         const itmIdx = workList.findIndex(itm=>itm.workflowUri === workflowUri)
@@ -329,16 +311,9 @@ ListWorkflow.propTypes={
     setSelWorkFlow:PropTypes.func.isRequired,
     setShowFab:PropTypes.func.isRequired,
     setListActivity:PropTypes.func.isRequired,
-    getDetails: PropTypes.func.isRequired,
-    // setStakehList:PropTypes.func.isRequired,
-    setItemListSubject:PropTypes.func.isRequired,
-    setRecordStore:PropTypes.func.isRequired,
-    setEmailStoreNew:PropTypes.func.isRequired,
-    setDelBtn:PropTypes.func.isRequired,
-    setTaskResult: PropTypes.func.isRequired,
-    setPageTitle:PropTypes.func.isRequired,
-    setActivityDetailsUpdate: PropTypes.func.isRequired,
-    setPageSubject:PropTypes.func.isRequired,
+    getDetails: PropTypes.func.isRequired, 
+    setRecordStore:PropTypes.func.isRequired,    
+    setPageTitle:PropTypes.func.isRequired,  
     setWorkflowName: PropTypes.func.isRequired,
     setNewBread: PropTypes.func.isRequired,
     
@@ -357,15 +332,9 @@ export default connect(mapStateToProps,
     setShowFab, 
     setListActivity, 
     getDetails, 
-    setNewBread,
-    setItemListSubject,
-    setRecordStore,
-    setEmailStoreNew,
-    setDelBtn, 
-    setTaskResult,
-    setPageTitle,
-    setActivityDetailsUpdate,
-    setPageSubject,
+    setNewBread,    
+    setRecordStore,   
+    setPageTitle,    
     setWorkflowName
 
 })(ListWorkflow)

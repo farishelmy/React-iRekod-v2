@@ -13,7 +13,7 @@ import { toggleErr,populateWorkflow } from '../../../../actions/workflowAction/s
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Col, Row, CardBody  } from 'reactstrap'
 
 
-class ModalWorkflow extends Component {
+class ModalDate extends Component {
     constructor(){
         super()
         this.state={          
@@ -69,24 +69,24 @@ class ModalWorkflow extends Component {
 
     // }
 
-      toggle=()=> {
-          const{showErr}=this.props.modal
-          this.props.toggleErr(!showErr)
-        }
+    toggle=()=> {
+        const{showErr}=this.props.modal
+        this.props.toggleErr(!showErr)
+    }
 
-      //Workflow Name
-      handleChangeName=(e)=>{
-        const inputName = e.target.getAttribute('name')
-        const inputVal =  e.target.value       
-        // ===""?e.target.value=null:e.target.value  
-        // console.log(e.target.value)    
-    
-      this.setState({
-          [inputName]:inputVal
-        })  
-        //  console.log(inputName)   
-        //  console.log(inputVal)
-      }    
+    //Workflow Name
+    handleChangeName=(e)=>{
+    const inputName = e.target.getAttribute('name')
+    const inputVal =  e.target.value       
+    // ===""?e.target.value=null:e.target.value  
+    // console.log(e.target.value)    
+
+    this.setState({
+        [inputName]:inputVal
+    })  
+    //  console.log(inputName)   
+    //  console.log(inputVal)
+    }    
 
       //DATE DUE 
       handleDateDueStart = (DateDueStart) => this.handleChangeDue({ DateDueStart })
@@ -205,13 +205,10 @@ class ModalWorkflow extends Component {
       <div>
         <Modal isOpen={showErr} toggle={this.toggle} className={this.props.className}>
             <Form onSubmit={this.formSubmit}>
-            <ModalHeader toggle={this.toggle}>Search Workflow</ModalHeader>
+            <ModalHeader toggle={this.toggle}>Search Activity by Date</ModalHeader>
             <ModalBody>
 
-                <FormGroup>
-                    <label>Workflow Name</label>
-                    <input name="WorkflowName" type="text" className="form-control" placeholder="Workflow Name" onChange={this.handleChangeName}  />               
-                </FormGroup>
+              
 
                 {/* Date Due */}
                 <Row>          
@@ -359,7 +356,7 @@ class ModalWorkflow extends Component {
     )
   }
 }
-ModalWorkflow.propTypes={
+ModalDate.propTypes={
     modal:PropTypes.object.isRequired,
     toggleErr:PropTypes.func.isRequired,
     populateWorkflow:PropTypes.func.isRequired,
@@ -383,7 +380,7 @@ export default connect(mapStateToProps,
     // getRecordList,
     // getActionTypes,
     // getListAudit
-})
-    (ModalWorkflow)
+
+})(ModalDate)
 
 

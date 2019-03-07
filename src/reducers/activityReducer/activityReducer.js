@@ -1,4 +1,5 @@
 import{
+    LIST_ACTIVITY,
     LIST_ACTIVITY_DUE,
     SET_CARD_VIEW,
     SHOW_FAB,
@@ -13,6 +14,7 @@ import{
 } from '../../actions/types'
 
 const initialState={
+    listActivity:[],
     listActivityDue: [],
     activityDet: null,
     activityUri: null,
@@ -29,6 +31,12 @@ const initialState={
 
 export default function(state = initialState, action){
     switch(action.type){
+        case LIST_ACTIVITY:
+        return {
+            ...state,
+            listActivity:action.payload,
+        }
+
         case LIST_ACTIVITY_DUE:
         return {
             ...state,

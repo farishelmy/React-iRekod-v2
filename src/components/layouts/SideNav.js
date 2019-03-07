@@ -79,43 +79,23 @@ class SideNav extends React.Component {
       const listWrkFlwObj ={
         _action: 'LISTWFTEMPLATE',
         _id: bId
-      }
-
-      // const listofSubjectObj ={
-      //   action: 'LIST_ITEM_SUBJECT',
-      //   bio_access_id: idAccess
-      // }
-  
-      // const stakehList={
-      //   action: "ITEM_LIST",
-      //   bio_access_id: idAccess       
-      // }
-  
-      // const customFieldObj={
-      //   action: "ITEM_LIST_BY_OBJECT",
-      //   bio_access_id: idAccess,
-      //   object_id:"STKH"    
-      // }
+      }       
    
-      const pageSubject= ""
+      
       // this.props.setStakehList(stakehList)
-      this.props.ListWorkflowTemplate(listWrkFlwObj)
-      // this.props.setListofSubject(listofSubjectObj)
-      this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-      // this.props.setCustomField(customFieldObj)
-      // this.props.setPageSubject(pageSubject)
-      // this.props.setStakehSel(null)    // ID stakeholder select
+      this.props.ListWorkflowTemplate(listWrkFlwObj)       
+      this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))     
       this.props.setShowFab(false)  // Fav True False
       // this.props.setSelWorkFlow(null)     //ID select for workflow  
 
     ///////////////////////////////SearchWorkflow/////////////////////////////////////////////
+
     const pgName = e.target.getAttribute('data-pagename')
-    this.props.setActivePage(pgName)
-    // this.props.setStakehSel(null)  // ID stakeholder select
-    this.props.setShowFab(false)  // Fav True False
+    this.props.setActivePage(pgName)    
+    this.props.setShowFab(false)          // Fav True False
     this.props.setSelWorkFlow(null)      //ID select for workflow  
             
-    if(pgName==='SearchWorkflow')
+    if(pgName==='searchWorkflow')
     {
       this.props.toggleErr(true)
     }  
@@ -129,6 +109,19 @@ class SideNav extends React.Component {
     }
 
     this.props.setListActDue(listAct)
+
+
+    ////////////////////////////////SearchActivity////////////////////////////////////
+
+    if(pgName==='searchActivity')
+    {
+      this.props.toggleErr(true)
+    }
+
+    if(pgName==='searchDate')
+    {
+      this.props.toggleErr(true)
+    }
 
 
      
@@ -200,9 +193,9 @@ class SideNav extends React.Component {
                       </a>
                 </li>
                 <li>
-                      <a href="/" onClick={this.setActivePage} data-pagename="SearchWorkflow" data-pagetitle="Search Workflow" >
-                      <div className="userIcon" data-pagename="SearchWorkflow">
-                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="SearchWorkflow" name="Search Workflow" />
+                      <a href="/" onClick={this.setActivePage} data-pagename="searchWorkflow" data-pagetitle="Search Workflow" >
+                      <div className="userIcon" data-pagename="searchWorkflow">
+                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="searchWorkflow" name="Search Workflow" />
                       </div>Search Workflow
                       </a>
                 </li>
@@ -215,19 +208,27 @@ class SideNav extends React.Component {
               <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1"/></div>Activity </a>
               <ul id="chartsDropdown" className={this.state.activityToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                 <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="searchActivity" data-pagetitle="Search Activity" >
+                      <div className="userIcon" data-pagename="searchActivity">
+                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="searchActivity" name="Search Activity" />
+                      </div>Search Activity
+                      </a>
+                </li>
+                <li>
+                      <a href="/" onClick={this.setActivePage} data-pagename="searchDate" data-pagetitle="Search Activity" >
+                      <div className="userIcon" data-pagename="searchDate">
+                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="searchDate" name="Search Activity" />
+                      </div>Search Activity by Date
+                      </a>
+                </li>
+                <li>
                       <a href="/" onClick={this.setActivePage} data-pagename="listOfActivity" data-pagetitle="List Activity" >
                       <div className="userIcon" data-pagename="listOfActivity">
                       <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfActivity" name="List Activity" />
                       </div>List of Activity Due
                       </a>
                 </li>
-                <li>
-                      <a href="/" onClick={this.setActivePage} data-pagename="SearchActivity" data-pagetitle="Search Activity" >
-                      <div className="userIcon" data-pagename="SearchActivity">
-                      <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="SearchActivity" name="Search Activity" />
-                      </div>Search Activity
-                      </a>
-                </li>
+               
               </ul>
             </li>
 

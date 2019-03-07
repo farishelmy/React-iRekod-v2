@@ -1,4 +1,4 @@
-import {SHOW_ERR,POPULATE_WORKFLOW} from '../../types'
+import {SHOW_ERR,LIST_ACTIVITY} from '../../types'
 
 import {biorisUrl} from '../../../config/appConf'
 import {converter} from '../../../utils/converter'
@@ -18,7 +18,7 @@ export const populateWorkflow=(param)=>dispatch=>{
   .then(res=>{ 
       // console.log(res)
       dispatch({           
-          type: POPULATE_WORKFLOW,
+          type: LIST_ACTIVITY,
           payload: res.data
       })
   })

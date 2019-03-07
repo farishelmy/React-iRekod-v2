@@ -1,6 +1,7 @@
 import React, { Component,Fragment } from 'react' 
-// import {updStkh} from '../../actions/stakehUpdateAction'
+ 
 import Select from 'react-select'
+// import duration from 'bootstrap-duration-picker'
 
 import 'rc-checkbox/assets/index.css'
 import { Button } from 'reactstrap'
@@ -26,6 +27,14 @@ class GeneralWizard extends Component {
             supervisor:null,
             priority:null,
             estDuration:null,
+            stakehList:[],
+            priorityOption:[
+                {value: "Very High" ,label: "Very High" },
+                {value: "High" ,label: "High"},
+                {value: "Medium" , label: "Medium"},
+                {value:  "Low" ,label: "Low"},  
+                {value: "Very Low" ,label: "Very Low"}                
+            ],      
 
         
         }     
@@ -33,6 +42,9 @@ class GeneralWizard extends Component {
     
     componentWillMount(){
       const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.props.item
+      const {stakehType}=this.props.stakeholderlistType   
+      const stakehOptions = stakehType.map(itm=>({ value: itm.uri, label:itm.Name}))
+      const priorityVal = ({value: priority, label: priority})
       this.setState({
         activityName:activityName,
         activityUri:activityUri,        
@@ -41,10 +53,11 @@ class GeneralWizard extends Component {
         activityDateDue:activityDateDue,
         icon:icon,
         supervisor:supervisor,
-        priority:priority,
+        priority:priorityVal,
         estDuration:estDuration,
+        stakehList:stakehOptions,
       })
-    }
+    }    
 
     handleChange=(e)=>{
       const inputName = e.target.getAttribute('name')
@@ -55,16 +68,36 @@ class GeneralWizard extends Component {
     this.setState({
         [inputName]:inputVal
       })  
-       // console.log(inputName)   
-      //  console.log(inputVal)
-  }    
+    //    console.log(inputName)   
+    //    console.log(inputVal)
+    }   
+    
+    handleAssignTo=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({assignedTo:param})
+        // console.log(param)
+    }
+
+    handleSupervisor=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({supervisor:param})
+        // console.log(param)
+    }
+
+    handlePriority=(param)=>{
+        // const inputName = e.target.getAttribute('name')
+        this.setState({priority:param})
+        // console.log(param)
+    }
+
+    
 
     
 
     
   render() {
 
-    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration} = this.state
+    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration,stakehList,priorityOption} = this.state
      
    
     
@@ -83,39 +116,46 @@ class GeneralWizard extends Component {
                     <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
                         <div className="form-group">
                             <label>Activity Name</label>
-                                <input type="text" name="stakeh_type_name" className="form-control" value={activityName} disabled/>
+                                <input type="text" name="activityName" className="form-control" placeholder="Name" onChange={this.handleChange} value={activityName} />
                         </div>
                         <div className="row">
                             <div className="col-sm-6 form-group">
                                 <label>Assigned To</label>
-                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange} value={activityName}/> 
+                                <Select 
+                                    name="assignedTo"
+                                    options={stakehList}
+                                    onChange={this.handleAssignTo}
+                                    value={assignedTo===""?null:assignedTo} 
+                                    placeholder="Name"
+                                    isClearable
+                                /> 
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Supervisor</label>
-                                <input name="first_name" type="text" className="form-control" placeholder="Smith" value={activityName} onChange={this.handleChange} />
+                                <Select 
+                                    name="supervisor"
+                                    options={stakehList}
+                                    onChange={this.handleSupervisor}
+                                    value={supervisor===""?null:supervisor} 
+                                    placeholder="Name"
+                                    isClearable
+                                /> 
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Estimate</label>
-                                <input name="last_name" type="text" className="form-control" placeholder="Johnson" onChange={this.handleChange} value={activityName}/>
+                                <input name="estDuration" type="text" id="Duration" className="form-control" placeholder="Date" onChange={this.handleChange} value={estDuration}/>
                             </div>
                             <div className="col-sm-6 form-group">
                                 <label>Priority</label>
-                                <input name="full_name" type="text" className="form-control" placeholder="Smith Johnson" onChange={this.handleChange} value={activityName}/>
-                            </div>                            
-                            {/* <div className={pageTitle!=="User"?"col-sm-6 form-group":"col-sm-4 form-group"}>
-                                <label>Date of Birth</label>
-                                <DatePicker
-                                    name="date_of_birth" 
-                                    placeholderText="Date of Birth"
-                                    className="form-control" 
-                                    dateFormat="DD/MM/YYYY" 
-                                    selected={date_of_birth!==null?moment(date_of_birth, "DD/MM/YYYY"):date_of_birth}  
-                                    peekNextMonth
-                                    showMonthDropdown
-                                    showYearDropdown
-                                    dropdownMode="select"
-                                    onChange={this.handleDateChange}/>                               
-                            </div>                 */}
+                                <Select 
+                                    name="priority"
+                                    options={priorityOption}
+                                    onChange={this.handlePriority}
+                                    value={priority===""?null:priority} 
+                                    placeholder="Name"
+                                    isClearable
+                                /> 
+                            </div>                           
                         </div>
                     </div>
                 </div>
@@ -131,14 +171,15 @@ class GeneralWizard extends Component {
 GeneralWizard.propTypes={
     session: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,      
-    listWorkflow:PropTypes.object.isRequired,
+    listWorkflow: PropTypes.object.isRequired,
+    stakeholderlistType: PropTypes.object.isRequired,
     
 }
 
 const mapStateToProps= state =>({
         session:state.session,
         layout:state.layout,
-        
+        stakeholderlistType:state.stakeholderlistType,
         listWorkflow:state.listWorkflow,
         
 })

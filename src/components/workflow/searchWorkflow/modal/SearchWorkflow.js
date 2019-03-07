@@ -6,8 +6,6 @@ import PropTypes from 'prop-types'
 import {setActivePage} from '../../../../actions/layoutInitAction'
 import {setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName} from '../../../../actions/workflowAction/authListWorkFlow'
 import {setRecordStore, setListActivity} from '../../../../actions/workflowAction/workflowDetailAction'
-// import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
-// import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
 import {setNewBread} from '../../../../actions/breadcrumbAction'
 
 import Fab from '../../../fab/FabWorkflow'
@@ -142,20 +140,7 @@ class SearchWorkflow extends Component {
     const{workList}=this.state
     // console.log(workList)
     
-    const rec = workList.map(itm=>cardView?
-        <CardView
-            key={itm.workflowUri}
-            workflowName={itm.workflowName}
-            workflowUri={itm.workflowUri}
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}            
-            isSel={itm.isSel}
-            supervisor={itm.supervisor}
-            dateStart={itm.dateStarted}
-            dateDue={itm.dateDue}
-            jobNo={itm.jobNumber}
-            priority={itm.priority}
-        /> :
+    const rec = workList.map(itm=>cardView? 
         <ListView
             key={itm.workflowUri}
             workflowName={itm.workflowName}
@@ -167,6 +152,21 @@ class SearchWorkflow extends Component {
             jobNo={itm.jobNumber}
             priority={itm.priority}
         />
+        :
+            <CardView
+            key={itm.workflowUri}
+            workflowName={itm.workflowName}
+            workflowUri={itm.workflowUri}
+            icon={itm.iconCls}
+            markOnSel={this.markOnSel}            
+            isSel={itm.isSel}
+            supervisor={itm.supervisor}
+            dateStart={itm.dateStarted}
+            dateDue={itm.dateDue}
+            jobNo={itm.jobNumber}
+            priority={itm.priority}
+        />
+       
         )
 
    
@@ -226,8 +226,8 @@ class SearchWorkflow extends Component {
                     <Search/>
         </header>
 
-        <div className="row">
-           {cardView===false?<div className="row">
+        
+           {cardView!==false?<div className="row">
             <div className="col-12">                
                 <div className="d-flex justify-content-between align-items-center">
                 <div className="p-2 img-fluid img-scale"/>
@@ -245,7 +245,7 @@ class SearchWorkflow extends Component {
                 {rec} 
             </div>:rec}
 
-        </div> 
+        
 
         {showFab?<Fab 
         FabRec={this.setActivePage}
@@ -286,14 +286,8 @@ export default connect(mapStateToProps,
     setListActivity, 
     getDetails, 
     setNewBread,
-    // setItemListSubject,
-    setRecordStore,
-    // setEmailStoreNew,
-    // setDelBtn, 
-    // setTaskResult,
+    setRecordStore,       
     // setPageTitle,
-    // setActivityDetailsUpdate,
-    // setPageSubject,
     setWorkflowName
 
 })(SearchWorkflow)

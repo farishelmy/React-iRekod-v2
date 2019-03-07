@@ -1,59 +1,57 @@
 import React, { Component, Fragment } from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+ 
+// import Breadcrumb from '../layouts/Breadcrumb'
+import {setActivePage} from '../../../../actions/layoutInitAction'
+import {setCardView, activityUri, setShowFab, getDetails, activityName} from '../../../../actions/activityAction/listActivity/listActivityAction'
+// import {setRecordStore, setListActivity} from '../../../../actions/workflowAction/workflowDetailAction'
+import {setNewBread} from '../../../../actions/breadcrumbAction'
 
-import Breadcrumb from '../layouts/Breadcrumb'
-import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
-// import { setSelWorkFlow, getDetails} from '../../actions/workflowAction/authListWorkFlow'
-// import {setItemListSubject, setRecordStore, setDelBtn} from '../../actions/workflowAction/workflowDetailAction'
-import {getDetails,activityUri,activityName,setCardView,setShowFab} from '../../actions/activityAction/listActivity/listActivityAction'
-// import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
-// import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
-import {setNewBread} from '../../actions/breadcrumbAction'
+import Fab from '../../../fab/FabActivity'
+import Search from '../modal/ModalDate'
+import CardView from '../../CardView'
+import ListView from '../../ListView'
+
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
 
-import CardView from './CardView'
-import ListView from './ListView'
-import Fab from '../../components/fab/FabActivity'
 import 'rc-tooltip/assets/bootstrap.css'
 
 
-class ListActivity extends Component {
+class SearchDate extends Component {
 
     constructor(){
         super()
         this.state={
-            listAct:[],
+            ListAct:[],
+           
         }
     
     }
 
-
     componentDidUpdate(prevProps){
-        if(prevProps.listActivity.listActivityDue!==this.props.listActivity.listActivityDue){
-            const {listActivityDue}=this.props.listActivity  
-            // console.log(listActivityDue)
-            const act= listActivityDue.map(res=>({...res,isSel:false}))
+        if(prevProps.listActivity.listActivity!==this.props.listActivity.listActivity){
+            const {listActivity} = this.props.listActivity
+            // console.log(listActivity)
+            const listAct= listActivity.map(res=>({...res,isSel:false}))
             //  console.log(listWkflw)
             this.setState({
-                listAct:act
+                ListAct:listAct
             })
         }          
     }
 
-    //Direct Page To WorkFlow Detail
-    setActivePage=(FabRec)=>{
-
-        // console.log(FabRec)
+     //Direct Page To WorkFlow Detail
+     setActivePage=(FabRec)=>{
          
         const {user:{_id:bId}}=this.props.session
-        const {activitySel, listActivityDue}=this.props.listActivity          
+        // const {wrkflSel, workflowTemplate, workflowName}=this.props.listActivity          
 
         // this.props.setPageSubject(workflowTemplate)
         this.props.setActivePage(FabRec)
         
-        // //Activity Wizard
+        //Activity Wizard
         // const workflowDet={
         //     _action:'SEARCHACTIVITY',         
         //     workflowUri:wrkflSel,
@@ -72,7 +70,8 @@ class ListActivity extends Component {
         // // console.log(recordDet)
         // this.props.setRecordStore(recordDet)        
       
-         
+        // // this.props.setActivityDetailsUpdate(workflowDet)  
+        // // this.props.setTaskResult(taskResulStatusObj)   
 
         // //Breadcrumb
         // this.props.setNewBread(false,{
@@ -80,49 +79,30 @@ class ListActivity extends Component {
         //     label: workflowName, 
         //     activePage: 'viewDetails', 
         //     isActive: true,
-        // })  
-         
-
+        // })          
     }
 
-    //Create new Workflow
-    // createNewActivity=(e)=>{
-    //     const page = e.target.getAttribute('data-pagename')
-    //     const pageTitle = e.target.getAttribute('data-name')
-    //     const {user:{bio_access_id:bId}}=this.props.session
-
-    //     this.props.setActivePage(page)
-
-    //     const emailObj={
-    //     action: "ITEM_LIST",
-    //     bio_access_id: bId      
-    //         }
-    //     this.props.setEmailStoreNew(emailObj)
-    //     this.props.setPageTitle(pageTitle)
-    // }
-
-   
 
     //Selection
-    markOnSel=(activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration)=>{        
-         
-        const val = [{activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}]
+    markOnSel=(workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority)=>{
+        
+        const {user:{_id:bId}}=this.props.session
+        const val = [{workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority}]
 
         this.props.getDetails(val) //Set Workflow Details
-        this.props.activityUri(activityUri)  //Set Workflow Uri
-        this.props.activityName(workflowName)  //Set Workflow Name
-    
-
-        const {listAct} = this.state
-        // console.log(listAct)
-        const itmIdx = listAct.findIndex(itm=>itm.activityUri === activityUri)
-        const desIdx = listAct.findIndex(itm=>itm.isSel===true)
+        this.props.activityUri(workflowUri)  //Set Workflow Uri
+        this.props.activityName(workflowName)  //Set Workflow Name   
+        
+        const {workList} = this.state
+        // console.log({workList} )
+        const itmIdx = workList.findIndex(itm=>itm.workflowUri === workflowUri)
+        const desIdx = workList.findIndex(itm=>itm.isSel===true)
 
         const newWrkfwList = desIdx === -1?
-        update(listAct,{
+        update(workList,{
           [itmIdx]:{isSel:{$set:true}}
         })
-        :update(listAct,{
+        :update(workList,{
           [itmIdx]:{isSel:{$set:true}},
           [desIdx]:{isSel:{$set:false}}
         })  
@@ -138,35 +118,10 @@ class ListActivity extends Component {
         }
 
         this.setState({
-            listAct: newWrkfwList 
+            workList: newWrkfwList 
             
         })
     }
-
-
-      
-    //Delete Btn
-    // delBtn=()=>{
-    //     // const {wrkflowSelect} = this.state
-    //     const {user:{_id:bId}} = this.props.session  
-    //     const {wrkflSel, listActivityDue}=this.props.listActivity 
-            
-    //     //  console.log(wrkflSel)       
-
-    //     const wrkflowObj={
-    //         bio_access_id:bId,
-    //         task_ids:[wrkflSel]
-
-    //     }
-    //     this.props.setDelBtn(wrkflowObj)
-
-    //     const itemDeleted = listActivity.filter(itm => itm.task_id !== wrkflSel)
-    //     // console.log(vv)
-    //     // this.props.listWorkFlowSub(itemDeleted)
-
-    //     alert("Successful Deleted")
-
-    // } 
 
     //Change view Card and List
     changeToViewCard=(e)=>{
@@ -174,60 +129,61 @@ class ListActivity extends Component {
         this.props.setCardView(!cardView)
     }
 
+ 
+
 
 
   render() {
 
     const{cardView, showFab}=this.props.listActivity
     
-    const{listAct}=this.state
-    // console.log(listAct)
+    const{ListAct}=this.state
+    // console.log(workList)
     
-    const rec = listAct.map(itm=>cardView?
-        <CardView
-            key={itm.activityUri}
-            activityName={itm.activityName}
-            activityUri={itm.activityUri}
-            workflowName={itm.workflowName}
-            assignedTo={itm.assignedTo}
-            activityDateDue={itm.activityDateDue}           
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}  
-            isSel={itm.isSel}
-            supervisor={itm.supervisor}             
-            priority={itm.priority}
-            estDuration={itm.estDuration}
-        /> :
+    const rec = ListAct.map(itm=>cardView? 
         <ListView
-            key={itm.activityUri}
-            activityName={itm.activityName}
-            activityUri={itm.activityUri}
+            key={itm.workflowUri}
             workflowName={itm.workflowName}
-            assignedTo={itm.assignedTo}
-            activityDateDue={itm.activityDateDue}           
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}  
+            workflowUri={itm.workflowUri}
+            markOnSel={this.markOnSel}             
             isSel={itm.isSel}
-            supervisor={itm.supervisor}             
+            dateStart={itm.dateStarted}
+            dateDue={itm.dateDue}
+            jobNo={itm.jobNumber}
             priority={itm.priority}
-            estDuration={itm.estDuration}
         />
-        )
+        :
+            <CardView
+            key={itm.workflowUri}
+            workflowName={itm.workflowName}
+            workflowUri={itm.workflowUri}
+            icon={itm.iconCls}
+            markOnSel={this.markOnSel}            
+            isSel={itm.isSel}
+            supervisor={itm.supervisor}
+            dateStart={itm.dateStarted}
+            dateDue={itm.dateDue}
+            jobNo={itm.jobNumber}
+            priority={itm.priority}
+        />
        
+        )
+
+   
     return (
       <Fragment>  
 
-        <div className="breadcrumb-holder">
-        <div className="container-fluid">
-        <Breadcrumb/>
-        </div>
-        </div>
+        {/* <div className="breadcrumb-holder">
+            <div className="container-fluid">
+                <Breadcrumb/>
+            </div>
+        </div>  */}
     
       <section className="forms">
           <div className="container-fluid">
           <header>
                     <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h1 className="h3 display"><strong>List of Activity</strong></h1>  
+                        <h1 className="h3 display"><strong>Search Activity</strong></h1>  
                        
                             <div className="d-flex align-items-center">                          
 
@@ -267,12 +223,11 @@ class ListActivity extends Component {
 
                     </div>
 
-                    
-
+                    <Search/>
         </header>
+
         
-        <div className="row">
-           {cardView===false?<div className="row">
+           {cardView!==false?<div className="row">
             <div className="col-12">                
                 <div className="d-flex justify-content-between align-items-center">
                 <div className="p-2 img-fluid img-scale"/>
@@ -280,24 +235,23 @@ class ListActivity extends Component {
                         <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
                     </div>
                     <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Workflow</p>
+                        <p className="card-title mb-1 font-weight-bold text-muted">Date Start</p>
                     </div>
                     <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Assigned To</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Due Date</p>
+                        <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
                     </div>
                 </div>               
             </div>
                 {rec} 
             </div>:rec}
-        </div> 
+
+        
 
         {showFab?<Fab 
         FabRec={this.setActivePage}
         delBtn={this.delBtn}
         />:''}
+       
 </div>
 </section>
 </Fragment>  
@@ -305,27 +259,16 @@ class ListActivity extends Component {
   }
 }
 
-ListActivity.propTypes={
+SearchDate.propTypes={
     session: PropTypes.object.isRequired,
     listActivity: PropTypes.object.isRequired,
-    setActivePage: PropTypes.func.isRequired,
-    setCardView:PropTypes.func.isRequired,
-    // setSelWorkFlow:PropTypes.func.isRequired,
-    setShowFab:PropTypes.func.isRequired,
-    // setListActivity:PropTypes.func.isRequired,
+    setCardView: PropTypes.func.isRequired,
     getDetails: PropTypes.func.isRequired,
-    // setStakehList:PropTypes.func.isRequired,
-    // setItemListSubject:PropTypes.func.isRequired,
-    // setRecordStore:PropTypes.func.isRequired,
-    // setEmailStoreNew:PropTypes.func.isRequired,
-    // setDelBtn:PropTypes.func.isRequired,
-    setPageTitle:PropTypes.func.isRequired,
-    // setActivityDetailsUpdate: PropTypes.func.isRequired,
-    // setPageSubject:PropTypes.func.isRequired,
-    setNewBread: PropTypes.func.isRequired,
     activityUri: PropTypes.func.isRequired,
     activityName: PropTypes.func.isRequired,
-    
+    setShowFab: PropTypes.func.isRequired,
+    setActivePage: PropTypes.func.isRequired,    
+    setNewBread: PropTypes.func.isRequired,
 }
 const mapStateToProps= state =>({
     session: state.session,
@@ -336,20 +279,14 @@ export default connect(mapStateToProps,
 {
     setActivePage,
     setCardView, 
-    // setSelWorkFlow, 
-    setShowFab, 
-    // setListActivity, 
-    getDetails, 
-    setNewBread,
-    // setItemListSubject,
-    // setRecordStore,
-    // setEmailStoreNew,
-    // setDelBtn, 
-    setPageTitle,
-    // setActivityDetailsUpdate,
-    // setPageSubject,
+    activityName,
     activityUri,
-    activityName
+    getDetails,    
+    setShowFab,      
+    setNewBread,     
+    // setPageTitle,
+ 
+    
 
-})(ListActivity)
+})(SearchDate)
 
