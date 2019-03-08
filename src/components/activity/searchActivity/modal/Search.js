@@ -9,9 +9,7 @@ import {setCardView, activityUri, setShowFab, getDetails, activityName} from '..
 import {setNewBread} from '../../../../actions/breadcrumbAction'
 
 import Fab from '../../../fab/FabActivity'
-import Search from '../modal/ModalDate'
-import CardView from '../../CardView'
-import ListView from '../../ListView'
+ 
 
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
@@ -19,7 +17,7 @@ import update from 'immutability-helper'
 import 'rc-tooltip/assets/bootstrap.css'
 
 
-class SearchDate extends Component {
+class Search extends Component {
 
     constructor(){
         super()
@@ -135,39 +133,9 @@ class SearchDate extends Component {
 
   render() {
 
-    const{cardView, showFab}=this.props.listActivity
+    const{showFab}=this.props.listActivity
     
-    const{ListAct}=this.state
-    // console.log(workList)
-    
-    const rec = ListAct.map(itm=>cardView? 
-        <ListView
-            key={itm.workflowUri}
-            workflowName={itm.workflowName}
-            workflowUri={itm.workflowUri}
-            markOnSel={this.markOnSel}             
-            isSel={itm.isSel}
-            dateStart={itm.dateStarted}
-            dateDue={itm.dateDue}
-            jobNo={itm.jobNumber}
-            priority={itm.priority}
-        />
-        :
-            <CardView
-            key={itm.workflowUri}
-            workflowName={itm.workflowName}
-            workflowUri={itm.workflowUri}
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}            
-            isSel={itm.isSel}
-            supervisor={itm.supervisor}
-            dateStart={itm.dateStarted}
-            dateDue={itm.dateDue}
-            jobNo={itm.jobNumber}
-            priority={itm.priority}
-        />
-       
-        )
+   
 
    
     return (
@@ -183,7 +151,7 @@ class SearchDate extends Component {
           <div className="container-fluid">
           <header>
                     <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h1 className="h3 display"><strong>Search Activity</strong></h1>  
+                        <h1 className="h3 display"><strong>Search</strong></h1>  
                        
                             <div className="d-flex align-items-center">                          
 
@@ -223,27 +191,100 @@ class SearchDate extends Component {
 
                     </div>
 
-                    <Search/>
+ 
         </header>
 
-        
-           {cardView!==false?<div className="row">
-            <div className="col-12">                
-                <div className="d-flex justify-content-between align-items-center">
-                <div className="p-2 img-fluid img-scale"/>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Date Start</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
-                    </div>
-                </div>               
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4>All form elements</h4>
+                </div>
+                <form class="form-horizontal">
+
+                <div class="card-body">
+                   
+                        <div className="row">
+                            <div className="col-sm-6 form-group">
+                                <label>Initials</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange}  /> 
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div className="row">
+                            <div className="col-sm-4 form-group">
+                                <label>Initials</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange}  /> 
+                            </div>
+                            <div className="col-sm-4 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                            <div className="col-sm-4 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div className="row">
+                            <div className="col-sm-6 form-group">
+                                <label>Initials</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange}  /> 
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div className="row">
+                            <div className="col-sm-6 form-group">
+                                <label>Initials</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange}  /> 
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div className="row">
+                            <div className="col-sm-6 form-group">
+                                <label>Initials</label>
+                                <input name="initials" type="text" placeholder="Mr / Mrs" className="form-control" onChange={this.handleChange}  /> 
+                            </div>
+                            <div className="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input name="first_name" type="text" className="form-control" placeholder="Smith"  onChange={this.handleChange} />
+                            </div>
+                        </div>
+                       
+                        
+
+
+                
+                   
+                </div>
+                <div className="modal-footer">
+                            <button type="submit" className="btn btn-primary">Save</button>                   
+                            <button type="button" className="btn btn-secondary">Close</button>
+                        </div>
+                </form>
             </div>
-                {rec} 
-            </div>:rec}
+        </div>
+        
+         
 
         
 
@@ -259,7 +300,7 @@ class SearchDate extends Component {
   }
 }
 
-SearchDate.propTypes={
+Search.propTypes={
     session: PropTypes.object.isRequired,
     listActivity: PropTypes.object.isRequired,
     setCardView: PropTypes.func.isRequired,
@@ -288,5 +329,5 @@ export default connect(mapStateToProps,
  
     
 
-})(SearchDate)
+})(Search)
 

@@ -16,7 +16,6 @@ import WorkflowDetails from './workflow/listWorkflow/WorkflowDetails'
 import ListActivity from './activity/ListActivity'
 import ActivityDetails from './activity/listActivity/ActivityDetails'
 import SearchActivity from './activity/searchActivity/modal/SearchActivity'
-import SearchDate from './activity/searchActivity/modal/SearchDate'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -80,8 +79,9 @@ class Home extends Component {
       'listOfActivity':ListActivity,
       'viewAct':ActivityDetails,
       'searchActivity': SearchActivity,
-      'searchDate': SearchDate,
+      
 
+       
       
     }
      

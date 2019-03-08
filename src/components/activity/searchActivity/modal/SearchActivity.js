@@ -24,8 +24,7 @@ class SearchActivity extends Component {
     constructor(){
         super()
         this.state={
-            ListAct:[],
-           
+            ListAct:[],          
         }
     
     }
@@ -84,41 +83,40 @@ class SearchActivity extends Component {
 
 
     //Selection
-    markOnSel=(workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority)=>{
-        
-        const {user:{_id:bId}}=this.props.session
-        const val = [{workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority}]
+    markOnSel=(activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration)=>{        
+         
+        const val = [{activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}]
 
         this.props.getDetails(val) //Set Workflow Details
-        this.props.activityUri(workflowUri)  //Set Workflow Uri
-        this.props.activityName(workflowName)  //Set Workflow Name   
-        
-        const {workList} = this.state
-        // console.log({workList} )
-        const itmIdx = workList.findIndex(itm=>itm.workflowUri === workflowUri)
-        const desIdx = workList.findIndex(itm=>itm.isSel===true)
+        this.props.activityUri(activityUri)  //Set Workflow Uri
+        this.props.activityName(workflowName)  //Set Workflow Name
+    
+
+        const {ListAct} = this.state
+        // console.log(listAct)
+        const itmIdx = ListAct.findIndex(itm=>itm.activityUri === activityUri)
+        const desIdx = ListAct.findIndex(itm=>itm.isSel===true)
 
         const newWrkfwList = desIdx === -1?
-        update(workList,{
+        update(ListAct,{
           [itmIdx]:{isSel:{$set:true}}
         })
-        :update(workList,{
+        :update(ListAct,{
           [itmIdx]:{isSel:{$set:true}},
           [desIdx]:{isSel:{$set:false}}
         })  
-        // // select
+
+        // select
         if (itmIdx===desIdx){
             this.props.setShowFab(false)
-            this.props.activityUri(null) 
-                      
-         
+            this.props.activityUri(null)                      
         }
         else{
             this.props.setShowFab(true)
         }
 
         this.setState({
-            workList: newWrkfwList 
+            ListAct: newWrkfwList 
             
         })
     }
@@ -142,29 +140,33 @@ class SearchActivity extends Component {
     
     const rec = ListAct.map(itm=>cardView? 
         <ListView
-            key={itm.workflowUri}
+            key={itm.activityUri}
+            activityName={itm.activityName}
+            activityUri={itm.activityUri}
             workflowName={itm.workflowName}
-            workflowUri={itm.workflowUri}
-            markOnSel={this.markOnSel}             
+            assignedTo={itm.assignedTo}
+            activityDateDue={itm.activityDateDue}           
+            icon={itm.iconCls}
+            markOnSel={this.markOnSel}  
             isSel={itm.isSel}
-            dateStart={itm.dateStarted}
-            dateDue={itm.dateDue}
-            jobNo={itm.jobNumber}
+            supervisor={itm.supervisor}             
             priority={itm.priority}
+            estDuration={itm.estDuration}
         />
         :
-            <CardView
-            key={itm.workflowUri}
+        <CardView
+            key={itm.activityUri}
+            activityName={itm.activityName}
+            activityUri={itm.activityUri}
             workflowName={itm.workflowName}
-            workflowUri={itm.workflowUri}
+            assignedTo={itm.assignedTo}
+            activityDateDue={itm.activityDateDue}           
             icon={itm.iconCls}
-            markOnSel={this.markOnSel}            
+            markOnSel={this.markOnSel}  
             isSel={itm.isSel}
-            supervisor={itm.supervisor}
-            dateStart={itm.dateStarted}
-            dateDue={itm.dateDue}
-            jobNo={itm.jobNumber}
+            supervisor={itm.supervisor}             
             priority={itm.priority}
+            estDuration={itm.estDuration}
         />
        
         )
@@ -235,10 +237,13 @@ class SearchActivity extends Component {
                         <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
                     </div>
                     <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Date Start</p>
+                        <p className="card-title mb-1 font-weight-bold text-muted">Workflow</p>
                     </div>
                     <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
+                        <p className="card-title mb-1 font-weight-bold text-muted">Assigned To</p>
+                    </div>
+                    <div className="col p-2">
+                        <p className="card-title mb-1 font-weight-bold text-muted">Due Date</p>
                     </div>
                 </div>               
             </div>

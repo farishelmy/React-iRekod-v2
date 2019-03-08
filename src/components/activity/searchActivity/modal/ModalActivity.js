@@ -7,261 +7,430 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { connect } from 'react-redux'
 
-import { toggleErr,populateWorkflow } from '../../../../actions/workflowAction/searchWorkflowAction/searchWorkflowAction'
- 
+import { toggleErr, populateActivity } from '../../../../actions/activityAction/searchActivity/searchActivityAction'
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter,Form, FormGroup, Col, Row, CardBody  } from 'reactstrap'
+
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Col, Row, } from 'reactstrap'
 
 
 class ModalActivity extends Component {
-    constructor(){
-        super()
-        this.state={          
-          DateDueStart: null,
-          DateDueEnd: null,
-          DateStartedStart: null,
-          DateStartedEnd: null,
-          DateCompletedStart: null,
-          DateCompletedEnd: null,
-          WorkflowName:null,            
-          actionVal:[],
-          
+  constructor() {
+    super()
+    this.state = {     
+      ActivityName: null,
+      WorkflowName: null,
+      assignedTo: null,
+      supervisor: null,
+      escalatedTo: null,
+      DateDueStart: null,
+      DateDueEnd: null,
+      DateStartedStart: null,
+      DateStartedEnd: null,
+      DateCompletedStart: null,
+      DateCompletedEnd: null,
+      ActivityNotStart: false,
+      CompletedActivity: false,
+      stakehList: [],
 
-        }
+
     }
-    // componentDidMount(){
-    //     const {user:{bio_access_id:bId}}=this.props.session
-    //     const {stakehList}=this.props.stakeh
-    //     if(stakehList.length === 0){this.props.getStakehList({bio_access_id:bId,action:'ITEM_LIST'})}
-        
-    //     const {recordList}=this.props.record
-    //     if(recordList.length === 0){this.props.getRecordList({bio_access_id:bId,action:'ITEM_LIST'})}
+  }
 
-    //     const {actionTypes}=this.props.actionTy
-    //     if(actionTypes.length === 0){this.props.getActionTypes({bio_access_id:bId,action:'ACTION_TYPES'})}
-    // }
-    // componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
+    if(prevProps.stakeholderlistType.stakehType!==this.props.stakeholderlistType.stakehType){
+      const { stakehType } = this.props.stakeholderlistType      
+      const stakehOptions = stakehType.map(itm => ({
+        value: itm.uri,
+        label: itm.Name
+      }));
+      this.setState({     
+        stakehList: stakehOptions
+      });
+    } 
+  }
 
-    //     if (prevProps.stakeh.stakehList !== this.props.stakeh.stakehList) {
-    //         // console.log('update')
-    //         const {stakehList}=this.props.stakeh
-    //         const stakeholder = stakehList.map(itm => ({ value: itm.stakeholder_id, label: itm.full_name, stakehType:itm.stakeh_type, stakehTypeName:itm.stakeh_type_name.toLowerCase()}))
-    //         this.setState({stakeh: stakeholder})
-  
-    //       }
+  toggle = () => {
+    const { showErr } = this.props.modal
+    this.props.toggleErr(!showErr)
+  }
 
-    //     if (prevProps.record.recordList !== this.props.record.recordList) {
-    //         // console.log('update')
-    //         const {recordList}=this.props.record
-    //         const record = recordList.map(itm => ({ value: itm.record_id, label: itm.title, recordNo:itm.record_no, recordType: itm.record_type}))
-    //         this.setState({record: record})
-  
-    //       }
-
-    //       if (prevProps.actionTy.actionTypes !== this.props.actionTy.actionTypes) {
-    //         // console.log('update')
-
-    //         const {actionTypes}=this.props.actionTy
-    //         const actionTy = actionTypes.map(itm => ({ value: itm.id, label:itm.name}))
-    //         this.setState({actionTy: actionTy})
-  
-    //       }
-
-    // }
-
-    toggle=()=> {
-        const{showErr}=this.props.modal
-        this.props.toggleErr(!showErr)
-    }
-
-    //Workflow Name
-    handleChangeName=(e)=>{
+  //Workflow Name
+  handleChange = (e) => {
     const inputName = e.target.getAttribute('name')
-    const inputVal =  e.target.value       
+    const inputVal = e.target.value
     // ===""?e.target.value=null:e.target.value  
     // console.log(e.target.value)    
 
     this.setState({
-        [inputName]:inputVal
-    })  
+      [inputName]: inputVal
+    })
     //  console.log(inputName)   
     //  console.log(inputVal)
-    }    
+  }
 
-      //DATE DUE 
-      handleDateDueStart = (DateDueStart) => this.handleChangeDue({ DateDueStart })
+  handleAssignedTo = param => {
+    // const inputName = e.target.getAttribute('name')
+    this.setState({ assignedTo: param });
+    // console.log(param)
+  };
 
-      handleDateDueEnd = (DateDueEnd) => this.handleChangeDue({ DateDueEnd })
-      
-      handleChangeDue = ({ DateDueStart, DateDueEnd }) => {
-        DateDueStart = DateDueStart || this.state.DateDueStart
-        DateDueEnd = DateDueEnd || this.state.DateDueEnd
+  handleSupervisor = param => {
+    // const inputName = e.target.getAttribute('name')
+    this.setState({ assignedTo: param });
+    // console.log(param)
+  }
 
-          if (DateDueStart.isAfter(DateDueEnd)) {
-            DateDueEnd = DateDueStart
-          }
+  handleEscalatedTo = param => {
+    // const inputName = e.target.getAttribute('name')
+    this.setState({ escalatedTo: param });
+    // console.log(param)
+  };
 
-        this.setState({ DateDueStart, DateDueEnd })
-      }    
+  //DATE DUE 
+  handleDateDueStart = (DateDueStart) => this.handleChangeDue({ DateDueStart })
 
-      // DATE STARTED
-      handleDateStartedStart = (DateStartedStart) => this.handleChangeStarted({ DateStartedStart })
+  handleDateDueEnd = (DateDueEnd) => this.handleChangeDue({ DateDueEnd })
 
-      handleDateStartedEnd = (DateStartedEnd) => this.handleChangeStarted({ DateStartedEnd })
-      
-      handleChangeStarted = ({ DateStartedStart, DateStartedEnd }) => {
-        DateStartedStart = DateStartedStart || this.state.DateStartedStart
-        DateStartedEnd = DateStartedEnd || this.state.DateStartedEnd
+  handleChangeDue = ({ DateDueStart, DateDueEnd }) => {
+    DateDueStart = DateDueStart || this.state.DateDueStart
+    DateDueEnd = DateDueEnd || this.state.DateDueEnd
 
-          if (DateStartedStart.isAfter(DateStartedEnd)) {
-            DateStartedEnd = DateStartedStart
-          }
-
-        this.setState({ DateStartedStart, DateStartedEnd })
-      } 
-
-       // DATE COMPLETED
-       handleDateCompletedStart = (DateCompletedStart) => this.handleChangeCompleted({ DateCompletedStart })
-
-       handleDateCompletedEnd = (DateCompletedEnd) => this.handleChangeCompleted({ DateCompletedEnd })
-       
-       handleChangeCompleted = ({ DateCompletedStart, DateCompletedEnd }) => {
-        DateCompletedStart = DateCompletedStart || this.state.DateCompletedStart
-        DateCompletedEnd = DateCompletedEnd || this.state.DateCompletedEnd
- 
-           if (DateCompletedStart.isAfter(DateCompletedEnd)) {
-            DateCompletedEnd = DateCompletedStart
-           }
- 
-         this.setState({ DateCompletedStart, DateCompletedEnd })
-       } 
-
-      
-     
-
-    formSubmit=(e)=>{
-        e.preventDefault()
-        const {DateDueStart, DateDueEnd,DateStartedStart,DateStartedEnd,DateCompletedStart,DateCompletedEnd, WorkflowName}=this.state  
-        // console.log(DateDueStart)        
-        const {user:{_id:bId}}=this.props.session
-        
-          if (WorkflowName!==null){
-            const param = {
-              workflowName:WorkflowName,
-              _action: "SEARCHWORKFLOW",
-              _id: bId,             
-            }
-            this.props.populateWorkflow(param)   
-            this.props.toggleErr(false)
-          }
-
-          if(DateDueStart!==null && DateDueEnd!==null){
-            const param = {
-              dueDateFrom: moment(DateDueStart).format("DD/MM/YYYY"),
-              dueDateTo: moment(DateDueEnd).format("DD/MM/YYYY"),
-              _action: "SEARCHWORKFLOW",
-              _id: bId,             
-            }
-            this.props.populateWorkflow(param)   
-            this.props.toggleErr(false)
-          }
-
-          if(DateStartedStart!==null && DateStartedEnd!==null){
-            const param = {
-              startDateFrom: moment(DateStartedStart).format("DD/MM/YYYY"),
-              startDateTo: moment(DateStartedEnd).format("DD/MM/YYYY"),
-              _action: "SEARCHWORKFLOW",
-              _id: bId,             
-            }
-            this.props.populateWorkflow(param)   
-            this.props.toggleErr(false)
-          }
-
-          if(DateCompletedStart!==null && DateCompletedEnd!==null){
-            const param = {
-              completeDateFrom: moment(DateCompletedStart).format("DD/MM/YYYY"),
-              completeDateTo: moment(DateCompletedEnd).format("DD/MM/YYYY"),
-              _action: "SEARCHWORKFLOW",
-              _id: bId,             
-            }
-            this.props.populateWorkflow(param)   
-            this.props.toggleErr(false)
-          }
-          
-
-
-
+    if (DateDueStart.isAfter(DateDueEnd)) {
+      DateDueEnd = DateDueStart
     }
 
+    this.setState({ DateDueStart, DateDueEnd })
+  }
+
+  // DATE STARTED
+  handleDateStartedStart = (DateStartedStart) => this.handleChangeStarted({ DateStartedStart })
+
+  handleDateStartedEnd = (DateStartedEnd) => this.handleChangeStarted({ DateStartedEnd })
+
+  handleChangeStarted = ({ DateStartedStart, DateStartedEnd }) => {
+    DateStartedStart = DateStartedStart || this.state.DateStartedStart
+    DateStartedEnd = DateStartedEnd || this.state.DateStartedEnd
+
+    if (DateStartedStart.isAfter(DateStartedEnd)) {
+      DateStartedEnd = DateStartedStart
+    }
+
+    this.setState({ DateStartedStart, DateStartedEnd })
+  }
+
+  // DATE COMPLETED
+  handleDateCompletedStart = (DateCompletedStart) => this.handleChangeCompleted({ DateCompletedStart })
+
+  handleDateCompletedEnd = (DateCompletedEnd) => this.handleChangeCompleted({ DateCompletedEnd })
+
+  handleChangeCompleted = ({ DateCompletedStart, DateCompletedEnd }) => {
+    DateCompletedStart = DateCompletedStart || this.state.DateCompletedStart
+    DateCompletedEnd = DateCompletedEnd || this.state.DateCompletedEnd
+
+    if (DateCompletedStart.isAfter(DateCompletedEnd)) {
+      DateCompletedEnd = DateCompletedStart
+    }
+
+    this.setState({ DateCompletedStart, DateCompletedEnd })
+  }
+
+  //CheckBox
+  handleChange=(event)=>{
+    // e.preventDefault()
+    const target = event.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name    
+            
+    this.setState({
+        [name]:value
+    })  
+    // console.log(input)  
+    // console.log(value)
+  }  
+
+  //Form Submit
+  formSubmit = (e) => {
+    e.preventDefault()
+    const { ActivityName, WorkflowName, assignedTo, supervisor, escalatedTo, ActivityNotStart, CompletedActivity, DateDueStart, DateDueEnd, DateStartedStart, DateStartedEnd, DateCompletedStart, DateCompletedEnd } = this.state       
+    const { user: { _id: bId } } = this.props.session
+
+    const param ={
+      _action: "SEARCHACTIVITY",
+      activityName: ActivityName!==null?ActivityName:null,
+      workflowName: WorkflowName!==null?WorkflowName:null,
+      assignedTo: assignedTo!==null?assignedTo:null,
+      supervisor: supervisor!==null?supervisor:null,
+      escalatedTo: escalatedTo!==null?escalatedTo:null,
+      dueDateFrom: DateDueStart!==null?moment(DateDueStart).format("DD/MM/YYYY"):null,
+      dueDateTo: DateDueEnd!==null?moment(DateDueEnd).format("DD/MM/YYYY"):null,
+      startDateFrom: DateStartedStart!==null?moment(DateStartedStart).format("DD/MM/YYYY"):null,
+      startDateTo: DateStartedEnd!==null?moment(DateStartedEnd).format("DD/MM/YYYY"):null,
+      completeDateFrom: DateCompletedStart!==null?moment(DateCompletedStart).format("DD/MM/YYYY"):null,
+      completeDateTo: DateCompletedEnd!==null?moment(DateCompletedEnd).format("DD/MM/YYYY"):null,
+      excludeActivityNotStart: ActivityNotStart,
+      excludeCompletedActivity: CompletedActivity,
+      _id: bId
+    }
+    this.props.populateActivity(param)
+    // console.log(param)
+    this.props.toggleErr(false)    
+
+  }
+
   render() {
-    const{showErr}=this.props.modal
-     
-  
-    
-    
-    
+    const { showErr } = this.props.modal
+    const {ActivityNotStart, CompletedActivity, stakehList} = this.state
+
 
     return (
       <div>
         <Modal isOpen={showErr} toggle={this.toggle} className={this.props.className}>
-            <Form onSubmit={this.formSubmit}>
+          <Form onSubmit={this.formSubmit}>
             <ModalHeader toggle={this.toggle}>Search Activity</ModalHeader>
             <ModalBody>
 
-                <FormGroup>
+              <Row> 
+                <Col md={6}>        
+                  <FormGroup>
                     <label>Activity Name</label>
-                    <input name="WorkflowName" type="text" className="form-control" placeholder="Activity Name" onChange={this.handleChangeName}  />               
-                </FormGroup>
+                      <input name="ActivityName" type="text" className="form-control" placeholder="Activity Name" onChange={this.handleChange} />
+                  </FormGroup>
+                </Col>
+               
 
-                <FormGroup>
+                <Col md={6}>        
+                  <FormGroup>
                     <label>Workflow Name</label>
-                    <input name="WorkflowName" type="text" className="form-control" placeholder="Workflow Name" onChange={this.handleChangeName}  />               
+                      <input name="WorkflowName" type="text" className="form-control" placeholder="Workflow Name" onChange={this.handleChange} />
+                  </FormGroup>
+                </Col>               
+              </Row> 
+
+
+              <Row> 
+                <Col md={6}>     
+                  <FormGroup>
+                    <label>Assigned To</label>
+                      <Select
+                        name="assignedTo"
+                        options={stakehList}
+                        onChange={this.handleAssignedTo}
+                        className="basic-multi-select"
+                        placeholder="Name"
+                        isClearable
+                      />
+                  </FormGroup>
+                </Col>               
+
+
+                <Col md={6}>  
+                <FormGroup>
+                  <label>Supervisor</label>
+                    <Select
+                      name="supervisor"
+                      options={stakehList}
+                      onChange={this.handleSupervisor}
+                      className="basic-multi-select"
+                      placeholder="Name"
+                      isClearable
+                    />
                 </FormGroup>
+                </Col>               
+              </Row> 
 
-                
 
+              <FormGroup>
+                <label>Escalated To</label>
+                  <Select
+                    name="escalatedTo"
+                    options={stakehList}
+                    onChange={this.handleEscalatedTo}
+                    className="basic-multi-select"
+                    placeholder="Name"
+                    isClearable
+                  />
+              </FormGroup>
+              
 
+               {/* Date Due */}
+              <Row>          
+                <Col md={6}>
+                  <FormGroup>
+                    <label>Date Due Start</label>
+                      <DatePicker
+                          placeholder="Date Start"
+                          selected={this.state.DateDueStart}
+                          selectsStart
+                          startDate={this.state.DateDueStart}
+                          endDate={this.state.DateDueEnd}
+                          onChange={this.handleDateDueStart}
+                          className="form-control"
+                          dateFormat="DD/MM/YYYY"                             
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"                                                             
+                      />
+                  </FormGroup>
+                </Col>
 
-            </ModalBody>
+                  <Col md={6}>
+                    <FormGroup>
+                      <label>Date Due End</label>
+                        <DatePicker
+                          placeholder="Date End"
+                          selected={this.state.DateDueEnd}
+                          selectsEnd
+                          startDate={this.state.DateDueStart}
+                          endDate={this.state.DateDueEnd}
+                          onChange={this.handleDateDueEnd}
+                          className="form-control"
+                          dateFormat="DD/MM/YYYY"
+                          peekNextMonth
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"  
+                          todayButton={"Today"}  
+                        />
+                    </FormGroup>
+                  </Col>
+                </Row>                
+
+                {/* DATE STARTED */}
+                <Row>          
+                  <Col md={6}>
+                    <FormGroup>
+                      <label>Date Started Start</label>
+                        <DatePicker
+                            placeholder="Date Start"
+                            selected={this.state.DateStartedStart}
+                            selectsStart
+                            startDate={this.state.DateStartedStart}
+                            endDate={this.state.DateStartedEnd}
+                            onChange={this.handleDateStartedStart}
+                            className="form-control"
+                            dateFormat="DD/MM/YYYY"                            
+                            showMonthDropdown
+                            showYearDropdown
+                            dropdownMode="select"                              
+                        />
+                    </FormGroup>
+                  </Col>
+
+                  <Col md={6}>
+                    <FormGroup>
+                      <label>Date Started End</label>
+                        <DatePicker
+                          placeholder="Date End"
+                          selected={this.state.DateStartedEnd}
+                          selectsEnd
+                          startDate={this.state.DateStartedStart}
+                          endDate={this.state.DateStartedEnd}
+                          onChange={this.handleDateStartedEnd}
+                          className="form-control"
+                          dateFormat="DD/MM/YYYY"                          
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select"                          
+                        />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                {/* DATE COMPLETED */}
+                <Row>          
+                  <Col md={6}>
+                    <FormGroup>
+                      <label>Date Completed Start</label>
+                        <DatePicker
+                            placeholder="Date Start"
+                            selected={this.state.DateCompletedStart}
+                            selectsStart
+                            startDate={this.state.DateCompletedStart}
+                            endDate={this.state.DateCompletedEnd}
+                            onChange={this.handleDateCompletedStart}
+                            className="form-control"
+                            dateFormat="DD/MM/YYYY"
+                            showMonthDropdown
+                            showYearDropdown
+                            dropdownMode="select" 
+                            todayButton={"Today"}  
+                        />
+                    </FormGroup>
+                  </Col>
+
+                  <Col md={6}>
+                    <FormGroup>
+                      <label>Date Completed End</label>
+                        <DatePicker
+                          placeholder="Date End"
+                          selected={this.state.DateCompletedEnd}
+                          selectsEnd
+                          startDate={this.state.DateCompletedStart}
+                          endDate={this.state.DateCompletedEnd}
+                          onChange={this.handleDateCompletedEnd}
+                          className="form-control"
+                          dateFormat="DD/MM/YYYY"
+                          showMonthDropdown
+                          showYearDropdown
+                          dropdownMode="select" 
+                          todayButton={"Today"}  
+                        />
+                    </FormGroup>
+                  </Col>
+                </Row>
+
+                <Row>  
+                  <Col md={6}>        
+                    <FormGroup>      
+                      <label>
+                        <input name="ActivityNotStart" type="checkbox" onChange={this.handleChange} checked={ActivityNotStart} />  Activity Not Ready to Start                        
+                      </label>
+                    </FormGroup>
+                  </Col>
+               
+                  <Col md={6}>       
+                    <FormGroup>    
+                      <label>
+                        <input name="CompletedActivity" type="checkbox" onChange={this.handleChange} checked={CompletedActivity} /> Activity Complete                        
+                      </label>
+                    </FormGroup>    
+                  </Col>            
+                </Row>            
+
+              </ModalBody>
             <ModalFooter>
 
 
-                
-            <Button type="submit" color="primary">Search</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+
+              <Button type="submit" color="primary">Search</Button>{' '}
+              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
-            </Form>
+          </Form>
         </Modal>
-     </div>
+      </div>
 
     )
   }
 }
-ModalActivity.propTypes={
-    modal:PropTypes.object.isRequired,
-    toggleErr:PropTypes.func.isRequired,
-    populateWorkflow:PropTypes.func.isRequired,
-    // getListAudit:PropTypes.func.isRequired,
-    // getRecordList : PropTypes.func.isRequired,
-    // getActionTypes : PropTypes.func.isRequired
+ModalActivity.propTypes = {
+  modal: PropTypes.object.isRequired,
+  stakeholderlistType: PropTypes.object.isRequired,
+  toggleErr: PropTypes.func.isRequired,  
+  populateActivity: PropTypes.func.isRequired,
 
-  }
+
+}
 const mapStateToProps = (state) => ({
-  modal:state.modal,
-  session:state.session,
-   
-   
- 
+  modal: state.modal,
+  session: state.session,
+  stakeholderlistType:state.stakeholderlistType
 
 })
 export default connect(mapStateToProps,
-    {
-      toggleErr,
-      populateWorkflow,
-    // getRecordList,
-    // getActionTypes,
-    // getListAudit
-})
-    (ModalActivity)
+  {
+    toggleErr,
+    populateActivity,
+  })
+  (ModalActivity)
 
 

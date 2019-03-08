@@ -10,7 +10,7 @@ export const toggleErr = (modalstate) => ({
 })
 
 //Search Workflow
-export const populateWorkflow=(param)=>dispatch=>{
+export const populateActivity=(param)=>dispatch=>{
   // console.log(param)
   const url=biorisUrl+converter(param)  
   fetch(url)
