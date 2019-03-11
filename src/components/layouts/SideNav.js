@@ -86,18 +86,7 @@ class SideNav extends React.Component {
     this.props.ListWorkflowTemplate(listWrkFlwObj)
     this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
     this.props.setShowFab(false)  // Fav True False
-    // this.props.setSelWorkFlow(null)     //ID select for workflow  
-
-    ///////////////////////////////SearchWorkflow/////////////////////////////////////////////
-
-    const pgName = e.target.getAttribute('data-pagename')
-    this.props.setActivePage(pgName)
-    this.props.setShowFab(false)          // Fav True False
-    this.props.setSelWorkFlow(null)      //ID select for workflow  
-
-    if (pgName === 'searchWorkflow') {
-      this.props.toggleErr(true)
-    }
+    // this.props.setSelWorkFlow(null)     //ID select for workflow     
 
 
     ////////////////////////////////Activity////////////////////////////////////
@@ -108,6 +97,20 @@ class SideNav extends React.Component {
     }
 
     this.props.setListActDue(listAct)
+
+     ///////////////////////////////Search/////////////////////////////////////////////
+
+     const pgName = e.target.getAttribute('data-pagename')
+     this.props.setActivePage(pgName)
+     this.props.setShowFab(false)          // Fav True False
+     this.props.setSelWorkFlow(null)      //ID select for workflow  
+ 
+    ///////////////////////////////SearchWorkflow/////////////////////////////////////////////
+
+
+     if (pgName === 'searchWorkflow') {
+       this.props.toggleErr(true)
+     }
 
 
     ////////////////////////////////SearchActivity////////////////////////////////////

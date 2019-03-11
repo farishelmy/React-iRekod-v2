@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ListActivity({activityUri,activityName,workflowName,assignedTo,activityDateDue,iconCls,supervisor,priority,isSel,markOnSel}) {
     const handleClick=(e)=>{
-        markOnSel(activityUri,activityName,workflowName,assignedTo,activityDateDue,iconCls,supervisor,priority)
+        markOnSel(activityUri,activityName,workflowName,assignedTo,activityDateDue,iconCls,supervisor,priority,isSel)
     }
   return (
      

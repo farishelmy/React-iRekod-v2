@@ -60,7 +60,8 @@ class EmailWizard extends Component {
       supervisor: supervisor,
       priority: priority,
       estDuration: estDuration,
-      stakehList: stakehOptions
+      stakehList: stakehOptions,
+      subject: activityName,
     });
   }
 
@@ -73,8 +74,8 @@ class EmailWizard extends Component {
     this.setState({
       [inputName]: inputVal
     });
-    // console.log(inputName)
-    //  console.log(inputVal)
+    console.log(inputName)
+     console.log(inputVal)
   };
 
   handleTo = param => {
@@ -106,7 +107,8 @@ class EmailWizard extends Component {
       supervisor,
       priority,
       estDuration,
-      stakehList
+      stakehList,
+      subject
     } = this.state;
 
     return (
@@ -141,7 +143,9 @@ class EmailWizard extends Component {
                   type="text"
                   name="subject"
                   className="form-control"
-                  value={activityName}
+              
+                  onChange={this.handleChange}
+                  value={subject}
                 />
               </div>
               <div className="row">

@@ -32,23 +32,20 @@ const appReducer = combineReducers({
     fab:fabReducer,
     searchConf:searchReducer,
     breadcrumb:breadcrumbReducer,
-
+    modal:modalReducer,
    
     //stakeholder
-    stakeholderList:stakeholderList,
-    stakeholderlistType:stakeholderReducer,    
+    stakeholderlistType:stakeholderReducer, 
     stakeholderView:stakeholderView,
-    stakeholderUpdate:stakeholderUpdate,
-    stakeholderAdd:stakeholderAdd,
+    // stakeholderList:stakeholderList,       
+    // stakeholderUpdate:stakeholderUpdate,
+    // stakeholderAdd:stakeholderAdd,
 
     //workflow
     listWorkflow: listWorkFlowReducer,
     // workflowDetail: workFlowDetailsReducer,
     // crtNewReducer: createNewReducer,
-    // updActReducer: updateActReducer,
-
-    //modal
-    modal:modalReducer,
+    // updActReducer: updateActReducer, 
 
     //activity
     listActivity:listofActivityReducer,

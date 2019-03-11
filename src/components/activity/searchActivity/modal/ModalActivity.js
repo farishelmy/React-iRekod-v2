@@ -70,19 +70,19 @@ class ModalActivity extends Component {
 
   handleAssignedTo = param => {
     // const inputName = e.target.getAttribute('name')
-    this.setState({ assignedTo: param });
+    this.setState({ assignedTo: param.label });
     // console.log(param)
   };
 
   handleSupervisor = param => {
     // const inputName = e.target.getAttribute('name')
-    this.setState({ assignedTo: param });
+    this.setState({ assignedTo: param.label });
     // console.log(param)
   }
 
   handleEscalatedTo = param => {
     // const inputName = e.target.getAttribute('name')
-    this.setState({ escalatedTo: param });
+    this.setState({ escalatedTo: param.label });
     // console.log(param)
   };
 

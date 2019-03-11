@@ -6,7 +6,7 @@ import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
 // import { setSelWorkFlow, getDetails} from '../../actions/workflowAction/authListWorkFlow'
 // import {setItemListSubject, setRecordStore, setDelBtn} from '../../actions/workflowAction/workflowDetailAction'
-import {getDetails,activityUri,activityName,setCardView,setShowFab} from '../../actions/activityAction/listActivity/listActivityAction'
+import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage} from '../../actions/activityAction/listActivity/listActivityAction'
 // import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
 // import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
@@ -52,6 +52,7 @@ class ListActivity extends Component {
 
         // this.props.setPageSubject(workflowTemplate)
         this.props.setActivePage(FabRec)
+        this.props.setWizardPage("general")
         
         // //Activity Wizard
         // const workflowDet={
@@ -325,6 +326,7 @@ ListActivity.propTypes={
     setNewBread: PropTypes.func.isRequired,
     activityUri: PropTypes.func.isRequired,
     activityName: PropTypes.func.isRequired,
+    setWizardPage: PropTypes.func.isRequired,
     
 }
 const mapStateToProps= state =>({
@@ -349,7 +351,8 @@ export default connect(mapStateToProps,
     // setActivityDetailsUpdate,
     // setPageSubject,
     activityUri,
-    activityName
+    activityName,
+    setWizardPage
 
 })(ListActivity)
 

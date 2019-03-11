@@ -53,11 +53,11 @@ render() {
   return (
     
   <Fragment>
-      <div className="breadcrumb-holder">
+      {/* <div className="breadcrumb-holder">
             <div className="container-fluid">
               <Breadcrumb/>
             </div>
-        </div>   
+        </div>    */}
  
         {activityDet.map((item,idx) =>   
 

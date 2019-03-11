@@ -3,8 +3,8 @@ import {STAKEHOLDER_VIEW,STAKEHOLDER_MEMBER,STAKEHOLDER_GROUP,STAKEHOLDER_ACC} f
 const initialState = {
     stakeholderDetail:[],
     stakeholderMember:[],
-    stakeholderGroup:[],
-    stakeholderAcc:[],   
+    // stakeholderGroup:[],
+    // stakeholderAcc:[],   
 }
 
 export default (state = initialState, action) => {
