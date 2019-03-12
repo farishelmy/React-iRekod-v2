@@ -61,17 +61,17 @@ class ListWorkflow extends Component {
       workflowName
     } = this.props.listWorkflow;
 
-    this.props.setShowFab(false);
-    this.props.setActivePage(FabRec);
-    this.props.setWizardPage("general");
+    this.props.setShowFab(false)
+    this.props.setActivePage(FabRec)
+    this.props.setWizardPage("general")
 
     //Activity Wizard
     const workflowDet = {
       _action: "SEARCHACTIVITY",
       workflowUri: wrkflSel,
       _id: bId
-    };
-
+    }
+     
     this.props.setListActivity(workflowDet);
 
     //Record Wizard
@@ -92,9 +92,9 @@ class ListWorkflow extends Component {
 
     //Breadcrumb
     this.props.setNewBread(false, {
-      id: "viewDetails",
+      id: wrkflSel,
       label: workflowName,
-      activePage: "viewDetails",
+      activePage: "viewWorkflow",
       isActive: true
     });
   };
@@ -166,10 +166,10 @@ class ListWorkflow extends Component {
           });
     // // select
     if (itmIdx === desIdx) {
-      this.props.setShowFab(false);
-      this.props.setSelWorkFlow(null);
+      this.props.setShowFab(false)
+      this.props.setSelWorkFlow(null)
     } else {
-      this.props.setShowFab(true);
+      this.props.setShowFab(true)
     }
 
     this.setState({
@@ -321,43 +321,42 @@ class ListWorkflow extends Component {
                 </div>
               </div>
 
-              {activePage === "listOfWorkflow" ? (
+              {activePage === "listOfWorkflow" ? 
                 <ListTemplate />
-              ) : activePage === "SearchWorkflow" ? (
+               : activePage === "SearchWorkflow" ? 
                 <Search />
-              ) : (
+               : 
                 ""
-              )}
+              }
             </header>
 
             <div className="row">
-              {cardView === false ? (
-                <div className="row">
-                  <div className="col-12">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <div className="p-2 img-fluid img-scale" />
-                      <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">
-                          Title
-                        </p>
-                      </div>
-                      <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">
-                          Date Start
-                        </p>
-                      </div>
-                      <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">
-                          Date Due
-                        </p>
+              {cardView === false ? 
+                workList.length!==0?
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="p-2 img-fluid img-scale" />
+                        <div className="col p-2">
+                          <p className="card-title mb-1 font-weight-bold text-muted">
+                            Title
+                          </p>
+                        </div>
+                        <div className="col p-2">
+                          <p className="card-title mb-1 font-weight-bold text-muted">
+                            Date Start
+                          </p>
+                        </div>
+                        <div className="col p-2">
+                          <p className="card-title mb-1 font-weight-bold text-muted">
+                            Date Due
+                          </p>
+                        </div>
                       </div>
                     </div>
+                    {rec}
                   </div>
-                  {rec}
-                </div>
-              ) : (
-                rec
-              )}
+                :"":rec}
             </div>
 
             {showFab ? (

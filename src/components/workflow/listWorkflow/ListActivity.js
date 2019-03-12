@@ -12,16 +12,16 @@ export default function ListActivity({activityUri,activityName,workflowName,assi
             <div className=" d-flex justify-content-between align-items-center">
                 <img className="p-2 img-fluid img-scale" src={require('../../../img/management.svg')} alt="activity"/>
                     <div className="col p-2">
-                        <p className={isSel?"card-title mb-1 font-weight-bold text-light":"card-title mb-1 font-weight-bold text-muted"}>{activityName}</p>
+                        <p className={isSel?"card-title mb-1 font-weight-bold text-light text-truncate":"card-title mb-1 font-weight-bold text-muted text-truncate"}>{activityName}</p>
                     </div>
                     <div className="col p-2">
-                        <p className={isSel?"card-title mb-1 font-weight-bold text-light":"card-title mb-1 font-weight-bold text-muted"}>{workflowName}</p>
+                        <p className={isSel?"card-title mb-1 font-weight-bold text-light text-truncate":"card-title mb-1 font-weight-bold text-muted text-truncate"}>{workflowName}</p>
                     </div>
                     <div className="col p-2">
-                        <p className={isSel?"card-title mb-1 font-weight-bold text-light":"card-title mb-1 font-weight-bold text-muted"}>{assignedTo}</p>
+                        <p className={isSel?"card-title mb-1 font-weight-bold text-light text-truncate":"card-title mb-1 font-weight-bold text-muted text-truncate"}>{assignedTo}</p>
                     </div>
                     <div className="col p-2">
-                        <p className={isSel?"card-title mb-1 font-weight-bold text-light":"card-title mb-1 font-weight-bold text-muted"}>{activityDateDue}</p>
+                        <p className={isSel?"card-title mb-1 font-weight-bold text-light text-truncate":"card-title mb-1 font-weight-bold text-muted text-truncate"}>{activityDateDue}</p>
                     </div>
             </div>
         </div>

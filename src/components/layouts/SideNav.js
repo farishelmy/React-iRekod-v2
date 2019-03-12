@@ -60,9 +60,9 @@ class SideNav extends React.Component {
 
     //Breadcrumb
     this.props.setNewBread(true, {
-      id: 'index',
+      id: e.target.getAttribute('data-pagename'),
       label: e.target.getAttribute('data-pageTitle'),
-      activePage: 'index',
+      activePage: e.target.getAttribute('data-pagename'),
       isActive: true,
     })
 
@@ -118,17 +118,6 @@ class SideNav extends React.Component {
     if (pgName === 'searchActivity') {
       this.props.toggleErr(true)
     }
-
-    if (pgName === 'searchDate') {
-      this.props.toggleErr(true)
-    }
-
-
-
-
-
-
-
 
   }
 
@@ -186,17 +175,17 @@ class SideNav extends React.Component {
                   <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1" /></div>Workflow </a>
                 <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                   <li>
-                    <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List of Workflow" >
-                      <div className="userIcon" data-pagename="listOfWorkflow">
-                        <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
-                      </div>List of Workflow Template
-                      </a>
-                  </li>
-                  <li>
                     <a href="/" onClick={this.setActivePage} data-pagename="searchWorkflow" data-pagetitle="Search Workflow" >
                       <div className="userIcon" data-pagename="searchWorkflow">
                         <img src={require('../../img/loupe.svg')} alt="doc" className="img-fluid p-1" data-pagename="searchWorkflow" name="Search Workflow" />
                       </div>Search Workflow
+                      </a>
+                  </li>
+                  <li>
+                    <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List of Workflow" >
+                      <div className="userIcon" data-pagename="listOfWorkflow">
+                        <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
+                      </div>List of Workflow Template
                       </a>
                   </li>
                 </ul>

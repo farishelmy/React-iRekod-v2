@@ -3,12 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Breadcrumb from '../layouts/Breadcrumb'
-import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction'
-// import { setSelWorkFlow, getDetails} from '../../actions/workflowAction/authListWorkFlow'
-// import {setItemListSubject, setRecordStore, setDelBtn} from '../../actions/workflowAction/workflowDetailAction'
+import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction' 
 import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage} from '../../actions/activityAction/listActivity/listActivityAction'
-// import {setEmailStoreNew} from '../../actions/workflowAction/createNewActAction'
-// import {setActivityDetailsUpdate} from '../../actions/workflowAction/updateActAction'
 import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
@@ -48,40 +44,20 @@ class ListActivity extends Component {
         // console.log(FabRec)
          
         const {user:{_id:bId}}=this.props.session
-        const {activitySel, listActivityDue}=this.props.listActivity          
+        const {activityName, listActivityDue}=this.props.listActivity          
 
         // this.props.setPageSubject(workflowTemplate)
         this.props.setActivePage(FabRec)
-        this.props.setWizardPage("general")
-        
-        // //Activity Wizard
-        // const workflowDet={
-        //     _action:'SEARCHACTIVITY',         
-        //     workflowUri:wrkflSel,
-        //     _id:bId,               
-        // } 
+        this.props.setWizardPage("general") 
+        this.props.setShowFab(false)      
 
-        // this.props.setListActivity(workflowDet)
-
-        // //Record Wizard    
-        // const recordDet = {
-        //     _id: bId,
-        //     _action: "SEARCHRECORD",
-        //     jsonQuery: JSON.stringify([{"op":"EQUALS","field":"%26%26Related+Records+of+Workflow","value1":workflowName}]),
-        //     searchOrder: "0"
-        // }
-        // // console.log(recordDet)
-        // this.props.setRecordStore(recordDet)        
-      
-         
-
-        // //Breadcrumb
-        // this.props.setNewBread(false,{
-        //     id: 'viewDetails', 
-        //     label: workflowName, 
-        //     activePage: 'viewDetails', 
-        //     isActive: true,
-        // })  
+        //Breadcrumb
+        this.props.setNewBread(false,{
+            id: 'viewAct', 
+            label: activityName, 
+            activePage: 'viewAct', 
+            isActive: true,
+        })  
          
 
     }
@@ -313,16 +289,9 @@ ListActivity.propTypes={
     setCardView:PropTypes.func.isRequired,
     // setSelWorkFlow:PropTypes.func.isRequired,
     setShowFab:PropTypes.func.isRequired,
-    // setListActivity:PropTypes.func.isRequired,
-    getDetails: PropTypes.func.isRequired,
-    // setStakehList:PropTypes.func.isRequired,
-    // setItemListSubject:PropTypes.func.isRequired,
-    // setRecordStore:PropTypes.func.isRequired,
-    // setEmailStoreNew:PropTypes.func.isRequired,
+    getDetails: PropTypes.func.isRequired,   
     // setDelBtn:PropTypes.func.isRequired,
-    setPageTitle:PropTypes.func.isRequired,
-    // setActivityDetailsUpdate: PropTypes.func.isRequired,
-    // setPageSubject:PropTypes.func.isRequired,
+    setPageTitle:PropTypes.func.isRequired,    
     setNewBread: PropTypes.func.isRequired,
     activityUri: PropTypes.func.isRequired,
     activityName: PropTypes.func.isRequired,
@@ -337,18 +306,12 @@ const mapStateToProps= state =>({
 export default connect(mapStateToProps,
 {
     setActivePage,
-    setCardView, 
-    // setSelWorkFlow, 
-    setShowFab, 
-    // setListActivity, 
+    setCardView,    
+    setShowFab,     
     getDetails, 
-    setNewBread,
-    // setItemListSubject,
-    // setRecordStore,
-    // setEmailStoreNew,
+    setNewBread,     
     // setDelBtn, 
-    setPageTitle,
-    // setActivityDetailsUpdate,
+    setPageTitle,     
     // setPageSubject,
     activityUri,
     activityName,

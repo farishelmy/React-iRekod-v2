@@ -1,8 +1,8 @@
 import React, { Component,Fragment } from 'react'
 import '../../../css/ViewDetail.css'
 import MemberView from '../../stakeholder/view/MemberView'
-import GroupView from '../../stakeholder/view/GroupView'
-import AccessView from '../../stakeholder/view/AccessView'
+// import GroupView from '../../stakeholder/view/GroupView'
+// import AccessView from '../../stakeholder/view/AccessView'
 import {setActivePage} from '../../../actions/layoutInitAction' 
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess} from '../../../actions/stakeholderAction/stakehViewDetail'
 import {setStakehType,setStakehSel,setStakehNumb,stakehSelObj} from '../../../actions/stakeholderAction/stakehTypeAction'
@@ -48,8 +48,7 @@ class ViewDetail extends Component {
     //stkh Detail     
     this.props.setStakeholderItemDetail(val)       
 
-    //Stakeh Obj
-   
+    //Stakeh Obj   
     this.props.stakehSelObj(val)
 
      //Member

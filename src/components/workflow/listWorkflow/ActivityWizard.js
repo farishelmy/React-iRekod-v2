@@ -6,6 +6,7 @@ import { setActivePage } from '../../../actions/layoutInitAction'
 import { setSelWorkFlow, setShowFab } from '../../../actions/workflowAction/authListWorkFlow'
 import { getDetails,activityUri,activityName } from '../../../actions/activityAction/listActivity/listActivityAction'
 import { setWizardPage } from '../../../actions/workflowAction/workflowDetailAction'
+import { setNewBread } from '../../../actions/breadcrumbAction'
 
 
 import { connect } from 'react-redux'
@@ -34,9 +35,7 @@ class ActivityWizard extends Component {
 
   //Direct Page
   setActivePage = (FabRec1,FabRec2) => {
-    // console.log(FabRec2)
-
-    
+    // console.log(FabRec2)    
 
     this.props.setShowFab(false)
     this.props.setActivePage(FabRec2)
@@ -61,14 +60,15 @@ class ActivityWizard extends Component {
     // // console.log(recordDet)
     // this.props.setRecordStore(recordDet)
 
+    const {activityName} = this.props.listActivity
 
-    // //Breadcrumb
-    // this.props.setNewBread(false, {
-    //   id: 'viewDetails',
-    //   label: workflowName,
-    //   activePage: 'viewDetails',
-    //   isActive: true,
-    // })
+    //Breadcrumb
+    this.props.setNewBread(false, {
+      id: 'viewAct',
+      label: activityName,
+      activePage: 'viewAct',
+      isActive: true,
+    })
 
   }
 
@@ -80,7 +80,7 @@ class ActivityWizard extends Component {
     
     this.props.getDetails(val) //Set Workflow Details
     this.props.activityUri(activityUri)  //Set Workflow Uri
-    this.props.activityName(workflowName)  //Set Workflow Name
+    this.props.activityName(activityName)  //Set Workflow Name
 
     const { listActivity } = this.state
     // console.log({workList} )
@@ -136,21 +136,21 @@ class ActivityWizard extends Component {
           </div> */}
 
             <div className="row">
-              <div className="col-12">
+              <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="d-flex justify-content-between align-items-center">
                   <div className="p-2 img-fluid img-scale" />
-                  <div className="col p-2">
-                    <p className="card-title mb-1 font-weight-bold text-muted">Activity Name</p>
-                  </div>
-                  <div className="col p-2">
-                    <p className="card-title mb-1 font-weight-bold text-muted">Workflow Name</p>
-                  </div>
-                  <div className="col p-2">
-                    <p className="card-title mb-1 font-weight-bold text-muted">Assigned To</p>
-                  </div>
-                  <div className="col p-2">
-                    <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
-                  </div>
+                    <div className="col p-2">
+                      <p className="card-title mb-1 font-weight-bold text-muted ">Activity Name</p>
+                    </div>
+                    <div className="col p-2">
+                      <p className="card-title mb-1 font-weight-bold text-muted ">Workflow Name</p>
+                    </div>
+                    <div className="col p-2">
+                      <p className="card-title mb-1 font-weight-bold text-muted ">Assigned To</p>
+                    </div>
+                    <div className="col p-2">
+                      <p className="card-title mb-1 font-weight-bold text-muted ">Date Due</p>
+                    </div>
                 </div>
               </div>
 
@@ -188,6 +188,7 @@ ActivityWizard.propTypes = {
   session: PropTypes.object.isRequired,
   layout: PropTypes.object.isRequired,
   listWorkflow: PropTypes.object.isRequired,
+  listActivity: PropTypes.object.isRequired,
   setSelWorkFlow: PropTypes.func.isRequired,
   setShowFab: PropTypes.func.isRequired,
   getDetails: PropTypes.func.isRequired,
@@ -205,6 +206,7 @@ const mapStateToProps = state => ({
   session: state.session,
   layout: state.layout,
   listWorkflow: state.listWorkflow,
+  listActivity: state.listActivity,
 
 })
 
@@ -215,6 +217,7 @@ export default connect(mapStateToProps, {
   activityUri,
   activityName,
   setActivePage,
-  setWizardPage
+  setWizardPage,
+  setNewBread
 
 })(ActivityWizard)

@@ -163,7 +163,7 @@ class index extends Component {
 
         //Breadcrumb
         this.props.setNewBread(false,{
-            id:'viewStakeh', 
+            id: stakehObj.sId, 
             label:stakehObj.name, 
             activePage:'viewStakeh', 
             isActive:true,

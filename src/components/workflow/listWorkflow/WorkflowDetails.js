@@ -4,7 +4,9 @@ import activityWizard from '../../workflow/listWorkflow/ActivityWizard'
 import recordWizard from '../../workflow/listWorkflow/RecordWizard'
 import FolTabHead from '../../workflow/listWorkflow/TabWorkflowDet'
 import Breadcrumb from '../../layouts/Breadcrumb'
+
 import {setWizardPage,setListActivity} from '../../../actions/workflowAction/workflowDetailAction'
+import {setShowFab} from '../../../actions/workflowAction/authListWorkFlow'
  
 
 import {connect} from 'react-redux'
@@ -19,6 +21,8 @@ class WorkflowDetails extends Component {
         const {wrkflSel}=this.props.listWorkflow
 
         this.props.setWizardPage(wizardName)
+        this.props.setShowFab(false)
+
         
         
         // //Activity Detail
@@ -98,6 +102,7 @@ WorkflowDetails.propTypes={
   setWizardPage: PropTypes.func.isRequired,
   listWorkflow: PropTypes.object.isRequired,
   setListActivity: PropTypes.func.isRequired,
+  setShowFab: PropTypes.func.isRequired,
 }
 
 const mapStateToProps= state =>({
@@ -108,6 +113,7 @@ const mapStateToProps= state =>({
   
 export default connect(mapStateToProps, { 
     setWizardPage,
-    setListActivity
+    setListActivity,
+    setShowFab
 
 })(WorkflowDetails)

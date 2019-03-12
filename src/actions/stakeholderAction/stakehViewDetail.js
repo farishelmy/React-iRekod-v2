@@ -24,6 +24,21 @@ export const setStakeholderItemDetail = (param) => {
         payload:param
     }
 }
+
+export const setStakeholderItemDetailBreadcrumb = (param) => dispatch =>{
+    // console.log(param)
+    const url=biorisUrl+converter(param)
+    // console.log(url)
+        fetch(url)
+        .then(res=>res.json())
+        .then(res=>{
+            console.log(res.data)
+            dispatch({
+                type:STAKEHOLDER_VIEW,
+                payload:res.data
+            })
+        })
+}
  
 //Call member 
 export const viewStakehMember = (param) => dispatch =>{

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-// import Breadcrumb from '../layouts/Breadcrumb'
+import Breadcrumb from '../../../layouts/Breadcrumb'
 import { setActivePage } from '../../../../actions/layoutInitAction'
 import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName } from '../../../../actions/workflowAction/authListWorkFlow'
 import { setRecordStore, setListActivity } from '../../../../actions/workflowAction/workflowDetailAction'
@@ -73,9 +73,9 @@ class SearchWorkflow extends Component {
        
         //Breadcrumb
         this.props.setNewBread(false, {
-            id: 'viewDetails',
+            id: wrkflSel,
             label: workflowName,
-            activePage: 'viewDetails',
+            activePage: 'viewWorkflow',
             isActive: true,
         })
     }
@@ -171,11 +171,11 @@ class SearchWorkflow extends Component {
         return (
             <Fragment>
 
-                {/* <div className="breadcrumb-holder">
-            <div className="container-fluid">
-                <Breadcrumb/>
-            </div>
-        </div>  */}
+            <div className="breadcrumb-holder">
+                <div className="container-fluid">
+                    <Breadcrumb/>
+                </div>
+            </div> 
 
                 <section className="forms">
                     <div className="container-fluid">
@@ -222,26 +222,33 @@ class SearchWorkflow extends Component {
                             </div>
 
                             <Search />
+
                         </header>
 
-
-                        {cardView !== false ? <div className="row">
-                            <div className="col-12">
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <div className="p-2 img-fluid img-scale" />
-                                    <div className="col p-2">
-                                        <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
+                        <div className="row">
+                            {cardView !== false ? 
+                                workList.length!==0?
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="p-2 img-fluid img-scale" />
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
+                                                </div>
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Workflow</p>
+                                                </div>
+                                                 
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Due Date</p>
+                                                </div>
+                                            </div>
+                                        </div>{rec}
                                     </div>
-                                    <div className="col p-2">
-                                        <p className="card-title mb-1 font-weight-bold text-muted">Date Start</p>
-                                    </div>
-                                    <div className="col p-2">
-                                        <p className="card-title mb-1 font-weight-bold text-muted">Date Due</p>
-                                    </div>
-                                </div>
-                            </div>
-                            {rec}
-                        </div> : rec}
+                                :"" 
+                            : rec}
+                        </div>
+                        
 
 
 

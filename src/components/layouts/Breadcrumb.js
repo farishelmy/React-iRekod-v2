@@ -4,7 +4,12 @@ import { connect } from "react-redux"
 import update from "immutability-helper"
 import { setBread, resetNav, backPrev } from "../../actions/breadcrumbAction"
 import { setActivePage } from "../../actions/layoutInitAction"
-import {setStakehType} from "../../actions/stakeholderAction/stakehTypeAction"
+import { setStakehType } from "../../actions/stakeholderAction/stakehTypeAction"
+import { setStakeholderItemDetailBreadcrumb } from "../../actions/stakeholderAction/stakehViewDetail"
+import { setListActDue } from '../../actions/activityAction/listActivity/listActivityAction'
+import { toggleErr} from '../../actions/workflowAction/searchWorkflowAction/searchWorkflowAction'
+import { setShowFab } from '../../actions/workflowAction/authListWorkFlow'
+import { setWizardPage, setListActivity, setRecordStore } from '../../actions/workflowAction/workflowDetailAction'
 // import { setPageTitle } from '../../actions/recordAction'
 // import { getAdvSearch } from "../../actions/searchAction"
 // import { setActiveEditor } from "../../actions/editorAction"
@@ -93,7 +98,7 @@ class Breadcrumb extends Component {
       this.props.setBread(newNav)
       this.props.resetNav()
       const selNav = breadList.find(nav => nav.id === navId)
-      
+      console.log(selNav)
       if (selNavIdx === 1) {
         const { page, start, limit, pageTitle, parameter, activePage } = selNav
 
@@ -109,37 +114,79 @@ class Breadcrumb extends Component {
         const {user:{_id:bId}} = this.props.session
         const {stakehLabel} = this.props.stakeholderlistType
         
+        //Workflow
         const stakehObj={
           _action:'LISTLOCATION',
           _id:bId,                        
           filterType: stakehLabel,
         }
         this.props.setStakehType(stakehObj)
+
+          //Search Workflow
+          if(activePage==='searchWorkflow'){
+            this.props.toggleErr(true)            
+          }
+          else if(activePage==='searchActivity'){
+            this.props.toggleErr(true) 
+          }
+
+        //Activity
+        const listAct = {
+          _action: "LISTACTDUE",
+          _id: bId
+        }    
+        this.props.setListActDue(listAct)
         
       } 
       else if (selNavIdx >= 2) {
-        const { page, start, limit, pageTitle, parameter, activePage } = selNav
-
-        // this.props.getAdvSearch(parameter, {
-        //   page: page,
-        //   start: start,
-        //   limit: limit
-        // })
-        
-        this.props.setActivePage(activePage)
-        // this.props.setPageTitle(pageTitle)
+        const { id, label, activePage } = selNav       
 
         const {user:{_id:bId}} = this.props.session
-        const {stakehLabel,stakehSel} = this.props.stakeholderlistType
-        const selNav = breadList.find(nav => nav.id === selNavIdx)
+        // const {stakehLabel,stakehSel} = this.props.stakeholderlistType
+        // const selNav = breadList.find(nav => nav.id === selNavIdx)
+              
         const stakehObj={
           _action:'LISTLOCATION',
           _id:bId, 
-          URI:stakehSel,                         
+          URI:navId,                         
           ANODE: "A",
         }
-        console.log(stakehObj)
-        this.props.setStakehType(stakehObj)
+        // console.log(stakehObj)
+        // this.props.setStakeholderItemDetailBreadcrumb(stakehObj)
+        // this.props.setActivePage(activePage)   
+
+       
+        if(activePage==="viewWorkflow"){
+          console.log("ywy")
+
+          this.props.setActivePage(activePage)     
+          this.props.setShowFab(false)
+          this.props.setWizardPage("general")
+
+          //Activity Wizard
+          const workflowDet = {
+            _action: "SEARCHACTIVITY",
+            workflowUri: id,
+            _id: bId
+          }          
+          this.props.setListActivity(workflowDet)
+
+          //Record Wizard
+          const recordDet = {
+            _id: bId,
+            _action: "SEARCHRECORD",
+            jsonQuery: JSON.stringify([
+              {
+                op: "EQUALS",
+                field: "%26%26Related+Records+of+Workflow",
+                value1: label
+              }
+            ]),
+            searchOrder: "0"
+          }
+          this.props.setRecordStore(recordDet)
+
+        }
         
       }else {
         const { pageTitle, activeEditor, activePage } = selNav
@@ -183,7 +230,7 @@ Breadcrumb.propTypes = {
   session: PropTypes.object.isRequired,
   breadcrumb: PropTypes.object.isRequired,
   stakeholderlistType: PropTypes.object.isRequired,
-  // search: PropTypes.object.isRequired,
+  layout: PropTypes.object.isRequired,
   // records: PropTypes.object.isRequired,
   setBread: PropTypes.func.isRequired,
   setActivePage: PropTypes.func.isRequired,
@@ -193,14 +240,20 @@ Breadcrumb.propTypes = {
   // setActiveEditor: PropTypes.func.isRequired,
   backPrev: PropTypes.func.isRequired,
   setStakehType: PropTypes.func.isRequired,
+  setStakeholderItemDetailBreadcrumb: PropTypes.func.isRequired,
+  setListActDue: PropTypes.func.isRequired,
+  toggleErr: PropTypes.func.isRequired,
+  setWizardPage: PropTypes.func.isRequired,
+  setShowFab: PropTypes.func.isRequired,
+  setListActivity: PropTypes.func.isRequired,
+  setRecordStore: PropTypes.func.isRequired,
 
 }
 const mapStateToProps = state => ({
   breadcrumb: state.breadcrumb,
   session: state.session,
-  stakeholderlistType: state.stakeholderlistType
-  // search:state.search,
-  // records:state.records
+  stakeholderlistType: state.stakeholderlistType,
+  layout:state.layout,   
 })
 
 export default connect(
@@ -213,6 +266,13 @@ export default connect(
     // getAdvSearch,
     backPrev,
     // setActiveEditor
-    setStakehType
+    setListActDue,
+    setStakehType,
+    setStakeholderItemDetailBreadcrumb,
+    toggleErr,
+    setWizardPage,
+    setShowFab,
+    setListActivity,
+    setRecordStore,
   }
 )(Breadcrumb)

@@ -30,7 +30,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
    
   return (         
     <div>
-    <section className="statistics mt-4">
+    {/* <section className="statistics mt-4">
         <div className="container-fluid">
         <div className="row d-flex">
         
@@ -140,7 +140,7 @@ export default function Card({setActivePage,setPageTitle,setStakehNumb}) {
         </div>
         </div>
     </section>
- 
+  */}
  
 
     </div>

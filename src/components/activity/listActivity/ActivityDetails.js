@@ -37,10 +37,8 @@ class ActivityDetails extends Component {
 
 render() {
 
-    const {wizardPage, containerLine, activityDet} = this.props.listActivity
-      
+    const {wizardPage, containerLine, activityDet} = this.props.listActivity     
 
-    
     this.components={
         general:GeneralWizard,
         record:recordWizard,
@@ -53,11 +51,11 @@ render() {
   return (
     
   <Fragment>
-      {/* <div className="breadcrumb-holder">
+      <div className="breadcrumb-holder">
             <div className="container-fluid">
               <Breadcrumb/>
             </div>
-        </div>    */}
+        </div>   
  
         {activityDet.map((item,idx) =>   
 

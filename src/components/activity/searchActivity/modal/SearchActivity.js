@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
- 
-// import Breadcrumb from '../layouts/Breadcrumb'
-import {setActivePage} from '../../../../actions/layoutInitAction'
-import {setCardView, activityUri, setShowFab, getDetails, activityName} from '../../../../actions/activityAction/listActivity/listActivityAction'
-// import {setRecordStore, setListActivity} from '../../../../actions/workflowAction/workflowDetailAction'
-import {setNewBread} from '../../../../actions/breadcrumbAction'
+
+import Breadcrumb from '../../../layouts/Breadcrumb'
+import { setActivePage } from '../../../../actions/layoutInitAction'
+import { setCardView, activityUri, setShowFab, getDetails, activityName, setWizardPage } from '../../../../actions/activityAction/listActivity/listActivityAction'
+import { setNewBread } from '../../../../actions/breadcrumbAction'
 
 import Fab from '../../../fab/FabActivity'
 import Search from '../modal/ModalActivity'
@@ -14,257 +13,240 @@ import CardView from '../../CardView'
 import ListView from '../../ListView'
 
 import Tooltip from 'rc-tooltip'
-import update from 'immutability-helper' 
+import update from 'immutability-helper'
 
 import 'rc-tooltip/assets/bootstrap.css'
 
 
 class SearchActivity extends Component {
 
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            ListAct:[],          
+        this.state = {
+            ListAct: [],
         }
-    
+
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps.listActivity.listActivity!==this.props.listActivity.listActivity){
-            const {listActivity} = this.props.listActivity
+    componentDidUpdate(prevProps) {
+        if (prevProps.listActivity.listActivity !== this.props.listActivity.listActivity) {
+            const { listActivity } = this.props.listActivity
             // console.log(listActivity)
-            const listAct= listActivity.map(res=>({...res,isSel:false}))
+            const listAct = listActivity.map(res => ({ ...res, isSel: false }))
             //  console.log(listWkflw)
             this.setState({
-                ListAct:listAct
+                ListAct: listAct
             })
-        }          
+        }
     }
 
-     //Direct Page To WorkFlow Detail
-     setActivePage=(FabRec)=>{
-         
-        const {user:{_id:bId}}=this.props.session
-        // const {wrkflSel, workflowTemplate, workflowName}=this.props.listActivity          
+    //Direct Page To WorkFlow Detail
+    setActivePage = (FabRec) => {
 
-        // this.props.setPageSubject(workflowTemplate)
+        const { user: { _id: bId } } = this.props.session
+        const {activityName}=this.props.listActivity          
+
+       
         this.props.setActivePage(FabRec)
-        
-        //Activity Wizard
-        // const workflowDet={
-        //     _action:'SEARCHACTIVITY',         
-        //     workflowUri:wrkflSel,
-        //     _id:bId,               
-        // } 
+        this.props.setWizardPage("general") 
+        this.props.setShowFab(false)    
 
-        // this.props.setListActivity(workflowDet)
-
-        // //Record Wizard    
-        // const recordDet = {
-        //     _id: bId,
-        //     _action: "SEARCHRECORD",
-        //     jsonQuery: JSON.stringify([{"op":"EQUALS","field":"%26%26Related+Records+of+Workflow","value1":workflowName}]),
-        //     searchOrder: "0"
-        // }
-        // // console.log(recordDet)
-        // this.props.setRecordStore(recordDet)        
-      
-        // // this.props.setActivityDetailsUpdate(workflowDet)  
-        // // this.props.setTaskResult(taskResulStatusObj)   
-
-        // //Breadcrumb
-        // this.props.setNewBread(false,{
-        //     id: 'viewDetails', 
-        //     label: workflowName, 
-        //     activePage: 'viewDetails', 
-        //     isActive: true,
-        // })          
+        //Breadcrumb
+        this.props.setNewBread(false,{
+            id: 'viewAct', 
+            label: activityName, 
+            activePage: 'viewAct', 
+            isActive: true,
+        })          
     }
 
 
     //Selection
-    markOnSel=(activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration)=>{        
-         
-        const val = [{activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}]
+    markOnSel = (activityName, activityUri, markOnSel, workflowName, assignedTo, activityDateDue, icon, isSel, supervisor, priority, estDuration) => {
+
+        const val = [{ activityName, activityUri, markOnSel, workflowName, assignedTo, activityDateDue, icon, isSel, supervisor, priority, estDuration }]
 
         this.props.getDetails(val) //Set Workflow Details
         this.props.activityUri(activityUri)  //Set Workflow Uri
         this.props.activityName(workflowName)  //Set Workflow Name
-    
 
-        const {ListAct} = this.state
+
+        const { ListAct } = this.state
         // console.log(listAct)
-        const itmIdx = ListAct.findIndex(itm=>itm.activityUri === activityUri)
-        const desIdx = ListAct.findIndex(itm=>itm.isSel===true)
+        const itmIdx = ListAct.findIndex(itm => itm.activityUri === activityUri)
+        const desIdx = ListAct.findIndex(itm => itm.isSel === true)
 
-        const newWrkfwList = desIdx === -1?
-        update(ListAct,{
-          [itmIdx]:{isSel:{$set:true}}
-        })
-        :update(ListAct,{
-          [itmIdx]:{isSel:{$set:true}},
-          [desIdx]:{isSel:{$set:false}}
-        })  
+        const newWrkfwList = desIdx === -1 ?
+            update(ListAct, {
+                [itmIdx]: { isSel: { $set: true } }
+            })
+            : update(ListAct, {
+                [itmIdx]: { isSel: { $set: true } },
+                [desIdx]: { isSel: { $set: false } }
+            })
 
         // select
-        if (itmIdx===desIdx){
+        if (itmIdx === desIdx) {
             this.props.setShowFab(false)
-            this.props.activityUri(null)                      
+            this.props.activityUri(null)
         }
-        else{
+        else {
             this.props.setShowFab(true)
         }
 
         this.setState({
-            ListAct: newWrkfwList 
-            
+            ListAct: newWrkfwList
+
         })
     }
 
     //Change view Card and List
-    changeToViewCard=(e)=>{
-        const{cardView}=this.props.listActivity
+    changeToViewCard = (e) => {
+        const { cardView } = this.props.listActivity
         this.props.setCardView(!cardView)
     }
 
- 
 
 
 
-  render() {
 
-    const{cardView, showFab}=this.props.listActivity
-    
-    const{ListAct}=this.state
-    // console.log(workList)
-    
-    const rec = ListAct.map(itm=>cardView? 
-        <ListView
-            key={itm.activityUri}
-            activityName={itm.activityName}
-            activityUri={itm.activityUri}
-            workflowName={itm.workflowName}
-            assignedTo={itm.assignedTo}
-            activityDateDue={itm.activityDateDue}           
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}  
-            isSel={itm.isSel}
-            supervisor={itm.supervisor}             
-            priority={itm.priority}
-            estDuration={itm.estDuration}
-        />
-        :
-        <CardView
-            key={itm.activityUri}
-            activityName={itm.activityName}
-            activityUri={itm.activityUri}
-            workflowName={itm.workflowName}
-            assignedTo={itm.assignedTo}
-            activityDateDue={itm.activityDateDue}           
-            icon={itm.iconCls}
-            markOnSel={this.markOnSel}  
-            isSel={itm.isSel}
-            supervisor={itm.supervisor}             
-            priority={itm.priority}
-            estDuration={itm.estDuration}
-        />
-       
+    render() {
+
+        const { cardView, showFab } = this.props.listActivity
+
+        const { ListAct } = this.state
+        // console.log(workList)
+
+        const rec = ListAct.map(itm => cardView ?
+            <ListView
+                key={itm.activityUri}
+                activityName={itm.activityName}
+                activityUri={itm.activityUri}
+                workflowName={itm.workflowName}
+                assignedTo={itm.assignedTo}
+                activityDateDue={itm.activityDateDue}
+                icon={itm.iconCls}
+                markOnSel={this.markOnSel}
+                isSel={itm.isSel}
+                supervisor={itm.supervisor}
+                priority={itm.priority}
+                estDuration={itm.estDuration}
+            />
+            :
+            <CardView
+                key={itm.activityUri}
+                activityName={itm.activityName}
+                activityUri={itm.activityUri}
+                workflowName={itm.workflowName}
+                assignedTo={itm.assignedTo}
+                activityDateDue={itm.activityDateDue}
+                icon={itm.iconCls}
+                markOnSel={this.markOnSel}
+                isSel={itm.isSel}
+                supervisor={itm.supervisor}
+                priority={itm.priority}
+                estDuration={itm.estDuration}
+            />
+
         )
 
-   
-    return (
-      <Fragment>  
 
-        {/* <div className="breadcrumb-holder">
-            <div className="container-fluid">
-                <Breadcrumb/>
-            </div>
-        </div>  */}
-    
-      <section className="forms">
-          <div className="container-fluid">
-          <header>
-                    <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h1 className="h3 display"><strong>Search Activity</strong></h1>  
-                       
-                            <div className="d-flex align-items-center">                          
+        return (
+            <Fragment>
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                            <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
-                            <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
-                            </button>
-                            </Tooltip>
+                <div className="breadcrumb-holder">
+                    <div className="container-fluid">
+                        <Breadcrumb/>
+                    </div>
+                </div> 
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Change to Card</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                            <button className="btn btn-sm btn-primary ml-2" onClick={this.changeToViewCard}>
-                                <i className="fa fa-th" aria-hidden="true"></i>
-                            </button>
-                            </Tooltip>
+                <section className="forms">
+                    <div className="container-fluid">
+                        <header>
+                            <div className="d-flex align-items-center justify-content-between mb-2">
+                                <h1 className="h3 display"><strong>Search Activity</strong></h1>
+
+                                <div className="d-flex align-items-center">
+
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                                    >
+                                        <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
+                                            <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
+                                        </button>
+                                    </Tooltip>
+
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Change to Card</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                                    >
+                                        <button className="btn btn-sm btn-primary ml-2" onClick={this.changeToViewCard}>
+                                            <i className="fa fa-th" aria-hidden="true"></i>
+                                        </button>
+                                    </Tooltip>
 
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                             <button className="btn btn-sm btn-primary ml-2"  alt="Sort" onClick={this.sortItem}>
-                                <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                                    <Tooltip
+                                        placement="top"
+                                        overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
+                                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                                    >
+                                        <button className="btn btn-sm btn-primary ml-2" alt="Sort" onClick={this.sortItem}>
+                                            <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
 
-                            </button>
+                                        </button>
 
-                            </Tooltip>
+                                    </Tooltip>
+                                </div>
+
+                            </div>
+
+                            <Search />
+                        </header>
+
+                        <div className="row">
+                            {cardView !== false ? 
+                                ListAct.length!==0?
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <div className="p-2 img-fluid img-scale" />
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
+                                                </div>
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Workflow</p>
+                                                </div>
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Assigned To</p>
+                                                </div>
+                                                <div className="col p-2">
+                                                    <p className="card-title mb-1 font-weight-bold text-muted">Due Date</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {rec}
+                                    </div>:"" : rec}
                         </div>
 
-                    </div>
 
-                    <Search/>
-        </header>
 
-        
-           {cardView!==false?<div className="row">
-            <div className="col-12">                
-                <div className="d-flex justify-content-between align-items-center">
-                <div className="p-2 img-fluid img-scale"/>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Title</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Workflow</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Assigned To</p>
-                    </div>
-                    <div className="col p-2">
-                        <p className="card-title mb-1 font-weight-bold text-muted">Due Date</p>
-                    </div>
-                </div>               
-            </div>
-                {rec} 
-            </div>:rec}
+                        {showFab ? <Fab
+                            FabRec={this.setActivePage}
+                            delBtn={this.delBtn}
+                        /> : ''}
 
-        
-
-        {showFab?<Fab 
-        FabRec={this.setActivePage}
-        delBtn={this.delBtn}
-        />:''}
-       
-</div>
-</section>
-</Fragment>  
-    )
-  }
+                    </div>
+                </section>
+            </Fragment>
+        )
+    }
 }
 
-SearchActivity.propTypes={
+SearchActivity.propTypes = {
     session: PropTypes.object.isRequired,
     listActivity: PropTypes.object.isRequired,
     setCardView: PropTypes.func.isRequired,
@@ -272,26 +254,28 @@ SearchActivity.propTypes={
     activityUri: PropTypes.func.isRequired,
     activityName: PropTypes.func.isRequired,
     setShowFab: PropTypes.func.isRequired,
-    setActivePage: PropTypes.func.isRequired,    
+    setActivePage: PropTypes.func.isRequired,
     setNewBread: PropTypes.func.isRequired,
+    setWizardPage: PropTypes.func.isRequired,
 }
-const mapStateToProps= state =>({
+const mapStateToProps = state => ({
     session: state.session,
-    listActivity: state.listActivity,    
-    
+    listActivity: state.listActivity,
+
 })
 export default connect(mapStateToProps,
-{
-    setActivePage,
-    setCardView, 
-    activityName,
-    activityUri,
-    getDetails,    
-    setShowFab,      
-    setNewBread,     
-    // setPageTitle,
- 
-    
+    {
+        setActivePage,
+        setCardView,
+        activityName,
+        activityUri,
+        getDetails,
+        setShowFab,
+        setNewBread,
+        // setPageTitle,
+        setWizardPage,
 
-})(SearchActivity)
+
+
+    })(SearchActivity)
 
