@@ -92,8 +92,10 @@ class ModalWorkflow extends Component {
   handleDateDueStart = (DateDueStart) => this.handleChangeDue({ DateDueStart })
 
   handleDateDueEnd = (DateDueEnd) => this.handleChangeDue({ DateDueEnd })
+  
 
   handleChangeDue = ({ DateDueStart, DateDueEnd }) => {
+    
     DateDueStart = DateDueStart || this.state.DateDueStart
     DateDueEnd = DateDueEnd || this.state.DateDueEnd
 

@@ -13,7 +13,9 @@ import{LIST_WORKFLOW,
     SET_CONTAINER_LINE,
     LIST_ACTIVITY,
     SET_RECORD_STORE,
-    WORKFLOW_NAME
+    WORKFLOW_NAME,
+    PAGE_SIZE,
+    TOTAL_COUNT
 } from '../../actions/types'
 
 const initialState={
@@ -27,6 +29,8 @@ const initialState={
     containerLine: true,    
     listActivity:[],
     recordStore:[],
+    pageSize:null,
+    totalCount:null,
 
     showFab:false, //show floating button
     cardView:true,
@@ -132,6 +136,18 @@ export default function(state = initialState, action){
         return {
             ...state,
             isSel:action.payload
+        } 
+
+        case PAGE_SIZE:
+        return {
+            ...state,
+            pageSize:action.payload
+        } 
+
+        case TOTAL_COUNT:
+        return {
+            ...state,
+            totalCount:action.payload
         } 
         default:
         return state

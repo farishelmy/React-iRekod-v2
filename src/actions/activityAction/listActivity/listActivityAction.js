@@ -4,7 +4,8 @@ import {LIST_ACTIVITY_DUE,
     ACTIVITY_NAME,
     SET_CARD_VIEW,
     SHOW_FAB,
-    WIZARD_PAGE
+    WIZARD_PAGE,
+    SHOW_ERR
 } from '../../types'
     
 import {biorisUrl} from '../../../config/appConf'
@@ -75,3 +76,5 @@ export const setWizardPage=(param)=>{
         payload:param
     }
 }
+ 
+

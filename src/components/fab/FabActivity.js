@@ -16,6 +16,8 @@ const deleteBtn=()=>{
     // console.log('delete')
 }
 
+ 
+
     
 
   return (
@@ -51,7 +53,7 @@ const deleteBtn=()=>{
                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Reasign Activity</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                         >
-                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                            <img name="reassignActivity" src={require('../../img/fab-trash.svg')} alt='reassignActivity' className='img-fluid' onClick={sendActive}/>
                     </Tooltip>
                 </span>
             </li>

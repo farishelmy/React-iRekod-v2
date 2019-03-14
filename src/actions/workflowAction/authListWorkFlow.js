@@ -6,7 +6,10 @@ import { LIST_WORKFLOW,
     WORKFLOW_SEL,
     SHOW_FAB,
     LIST_ACTIVITY_DETAIL,
-    WORKFLOW_NAME
+    WORKFLOW_NAME,
+    SHOW_ERR,
+    PAGE_SIZE,
+    TOTAL_COUNT
     } from '../types'
     
     import {biorisUrl} from '../../config/appConf'
@@ -27,18 +30,18 @@ export const ListWorkflowTemplate=(param)=>dispatch=>{
 
 }
 
-export const setListofSubject=(listofSubjectObj)=>dispatch=>{
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(listofSubjectObj)}`
-    fetch(url)
-    .then(res=>res.json())
-    .then(res=>{
-        dispatch({
-            type: LIST_OF_SUBJECT,
-            payload: res.results
-        })
-    })
+// export const setListofSubject=(listofSubjectObj)=>dispatch=>{
+//     const url=`${biorisUrl}/tasks?param=${JSON.stringify(listofSubjectObj)}`
+//     fetch(url)
+//     .then(res=>res.json())
+//     .then(res=>{
+//         dispatch({
+//             type: LIST_OF_SUBJECT,
+//             payload: res.results
+//         })
+//     })
 
-}
+// }
 
 //Workflow Template
 export const workflowTemplate=(param)=>dispatch=>{
@@ -58,6 +61,14 @@ export const populateWorkflow=(param)=>dispatch=>{
         dispatch({           
             type: POPULATE_WORKFLOW,
             payload: res.data
+        })
+        dispatch({           
+            type: PAGE_SIZE,
+            payload: res.pageSize
+        })
+        dispatch({           
+            type: TOTAL_COUNT,
+            payload: parseInt(res.totalCount)
         })
     })
 }
@@ -103,6 +114,8 @@ export const getDetails=(param)=>{
     }
 
 }
+
+
 
 
 

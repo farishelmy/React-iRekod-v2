@@ -78,7 +78,7 @@ class EscalationWizard extends Component {
       <Fragment>
       <h1 className="h3 display text-primary text-center">Escalations</h1>
       <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
-        <div className="row justify-content-center mb-5">
+        {/* <div className="row justify-content-center mb-5"> */}
          
 
           <div className="row">
@@ -116,7 +116,7 @@ class EscalationWizard extends Component {
             
   
           </div>
-        </div>   
+        {/* </div>    */}
      </form>
       </Fragment>
     )

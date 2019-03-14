@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction' 
 import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage} from '../../actions/activityAction/listActivity/listActivityAction'
+import { toggleErr} from '../../actions/activityAction/listActivity/modal'
 import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
@@ -12,6 +13,8 @@ import update from 'immutability-helper'
 import CardView from './CardView'
 import ListView from './ListView'
 import Fab from '../../components/fab/FabActivity'
+import ReassignModal from '../activity/listActivity/modal/ReassignModal'
+
 import 'rc-tooltip/assets/bootstrap.css'
 
 
@@ -39,25 +42,32 @@ class ListActivity extends Component {
     }
 
     //Direct Page To WorkFlow Detail
-    setActivePage=(FabRec)=>{
-
-        // console.log(FabRec)
+    setActivePage=(page)=>{
          
-        const {user:{_id:bId}}=this.props.session
-        const {activityName, listActivityDue}=this.props.listActivity          
+        if (page === 'viewAct'){
 
-        // this.props.setPageSubject(workflowTemplate)
-        this.props.setActivePage(FabRec)
-        this.props.setWizardPage("general") 
-        this.props.setShowFab(false)      
+            // console.log(page)
+            
+            const {user:{_id:bId}}=this.props.session
+            const {activityName, listActivityDue}=this.props.listActivity          
 
-        //Breadcrumb
-        this.props.setNewBread(false,{
-            id: 'viewAct', 
-            label: activityName, 
-            activePage: 'viewAct', 
-            isActive: true,
-        })  
+            // this.props.setPageSubject(workflowTemplate)
+            this.props.setActivePage(page)
+            this.props.setWizardPage("general") 
+            this.props.setShowFab(false)      
+
+            //Breadcrumb
+            this.props.setNewBread(false,{
+                id: 'viewAct', 
+                label: activityName, 
+                activePage: 'viewAct', 
+                isActive: true,
+            })  
+        }
+
+        else if (page === 'reassignActivity'){
+            this.props.toggleErr(true)
+        }
          
 
     }
@@ -123,39 +133,24 @@ class ListActivity extends Component {
 
       
     //Delete Btn
-    // delBtn=()=>{
-    //     // const {wrkflowSelect} = this.state
-    //     const {user:{_id:bId}} = this.props.session  
-    //     const {wrkflSel, listActivityDue}=this.props.listActivity 
-            
-    //     //  console.log(wrkflSel)       
+    delBtn=()=>{
+        // const {wrkflowSelect} = this.state
+        const {user:{_id:bId}} = this.props.session  
+        const {wrkflSel, listActivityDue}=this.props.listActivity 
+        alert("Successful Deleted")
+    } 
 
-    //     const wrkflowObj={
-    //         bio_access_id:bId,
-    //         task_ids:[wrkflSel]
-
-    //     }
-    //     this.props.setDelBtn(wrkflowObj)
-
-    //     const itemDeleted = listActivity.filter(itm => itm.task_id !== wrkflSel)
-    //     // console.log(vv)
-    //     // this.props.listWorkFlowSub(itemDeleted)
-
-    //     alert("Successful Deleted")
-
-    // } 
+     
 
     //Change view Card and List
     changeToViewCard=(e)=>{
         const{cardView}=this.props.listActivity
         this.props.setCardView(!cardView)
-    }
-
-
+    }     
 
   render() {
 
-    const{cardView, showFab}=this.props.listActivity
+    const{cardView, showFab}=this.props.listActivity   
     
     const{listAct}=this.state
     // console.log(listAct)
@@ -203,46 +198,46 @@ class ListActivity extends Component {
       <section className="forms">
           <div className="container-fluid">
           <header>
-                    <div className="d-flex align-items-center justify-content-between mb-2">
-                        <h1 className="h3 display"><strong>List of Activity</strong></h1>  
-                       
-                            <div className="d-flex align-items-center">                          
+            <div className="d-flex align-items-center justify-content-between mb-2">
+                <h1 className="h3 display"><strong>List of Activity</strong></h1>  
+                
+                    <div className="d-flex align-items-center">                          
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                            <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
-                            <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
-                            </button>
-                            </Tooltip>
+                    <Tooltip
+                        placement="top"
+                        overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                    >
+                    <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
+                    <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
+                    </button>
+                    </Tooltip>
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Change to Card</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                            <button className="btn btn-sm btn-primary ml-2" onClick={this.changeToViewCard}>
-                                <i className="fa fa-th" aria-hidden="true"></i>
-                            </button>
-                            </Tooltip>
+                    <Tooltip
+                        placement="top"
+                        overlay={<div style={{ height: 20, width: '100%' }}>Change to Card</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                    >
+                    <button className="btn btn-sm btn-primary ml-2" onClick={this.changeToViewCard}>
+                        <i className="fa fa-th" aria-hidden="true"></i>
+                    </button>
+                    </Tooltip>
 
 
-                            <Tooltip
-                                placement="top"
-                                overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
-                                arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
-                            >
-                             <button className="btn btn-sm btn-primary ml-2"  alt="Sort" onClick={this.sortItem}>
-                                <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
+                    <Tooltip
+                        placement="top"
+                        overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
+                        arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
+                    >
+                        <button className="btn btn-sm btn-primary ml-2"  alt="Sort" onClick={this.sortItem}>
+                        <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
 
-                            </button>
+                    </button>
 
-                            </Tooltip>
-                        </div>
+                    </Tooltip>
+                </div>
 
-                    </div>
+            </div>
 
                     
 
@@ -273,8 +268,12 @@ class ListActivity extends Component {
 
         {showFab?<Fab 
         FabRec={this.setActivePage}
+        reasgnBtn={this.reassignBtn}
         delBtn={this.delBtn}
         />:''}
+
+        <ReassignModal/>
+
 </div>
 </section>
 </Fragment>  
@@ -296,12 +295,13 @@ ListActivity.propTypes={
     activityUri: PropTypes.func.isRequired,
     activityName: PropTypes.func.isRequired,
     setWizardPage: PropTypes.func.isRequired,
+    toggleErr: PropTypes.func.isRequired,
     
 }
 const mapStateToProps= state =>({
     session: state.session,
     listActivity: state.listActivity,    
-    
+     
 })
 export default connect(mapStateToProps,
 {
@@ -315,7 +315,8 @@ export default connect(mapStateToProps,
     // setPageSubject,
     activityUri,
     activityName,
-    setWizardPage
+    setWizardPage,
+    toggleErr
 
 })(ListActivity)
 

@@ -1,5 +1,7 @@
 import React from 'react'
 import posed from 'react-pose'
+import Tooltip from "rc-tooltip";
+import "rc-tooltip/assets/bootstrap.css";
 
 export default function Workflow({activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}) {
     
@@ -27,19 +29,46 @@ export default function Workflow({activityName,activityUri,markOnSel,workflowNam
       
 
     return (
+      
+     
+      
+       
         <div className="col-md-6 col-xl-4">
+
+ 
+ 
         
-           <div className={isSel?"card bg-primary":"card"} onClick={handleClick} >
-               <div className="text-center">
-                    <img className="img-card mt-4" src={require('../../img/Icon/'+icon+'.svg')} alt="activity"/>
-               </div>
+           <div className={isSel?"card bg-primary":"card"} onClick={handleClick} >       
+            <div className="text-center">
+         
+            <Tooltip
+                    placement="top"
+                    overlay={
+                      <div style={{ height: 20, width: "100%" }}>
+                        Status: {icon}
+                      </div>
+                    }
+                    arrowContent={<div className="rc-tooltip-arrow-inner" />}
+                  >
+
+                <img className="img-card mt-4" src={require('../../img/Icon/'+icon+'.svg')} alt="activity"/>
+
+ </Tooltip>
+
+
+               </div>          
                <div className="card-body text-center">                  
                    <hr className={isSel?"mt-0 bg-light":"mt-0"} />
                    <p className={isSel?"card-title mb-1 font-weight-bold text-truncate text-light":"card-title mb-1 font-weight-bold text-truncate text-muted"}>{activityName}</p>                    
                </div>
            </div>
+               
            
        </div>
+
+ 
+        
+        
 
       // <div className="col-md-6 col-xl-4">                       
       // <div className={isSel?"card bg-primary":"card"} onClick={handleClick}>              

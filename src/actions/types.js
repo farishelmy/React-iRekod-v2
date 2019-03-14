@@ -73,6 +73,8 @@ export const LIST_WORKFLOW = 'LIST_WORKFLOW'
 export const LIST_OF_SUBJECT = 'LIST_OF_SUBJECT'
 export const POPULATE_WORKFLOW= 'POPULATE_WORKFLOW'
 export const WORKFLOW_TEMPLATE = 'WORKFLOW_TEMPLATE'
+export const PAGE_SIZE = 'PAGE_SIZE'
+export const TOTAL_COUNT = 'TOTAL_COUNT'
 
 //breadcrumb action and reducer link
 // export const SET_BREADCRUMB = 'SET_BREADCRUMB'

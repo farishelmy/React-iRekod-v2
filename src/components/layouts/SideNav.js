@@ -5,11 +5,13 @@ import { setStakehSel, setShowFab } from '../../actions/stakeholderAction/stakeh
 import { setSelWorkFlow } from '../../actions/workflowAction/authListWorkFlow'
 import { setActivePage, setPageTitle, setPageSubject } from '../../actions/layoutInitAction'
 import { setStakehType, setStakehNumb, setStakehLabel } from '../../actions/stakeholderAction/stakehTypeAction'
-import { ListWorkflowTemplate, setListofSubject } from '../../actions/workflowAction/authListWorkFlow'
+import { ListWorkflowTemplate, populateWorkflow } from '../../actions/workflowAction/authListWorkFlow'
 import { setStakehList } from '../../actions/stakeholderAction/stakehListAction'
 import { setListActDue } from '../../actions/activityAction/listActivity/listActivityAction'
 import { setNewBread } from '../../actions/breadcrumbAction'
 import { toggleErr } from '../../actions/workflowAction/searchWorkflowAction/searchWorkflowAction'
+import moment from 'moment'
+
 
 
 
@@ -51,6 +53,9 @@ class SideNav extends React.Component {
 
     /////////////////////////////stakeholder////////////////////////////////////
     const { user: { _id: bId } } = this.props.session
+    const pgName = e.target.getAttribute('data-pagename')
+    this.props.setActivePage(e.target.getAttribute('data-pagename'))
+
 
     const stakehList = {
       _action: "LISTLOCATION",
@@ -67,7 +72,6 @@ class SideNav extends React.Component {
     })
 
     // this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-    this.props.setActivePage(e.target.getAttribute('data-pagename'))
     this.props.setStakehLabel(e.target.getAttribute('data-label'))
     this.props.setStakehNumb(e.target.getAttribute('data-label'))
     this.props.setStakehSel(null)  // ID stakeholder select to null
@@ -76,18 +80,31 @@ class SideNav extends React.Component {
 
     ///////////////////////////////workflow////////////////////////////////////
 
-    const listWrkFlwObj = {
-      _action: 'LISTWFTEMPLATE',
-      _id: bId
+    if (pgName === 'listOfWorkflow'){
+      const listWrkFlwObj = {
+        _action: 'LISTWFTEMPLATE',
+        _id: bId
+      } 
+      this.props.setPageTitle(e.target.getAttribute('data-pagetitle'))
+      this.props.ListWorkflowTemplate(listWrkFlwObj)      
+      this.props.setShowFab(false)  // Fav True False
+
     }
-
-
-    // this.props.setStakehList(stakehList)
-    this.props.ListWorkflowTemplate(listWrkFlwObj)
-    this.props.setPageTitle(e.target.getAttribute('data-pageTitle'))
-    this.props.setShowFab(false)  // Fav True False
-    // this.props.setSelWorkFlow(null)     //ID select for workflow     
-
+   
+    
+    if (pgName === 'listAllWorkflow'){
+      const workflow = {
+        startDateFrom: '01/01/2000',
+        startDateTo: moment(),
+        _action: 'SEARCHWORKFLOW',
+        _id: bId
+      }
+    
+      this.props.setPageTitle(e.target.getAttribute('data-pagetitle'))
+      this.props.populateWorkflow(workflow)
+      this.props.setShowFab(false)  // Fav True False
+      
+    }
 
     ////////////////////////////////Activity////////////////////////////////////
 
@@ -100,8 +117,8 @@ class SideNav extends React.Component {
 
      ///////////////////////////////Search/////////////////////////////////////////////
 
-     const pgName = e.target.getAttribute('data-pagename')
-     this.props.setActivePage(pgName)
+     
+    //  this.props.setActivePage(pgName)
      this.props.setShowFab(false)          // Fav True False
      this.props.setSelWorkFlow(null)      //ID select for workflow  
  
@@ -182,12 +199,19 @@ class SideNav extends React.Component {
                       </a>
                   </li>
                   <li>
+                    <a href="/" onClick={this.setActivePage} data-pagename="listAllWorkflow" data-pagetitle="List All Workflow" >
+                      <div className="userIcon" data-pagename="listAllWorkflow">
+                        <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listAllWorkflow" name="List All Workflow" />
+                      </div>List All Workflow  
+                      </a>
+                  </li>
+                  {/* <li>
                     <a href="/" onClick={this.setActivePage} data-pagename="listOfWorkflow" data-pagetitle="List of Workflow" >
                       <div className="userIcon" data-pagename="listOfWorkflow">
                         <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listOfWorkflow" name="List Workflow" />
                       </div>List of Workflow Template
                       </a>
-                  </li>
+                  </li> */}
                 </ul>
               </li>
 
@@ -293,6 +317,7 @@ SideNav.propTypes = {
   setStakehLabel: PropTypes.func.isRequired,
   setListActDue: PropTypes.func.isRequired,
   setNewBread: PropTypes.func.isRequired,
+  populateWorkflow: PropTypes.func.isRequired,
 
 
 
@@ -313,7 +338,7 @@ export default connect(mapStateToProps, {
   ListWorkflowTemplate,
   // setListofSubject,
   setStakehList,
-  // setCustomField,
+  populateWorkflow,
   setPageSubject,
   toggleErr,
   setStakehSel,

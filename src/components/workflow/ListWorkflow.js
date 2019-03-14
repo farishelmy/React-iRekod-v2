@@ -5,33 +5,30 @@ import ListTemplate from "./ListTemplate";
 
 import Breadcrumb from "../layouts/Breadcrumb";
 import { setActivePage, setPageTitle } from "../../actions/layoutInitAction";
-import {
-  setCardView,
-  setSelWorkFlow,
-  setShowFab,
-  getDetails,
-  setWorkflowName
-} from "../../actions/workflowAction/authListWorkFlow";
-import {
-  setRecordStore,
-  setListActivity,
-  setWizardPage
-} from "../../actions/workflowAction/workflowDetailAction";
+import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName, populateWorkflow } from "../../actions/workflowAction/authListWorkFlow";
+import { setRecordStore, setListActivity, setWizardPage } from "../../actions/workflowAction/workflowDetailAction";
 import { setNewBread } from "../../actions/breadcrumbAction";
+
 import Tooltip from "rc-tooltip";
 import update from "immutability-helper";
+import Pagination from 'rc-pagination';
 
 import Search from "../workflow/searchWorkflow/modal/ModalWorkflow";
 import CardView from "./CardView";
 import ListView from "./ListView";
 import Fab from "../../components/fab/FabWorkflow";
+
 import "rc-tooltip/assets/bootstrap.css";
+import 'rc-pagination/assets/index.css';
+import moment from 'moment'
+
 
 class ListWorkflow extends Component {
   constructor() {
     super();
     this.state = {
-      workList: []
+      workList: [],
+      current: 1,
     };
   }
 
@@ -50,54 +47,103 @@ class ListWorkflow extends Component {
     }
   }
 
-  //Direct Page To WorkFlow Detail
+  ///TESTING
   setActivePage = FabRec => {
-    const {
-      user: { _id: bId }
-    } = this.props.session;
-    const {
-      wrkflSel,
-      workflowTemplate,
-      workflowName
-    } = this.props.listWorkflow;
-
-    this.props.setShowFab(false)
-    this.props.setActivePage(FabRec)
-    this.props.setWizardPage("general")
-
-    //Activity Wizard
-    const workflowDet = {
-      _action: "SEARCHACTIVITY",
-      workflowUri: wrkflSel,
-      _id: bId
-    }
-     
-    this.props.setListActivity(workflowDet);
-
-    //Record Wizard
-    const recordDet = {
-      _id: bId,
-      _action: "SEARCHRECORD",
-      jsonQuery: JSON.stringify([
-        {
-          op: "EQUALS",
-          field: "%26%26Related+Records+of+Workflow",
-          value1: workflowName
-        }
-      ]),
-      searchOrder: "0"
+      const {
+        user: { _id: bId }
+      } = this.props.session;
+      const {
+        wrkflSel,
+        workflowTemplate,
+        workflowName
+      } = this.props.listWorkflow;
+  
+      this.props.setShowFab(false)
+      this.props.setActivePage('workflowContent')
+      this.props.setWizardPage("general")
+  
+      //Activity Wizard
+      const workflowDet = {
+        _action: "SEARCHACTIVITY",
+        workflowUri: wrkflSel,
+        _id: bId
+      }
+       
+      this.props.setListActivity(workflowDet);
+  
+      //Record Wizard
+      const recordDet = {
+        _id: bId,
+        _action: "SEARCHRECORD",
+        jsonQuery: JSON.stringify([
+          {
+            op: "EQUALS",
+            field: "%26%26Related+Records+of+Workflow",
+            value1: workflowName
+          }
+        ]),
+        searchOrder: "0"
+      };
+      // console.log(recordDet)
+      this.props.setRecordStore(recordDet);
+  
+      //Breadcrumb
+      this.props.setNewBread(false, {
+        id: wrkflSel,
+        label: workflowName,
+        activePage: "viewWorkflow",
+        isActive: true
+      });
     };
-    // console.log(recordDet)
-    this.props.setRecordStore(recordDet);
 
-    //Breadcrumb
-    this.props.setNewBread(false, {
-      id: wrkflSel,
-      label: workflowName,
-      activePage: "viewWorkflow",
-      isActive: true
-    });
-  };
+  //Direct Page To WorkFlow Detail
+  // setActivePage = FabRec => {
+  //   const {
+  //     user: { _id: bId }
+  //   } = this.props.session;
+  //   const {
+  //     wrkflSel,
+  //     workflowTemplate,
+  //     workflowName
+  //   } = this.props.listWorkflow;
+
+  //   this.props.setShowFab(false)
+  //   this.props.setActivePage(FabRec)
+  //   this.props.setWizardPage("general")
+
+  //   //Activity Wizard
+  //   const workflowDet = {
+  //     _action: "SEARCHACTIVITY",
+  //     workflowUri: wrkflSel,
+  //     _id: bId
+  //   }
+     
+  //   this.props.setListActivity(workflowDet);
+
+  //   //Record Wizard
+  //   const recordDet = {
+  //     _id: bId,
+  //     _action: "SEARCHRECORD",
+  //     jsonQuery: JSON.stringify([
+  //       {
+  //         op: "EQUALS",
+  //         field: "%26%26Related+Records+of+Workflow",
+  //         value1: workflowName
+  //       }
+  //     ]),
+  //     searchOrder: "0"
+  //   };
+  //   // console.log(recordDet)
+  //   this.props.setRecordStore(recordDet);
+
+  //   //Breadcrumb
+  //   this.props.setNewBread(false, {
+  //     id: wrkflSel,
+  //     label: workflowName,
+  //     activePage: "viewWorkflow",
+  //     isActive: true
+  //   });
+  // };
 
   //Create new Workflow
   // createNewActivity=(e)=>{
@@ -205,9 +251,34 @@ class ListWorkflow extends Component {
     this.props.setCardView(!cardView);
   };
 
+  onChangePaging = (page) => {
+    const {
+      user: { _id: bId }
+    } = this.props.session
+    const { pageSize, totalCount } = this.props.listWorkflow
+
+    const workflow = {
+      startDateFrom: '01/01/2000',
+      startDateTo: moment(),
+      _action: 'SEARCHWORKFLOW',
+      page: page,
+      start: (page-1)*pageSize,
+      _id: bId
+    }
+  
+    this.props.populateWorkflow(workflow)
+
+    this.setState({
+      current: page,
+    });
+  }
+
   render() {
-    const { cardView, showFab } = this.props.listWorkflow;
-    const { activePage } = this.props.layout;
+    const { cardView, showFab, pageSize, totalCount } = this.props.listWorkflow;
+    const { activePage, pageTitle } = this.props.layout;
+    
+    const { current } = this.state
+     
 
     const { workList } = this.state;
     // console.log(workList)
@@ -255,7 +326,7 @@ class ListWorkflow extends Component {
             <header>
               <div className="d-flex align-items-center justify-content-between mb-2">
                 <h1 className="h3 display">
-                  <strong>Workflow Template</strong>
+                  <strong>{pageTitle}</strong>
                 </h1>
 
                 <div className="d-flex align-items-center">
@@ -317,17 +388,18 @@ class ListWorkflow extends Component {
                     >
                       <i className="fa fa-sort-amount-asc" aria-hidden="true" />
                     </button>
-                  </Tooltip>
+                  </Tooltip>                
                 </div>
               </div>
 
-              {activePage === "listOfWorkflow" ? 
-                <ListTemplate />
+              { 
+                activePage === "listOfWorkflow" ? 
+                  <ListTemplate />
                : activePage === "SearchWorkflow" ? 
-                <Search />
-               : 
-                ""
+                  <Search />
+               :""
               }
+
             </header>
 
             <div className="row">
@@ -364,6 +436,11 @@ class ListWorkflow extends Component {
             ) : (
               ""
             )}
+
+            <div className="modal-footer">
+                <Pagination onChange={this.onChangePaging} current={current}  pageSize={pageSize} total={totalCount} />    
+            </div>
+
           </div>
         </section>
       </Fragment>
@@ -384,7 +461,8 @@ ListWorkflow.propTypes = {
   setRecordStore: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setWorkflowName: PropTypes.func.isRequired,
-  setNewBread: PropTypes.func.isRequired
+  setNewBread: PropTypes.func.isRequired,
+  populateWorkflow: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
   session: state.session,
@@ -404,6 +482,7 @@ export default connect(
     setRecordStore,
     setPageTitle,
     setWorkflowName,
-    setWizardPage
+    setWizardPage,
+    populateWorkflow
   }
 )(ListWorkflow);

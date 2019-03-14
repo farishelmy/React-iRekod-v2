@@ -12,10 +12,12 @@ import search from '../components/stakeholder/search/search'
 import ListWorkflow from './workflow/ListWorkflow'  
 import SearchWorkflow from './workflow/searchWorkflow/modal/SearchWorkflow'
 import WorkflowDetails from './workflow/listWorkflow/WorkflowDetails'
+import WorkflowContent from './workflow/WorkflowContent'
 
 import ListActivity from './activity/ListActivity'
 import ActivityDetails from './activity/listActivity/ActivityDetails'
 import SearchActivity from './activity/searchActivity/modal/SearchActivity'
+import ReassignActivity from './activity/listActivity/modal/ReassignModal'
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -74,11 +76,15 @@ class Home extends Component {
       'listOfWorkflow':ListWorkflow,             
       'viewWorkflow': WorkflowDetails,    
       'searchWorkflow': SearchWorkflow,
+      'listAllWorkflow': ListWorkflow,
+      'workflowContent': WorkflowContent,
+
       
       //activity
       'listOfActivity':ListActivity,
       'viewAct':ActivityDetails,
       'searchActivity': SearchActivity,
+      'reassignActivity': ReassignActivity,
       
 
        
