@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-Web_1920_1">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-Web_1920_1)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <circle id="Ellipse_9" data-name="Ellipse 9" cx="100" cy="100" r="100" transform="translate(726 332)" fill="#70c1b3"/>
+    <g id="Group_2" data-name="Group 2" transform="translate(-9.053 -68.713)">
+      <g id="assign" transform="translate(786 453.004)">
+        <g id="Group_1" data-name="Group 1" transform="translate(0)">
+          <path id="Path_1" data-name="Path 1" d="M14.383,61.871A49.118,49.118,0,0,1,33.043,50.465a27.467,27.467,0,0,1-12.327-22.8C20.717,12.411,33.452,0,49.106,0S77.5,12.411,77.5,27.666a27.467,27.467,0,0,1-12.327,22.8,49.118,49.118,0,0,1,18.66,11.406A46.937,46.937,0,0,1,98.212,95.709H90.539c0-22.264-18.587-40.377-41.433-40.377S7.673,73.445,7.673,95.709H0A46.937,46.937,0,0,1,14.383,61.871ZM49.106,47.855c11.423,0,20.717-9.056,20.717-20.189S60.529,7.477,49.106,7.477,28.389,16.534,28.389,27.666,37.683,47.855,49.106,47.855Z" transform="translate(0 0)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

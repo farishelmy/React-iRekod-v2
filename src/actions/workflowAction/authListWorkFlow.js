@@ -9,7 +9,8 @@ import { LIST_WORKFLOW,
     WORKFLOW_NAME,
     SHOW_ERR,
     PAGE_SIZE,
-    TOTAL_COUNT
+    TOTAL_COUNT,
+    PANEL_CONTENT
     } from '../types'
     
     import {biorisUrl} from '../../config/appConf'
@@ -110,6 +111,15 @@ export const setShowFab=(param)=>{
 export const getDetails=(param)=>{
     return {
         type:LIST_ACTIVITY_DETAIL,
+        payload:param
+    }
+
+}
+
+//Panel Content
+export const panelContent=(param)=>{
+    return {
+        type:PANEL_CONTENT,
         payload:param
     }
 

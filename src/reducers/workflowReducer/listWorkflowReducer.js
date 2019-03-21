@@ -15,7 +15,8 @@ import{LIST_WORKFLOW,
     SET_RECORD_STORE,
     WORKFLOW_NAME,
     PAGE_SIZE,
-    TOTAL_COUNT
+    TOTAL_COUNT,
+    PANEL_CONTENT
 } from '../../actions/types'
 
 const initialState={
@@ -31,6 +32,7 @@ const initialState={
     recordStore:[],
     pageSize:null,
     totalCount:null,
+    panelContent:true,
 
     showFab:false, //show floating button
     cardView:true,
@@ -148,6 +150,12 @@ export default function(state = initialState, action){
         return {
             ...state,
             totalCount:action.payload
+        }
+
+        case PANEL_CONTENT:
+        return {
+            ...state,
+            panelContent:action.payload
         } 
         default:
         return state

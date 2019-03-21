@@ -5,7 +5,7 @@ import update from "immutability-helper"
 import { setBread, resetNav, backPrev } from "../../actions/breadcrumbAction"
 import { setActivePage } from "../../actions/layoutInitAction"
 import { setStakehType } from "../../actions/stakeholderAction/stakehTypeAction"
-import { setStakeholderItemDetailBreadcrumb } from "../../actions/stakeholderAction/stakehViewDetail"
+import { setStakeholderItemDetail, viewStakehMember } from "../../actions/stakeholderAction/stakehViewDetail"
 import { setListActDue } from '../../actions/activityAction/listActivity/listActivityAction'
 import { toggleErr} from '../../actions/workflowAction/searchWorkflowAction/searchWorkflowAction'
 import { setShowFab } from '../../actions/workflowAction/authListWorkFlow'
@@ -139,27 +139,41 @@ class Breadcrumb extends Component {
         
       } 
       else if (selNavIdx >= 2) {
-        const { id, label, activePage } = selNav       
+        
+        const { id, label, activePage, typeName } = selNav       
 
         const {user:{_id:bId}} = this.props.session
         // const {stakehLabel,stakehSel} = this.props.stakeholderlistType
-        // const selNav = breadList.find(nav => nav.id === selNavIdx)
-              
-        const stakehObj={
-          _action:'LISTLOCATION',
-          _id:bId, 
-          URI:navId,                         
-          ANODE: "A",
+        // const selNav = breadList.find(nav => nav.id === selNavIdx)           
+      
+        /////////////////////////////Location////////////////////////////////
+
+        if(activePage==="viewStakeh"){         
+
+          const stakehObj ={
+            sId: id,
+            name: label,
+            typeName: typeName
+
+          }
+          this.props.setStakeholderItemDetail(stakehObj)
+
+          const stakehMember={
+            _action:'LISTLOCATION',
+            _id:bId, 
+            URI:navId,                         
+            ANODE: "A",
+          }           
+          this.props.viewStakehMember(stakehMember)
+          // this.props.setActivePage(activePage) 
+
         }
-        // console.log(stakehObj)
-        // this.props.setStakeholderItemDetailBreadcrumb(stakehObj)
-        // this.props.setActivePage(activePage)   
-
        
-        if(activePage==="viewWorkflow"){
-          console.log("ywy")
+        ////////////////////Workflow////////////////////////
 
-          this.props.setActivePage(activePage)     
+        if(activePage==="viewWorkflow"){
+
+          // this.props.setActivePage(activePage)     
           this.props.setShowFab(false)
           this.props.setWizardPage("general")
 
@@ -236,11 +250,11 @@ Breadcrumb.propTypes = {
   setActivePage: PropTypes.func.isRequired,
   resetNav: PropTypes.func.isRequired,
   // setPageTitle:PropTypes.func.isRequired,
-  // getAdvSearch: PropTypes.func.isRequired,
+  viewStakehMember: PropTypes.func.isRequired,
   // setActiveEditor: PropTypes.func.isRequired,
   backPrev: PropTypes.func.isRequired,
   setStakehType: PropTypes.func.isRequired,
-  setStakeholderItemDetailBreadcrumb: PropTypes.func.isRequired,
+  setStakeholderItemDetail: PropTypes.func.isRequired,
   setListActDue: PropTypes.func.isRequired,
   toggleErr: PropTypes.func.isRequired,
   setWizardPage: PropTypes.func.isRequired,
@@ -263,12 +277,12 @@ export default connect(
     setActivePage,
     // setPageTitle,
     resetNav,
-    // getAdvSearch,
+    viewStakehMember,
     backPrev,
     // setActiveEditor
     setListActDue,
     setStakehType,
-    setStakeholderItemDetailBreadcrumb,
+    setStakeholderItemDetail,
     toggleErr,
     setWizardPage,
     setShowFab,

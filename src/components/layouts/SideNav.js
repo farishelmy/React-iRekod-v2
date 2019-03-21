@@ -142,6 +142,7 @@ class SideNav extends React.Component {
 
     const { navBarClass } = this.props.layout
     const { user: { sortname: name, usertype: role } } = this.props.session
+    console.log()
 
     return (
       <nav className={navBarClass}>
@@ -174,7 +175,7 @@ class SideNav extends React.Component {
                   <div className="userIcon" data-pagename="dashboard">
                     <img src={require('../../img/StakeType/Dashboard.svg')} alt="dashboard" className="img-fluid mr-1" data-pagename="dashboard" />
                   </div>Dashboard
-            </a>
+                </a>
               </li>
 
               {/* Locations */}
@@ -183,7 +184,7 @@ class SideNav extends React.Component {
                   <div className="userIcon" data-pagename="index">
                     <img src={require('../../img/employee.svg')} alt="employee" className="img-fluid mr-1" data-pagename="index" />
                   </div>Locations
-            </a>
+                </a>
               </li>
 
               {/* List Of WorkFlow */}

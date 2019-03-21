@@ -38,6 +38,10 @@
   width: 100px;
   height: 100px;
 }
+.img-icon{
+  width: 25px;
+  height: 25px;
+}
 .cust-header{
   font-size:2rem
 }

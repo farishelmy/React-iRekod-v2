@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import { setActivePage } from '../../actions/layoutInitAction'
-import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName } from '../../actions/workflowAction/authListWorkFlow'
+import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName, panelContent } from '../../actions/workflowAction/authListWorkFlow'
 import { setRecordStore, setListActivity } from '../../actions/workflowAction/workflowDetailAction'
 import { setNewBread } from '../../actions/breadcrumbAction'
 
@@ -12,6 +12,11 @@ import Fab from '../fab/FabWorkflow'
 // import Search from '../modal/ModalWorkflow'
 import CardView from '../workflow/CardView'
 import ListView from '../workflow/ListView'
+import WorkflowPanel from '../workflow/WorkflowPanel'
+import SidePanel from '../workflow/SidePanel'
+import ActivityPanel from '../workflow/ActivityPanel'
+
+
 
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper'
@@ -25,22 +30,33 @@ class WorkflowContent extends Component {
         super()
         this.state = {
             workList: [],
+            tabWorkflow: false,
+            tabReadyToStart: false,
+            tabIncomplete: false,
 
         }
 
     }
+ 
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.listWorkflow.listWorkflow !== this.props.listWorkflow.listWorkflow) {
-            const { listWorkflow } = this.props.listWorkflow
-            // console.log(listWorkflow)
-            const listWkflw = listWorkflow.map(res => ({ ...res, isSel: false }))
-            //  console.log(listWkflw)
-            this.setState({
-                workList: listWkflw
-            })
+    toggleClass = (e) => {
+        e.preventDefault()
+        switch (e.target.name) {
+          case 'workflow':
+            const workflowState = this.state.tabWorkflow
+            this.setState({ tabWorkflow: !workflowState, tabReadyToStart: false, tabIncomplete: false })
+            break
+          case 'readyToStart':
+            const readyStartState = this.state.tabReadyToStart
+            this.setState({ tabReadyToStart: !readyStartState, tabWorkflow: false, tabIncomplete: false })
+            break
+          case 'Incomplete':
+            const incompleteState = this.state.tabIncomplete
+            this.setState({ tabIncomplete: !incompleteState, tabWorkflow: false, tabReadyToStart: false })
+            break
+          default:
         }
-    }
+      }
 
     //Direct Page To WorkFlow Detail
     setActivePage = (FabRec) => {
@@ -78,68 +94,12 @@ class WorkflowContent extends Component {
             activePage: 'viewWorkflow',
             isActive: true,
         })
-    }
-
-
-    //Selection
-    markOnSel = (workflowName, markOnSel, workflowUri, isSel, supervisor, icon, dateStart, dateDue, jobNo, priority) => {
-
-        const { user: { _id: bId } } = this.props.session
-        const val = [{ workflowName, markOnSel, workflowUri, isSel, supervisor, icon, dateStart, dateDue, jobNo, priority }]
-
-        this.props.getDetails(val) //Set Workflow Details
-        this.props.setSelWorkFlow(workflowUri)  //Set Workflow Uri
-        this.props.setWorkflowName(workflowName)  //Set Workflow Name   
-
-        const { workList } = this.state
-        // console.log({workList} )
-        const itmIdx = workList.findIndex(itm => itm.workflowUri === workflowUri)
-        const desIdx = workList.findIndex(itm => itm.isSel === true)
-
-        const newWrkfwList = desIdx === -1 ?
-            update(workList, {
-                [itmIdx]: { isSel: { $set: true } }
-            })
-            : update(workList, {
-                [itmIdx]: { isSel: { $set: true } },
-                [desIdx]: { isSel: { $set: false } }
-            })
-        // // select
-        if (itmIdx === desIdx) {
-            this.props.setShowFab(false)
-            this.props.setSelWorkFlow(null)
-
-
-        }
-        else {
-            this.props.setShowFab(true)
-        }
-
-        this.setState({
-            workList: newWrkfwList
-
-        })
-    }
-
-    //Change view Card and List
-    changeToViewCard = (e) => {
-        const { cardView } = this.props.listWorkflow
-        this.props.setCardView(!cardView)
-    }
-
-
-
-
+    }    
 
     render() {
 
-        const { cardView, showFab, workflowDetails } = this.props.listWorkflow
-
-        const { workList } = this.state
-
-
-
-
+        const { cardView, showFab, workflowDetails, panelContent } = this.props.listWorkflow
+        const { workList,  tabWorkflow, tabReadyToStart, tabIncomplete } = this.state
 
         return (
             <Fragment>
@@ -150,7 +110,6 @@ class WorkflowContent extends Component {
                     </div>
                 </div>
 
-                
         {workflowDetails.map((item,idx) =>   
 
                 <section key={idx} className="forms">
@@ -160,68 +119,19 @@ class WorkflowContent extends Component {
                         </header>
 
                         <div className="row">
-
-                            <div className="col-lg-4">
-                                
-                            <div class="card">
-                                <div class="card-body">
-                                <div class="media"><span style={{backgroundImage: `url(${require('../../img/Icon/'+item.icon+'.svg')})` }} class="img-card mr-3"></span>
-                                    <div class="media-body">
-                                    <h4>{item.workflowName}</h4>
-                                    <p class="text-muted mb-0">Coder</p>                                     
-                                    </div>
-                                </div>
-                                </div>
+                            <div className="col-lg-3">
+                                <SidePanel/>
                             </div>
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Activity</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row mb-3">
-
-                                    
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-
+                            <div className="col-lg-9">    
+                                { 
+                                    panelContent === true ? 
+                                    <WorkflowPanel/>
+                                    :
+                                    <ActivityPanel/>
+                                }   
                             </div>                          
-
-                            <div className="col-lg-8">
-                                
-
-                                    <div className="card">
-                                        <div className="card-header">
-                                            <h3 className="card-title">My Profile</h3>
-                                        </div>
-                                        <div className="card-body">
-                                            <div className="form-group">
-                                                <label className="form-label">Full Name</label>
-                                                <input type="text"  placeholder="First name" className="form-control" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label className="form-label">User Type</label>
-                                                <input type="text" placeholder="User Type" className="form-control" />
-                                            </div>
-                                        </div>
-                                        <div className="card-footer text-right">
-                                            <button className="btn btn-primary">Save</button>
-                                        </div>
-                                    </div>
-
-                                 
-                            </div>
                         </div>
-
-
-
-
-
                     </div>
                 </section>
                    ) } 
@@ -242,6 +152,7 @@ WorkflowContent.propTypes = {
     setRecordStore: PropTypes.func.isRequired,
     setListActivity: PropTypes.func.isRequired,
     setNewBread: PropTypes.func.isRequired,
+    panelContent: PropTypes.func.isRequired,
 }
 const mapStateToProps = state => ({
     session: state.session,
@@ -259,7 +170,8 @@ export default connect(mapStateToProps,
         setNewBread,
         setRecordStore,
         // setPageTitle,
-        setWorkflowName
+        setWorkflowName,
+        panelContent
 
     })(WorkflowContent)
 

@@ -33,7 +33,8 @@ class ViewDetail extends Component {
     const val = ({sId,typeName,name})  
     
     this.props.setNewBread(false,{
-      id:sId, 
+      id:sId,
+      typeName:typeName,
       label:name, 
       activePage:'viewStakeh', 
       isActive:true,
@@ -167,7 +168,7 @@ class ViewDetail extends Component {
     const {pageTitle}=this.props.layout
     const {stakeholderDetail,stakeholderMember} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
-    // console.log(stakeholderDetail)
+    console.log(stakeholderDetail)
     // console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(stakeholderMember)    
@@ -195,7 +196,7 @@ class ViewDetail extends Component {
                       <p className="mb-4"><img className="userIcon mr-2" src={require('../../../img/role.svg')} alt="type"/>Type: {stakeholderDetail.typeName ===""?"N/A":stakeholderDetail.typeName} </p>  
                         <div className={stakeholderMember.length!==0?"card-title text-center":"d-none"}>
                           <hr/> 
-                          <h3>Associates</h3>
+                          <h3>Members</h3>
                         </div>                                       
                           <div className={stakeholderMember.length!==0?"card-body":"d-none"}>                   
                             {stakeholderMember!==[0]?stakeholderMember.map((item,idx)=><MemberView 
@@ -258,7 +259,8 @@ class ViewDetail extends Component {
                   </div>               
                 </div>
                 <div className="card-footer text-right">
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary mr-2">Save</button>
+                  <button className="btn btn-secondary">Cancel</button>
                 </div>
               </div>           
                                                             

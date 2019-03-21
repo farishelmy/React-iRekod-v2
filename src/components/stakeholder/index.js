@@ -165,6 +165,7 @@ class index extends Component {
         this.props.setNewBread(false,{
             id: stakehObj.sId, 
             label:stakehObj.name, 
+            typeName: stakehObj.typeName,
             activePage:'viewStakeh', 
             isActive:true,
         })
