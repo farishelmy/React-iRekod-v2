@@ -76,6 +76,7 @@ export const WORKFLOW_TEMPLATE = 'WORKFLOW_TEMPLATE'
 export const PAGE_SIZE = 'PAGE_SIZE'
 export const TOTAL_COUNT = 'TOTAL_COUNT'
 export const PANEL_CONTENT = 'PANEL_CONTENT'
+export const SHOW_SUB_BTN ='SHOW_SUB_BTN'
 
 //breadcrumb action and reducer link
 // export const SET_BREADCRUMB = 'SET_BREADCRUMB'

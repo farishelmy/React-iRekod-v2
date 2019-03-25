@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+ 
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import { setActivePage } from '../../actions/layoutInitAction'
@@ -13,7 +14,7 @@ import Fab from '../fab/FabWorkflow'
 import CardView from '../workflow/CardView'
 import ListView from '../workflow/ListView'
 import WorkflowPanel from '../workflow/WorkflowPanel'
-import SidePanel from '../workflow/SidePanel'
+import PanelDropdown from '../workflow/PanelDropdown'
 import ActivityPanel from '../workflow/ActivityPanel'
 
 
@@ -27,36 +28,45 @@ import 'rc-tooltip/assets/bootstrap.css'
 class WorkflowContent extends Component {
 
     constructor() {
-        super()
+        super()  
         this.state = {
-            workList: [],
-            tabWorkflow: false,
-            tabReadyToStart: false,
-            tabIncomplete: false,
+            title:null,
+
+        }  
+    }     
+
+    componentDidUpdate(prevProps){
+        if(prevProps.listActivity.activityDet !== this.props.listActivity.activityDet){
+            const {activityDet} = this.props.listActivity
+            const temp = activityDet.map(item => item.iconCls).toString()            
+            // console.log(temp)            
+                
+            if (temp === "activity-overdue"){
+                const titleValue = "Activity Started"
+                this.setState({
+                    title:titleValue
+                })
+            }
+                
+            if (temp === "activity-not-start"){
+                const titleValue = "Activity Not Ready Start"
+                this.setState({
+                    title:titleValue
+                })
+            }
+
+            if (temp === "activity-complete"){
+                const titleValue = "Activity Complete"
+                this.setState({
+                    title:titleValue
+                })
+            }
+            
+             
 
         }
 
     }
- 
-
-    toggleClass = (e) => {
-        e.preventDefault()
-        switch (e.target.name) {
-          case 'workflow':
-            const workflowState = this.state.tabWorkflow
-            this.setState({ tabWorkflow: !workflowState, tabReadyToStart: false, tabIncomplete: false })
-            break
-          case 'readyToStart':
-            const readyStartState = this.state.tabReadyToStart
-            this.setState({ tabReadyToStart: !readyStartState, tabWorkflow: false, tabIncomplete: false })
-            break
-          case 'Incomplete':
-            const incompleteState = this.state.tabIncomplete
-            this.setState({ tabIncomplete: !incompleteState, tabWorkflow: false, tabReadyToStart: false })
-            break
-          default:
-        }
-      }
 
     //Direct Page To WorkFlow Detail
     setActivePage = (FabRec) => {
@@ -99,7 +109,10 @@ class WorkflowContent extends Component {
     render() {
 
         const { cardView, showFab, workflowDetails, panelContent } = this.props.listWorkflow
-        const { workList,  tabWorkflow, tabReadyToStart, tabIncomplete } = this.state
+        const { activityDet } = this.props.listActivity   
+        const { title } = this.state
+        
+        
 
         return (
             <Fragment>
@@ -110,31 +123,36 @@ class WorkflowContent extends Component {
                     </div>
                 </div>
 
-        {workflowDetails.map((item,idx) =>   
+                <section  className="forms">
+                    <div className="container-fluid">     
 
-                <section key={idx} className="forms">
-                    <div className="container-fluid">
+                   
                         <header>
-                            <h1 className="h3 display "><strong>Workflows</strong></h1>
-                        </header>
+                            <div className="d-flex bd-highlight">
+                                <h1 className="h3 display p-2 flex-grow-1 bd-highlight"><strong>{panelContent===true?'Workflow':title}</strong></h1>                      
+                                <div className="p-2 bd-highlight col-md-3"><PanelDropdown/></div> 
+                            </div>            
+                        </header>   
+                        
+                  
 
                         <div className="row">
-                            <div className="col-lg-3">
-                                <SidePanel/>
-                            </div>
+                            {/* <div className="col-lg-3">
+                                <SidePanel/>  
+                            </div> */}
 
-                            <div className="col-lg-9">    
+                            <div className="col-lg-12">    
                                 { 
-                                    panelContent === true ? 
-                                    <WorkflowPanel/>
+                                    panelContent === true?
+                                        <WorkflowPanel/>
                                     :
-                                    <ActivityPanel/>
-                                }   
+                                        <ActivityPanel/>
+                                }    
                             </div>                          
                         </div>
                     </div>
                 </section>
-                   ) } 
+                   
             </Fragment>
         )
     }
@@ -143,6 +161,7 @@ class WorkflowContent extends Component {
 WorkflowContent.propTypes = {
     session: PropTypes.object.isRequired,
     listWorkflow: PropTypes.object.isRequired,
+    listActivity: PropTypes.object.isRequired,
     setCardView: PropTypes.func.isRequired,
     getDetails: PropTypes.func.isRequired,
     setSelWorkFlow: PropTypes.func.isRequired,
@@ -157,6 +176,7 @@ WorkflowContent.propTypes = {
 const mapStateToProps = state => ({
     session: state.session,
     listWorkflow: state.listWorkflow,
+    listActivity: state.listActivity
 
 })
 export default connect(mapStateToProps,

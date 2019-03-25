@@ -1,13 +1,11 @@
-import{LIST_WORKFLOW,
-    LIST_OF_SUBJECT, 
+import{LIST_WORKFLOW,    
     POPULATE_WORKFLOW, 
     WORKFLOW_TEMPLATE,
     SET_CARD_VIEW,  
     CHANGE_ISMULTI,
     WORKFLOW_SEL,
     SHOW_FAB, 
-    LIST_ACTIVITY_DETAIL,
-    STAKEHOLDER_LIST,
+    LIST_ACTIVITY_DETAIL,    
     SELECT_SEL,
     WIZARD_PAGE,
     SET_CONTAINER_LINE,
@@ -16,7 +14,8 @@ import{LIST_WORKFLOW,
     WORKFLOW_NAME,
     PAGE_SIZE,
     TOTAL_COUNT,
-    PANEL_CONTENT
+    PANEL_CONTENT,
+    SHOW_SUB_BTN
 } from '../../actions/types'
 
 const initialState={
@@ -37,11 +36,13 @@ const initialState={
     showFab:false, //show floating button
     cardView:true,
     isSel:false,
+
+    showSubBtn:false,
     
-    listofSubjectObj : [],   
+    
     isMultiSel:false,
     // isSelAll:false,      
-    stakehList:[],
+   
    
   
 }
@@ -54,12 +55,7 @@ export default function(state = initialState, action){
             listWorkflowTemplate:action.payload,
         }
 
-        case LIST_OF_SUBJECT:
-        return {
-            ...state,
-            listofSubjectObj:action.payload,
-        }
-
+       
         case WORKFLOW_TEMPLATE:
         return {
             ...state,
@@ -129,11 +125,7 @@ export default function(state = initialState, action){
             showFab:action.payload
         } 
        
-        case STAKEHOLDER_LIST:
-        return {
-            ...state,
-            stakehList:action.payload
-        } 
+       
         case SELECT_SEL:
         return {
             ...state,
@@ -156,6 +148,12 @@ export default function(state = initialState, action){
         return {
             ...state,
             panelContent:action.payload
+        } 
+
+        case SHOW_SUB_BTN:
+        return {
+            ...state,
+            showSubBtn:action.payload
         } 
         default:
         return state

@@ -1,8 +1,7 @@
-import {SET_SEL_ALL,CHANGE_ISMULTI,SHOW_MULTIFAB} from './types'
+import {SET_SEL_ALL,CHANGE_ISMULTI,SHOW_MULTIFAB,SHOW_SUB_BTN} from './types'
 
 
 export const changeMultiSel=(multiStatus)=>dispatch=>{
-    console.log(multiStatus)
     dispatch({
         type:CHANGE_ISMULTI,
         payload:multiStatus
@@ -23,5 +22,12 @@ export const showMultiFab=(multiStatus)=>{
     return {
         type:SHOW_MULTIFAB,
         payload:multiStatus
+    }
+ }
+
+export const changeSubBtn=(param)=>{
+    return {
+        type:SHOW_SUB_BTN,
+        payload:param
     }
  }

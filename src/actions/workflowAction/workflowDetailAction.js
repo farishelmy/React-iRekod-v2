@@ -1,5 +1,5 @@
-import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_RECORD_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, TASK_RESULT_DETAIL,
-        LIST_CUSTOM_FIELD_STKH, LIST_TASK_RESULT_STATUS, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS } from '../types'
+import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_RECORD_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, ACTIVITY_DETAIL,
+    ACTIVITY_URI, ACTIVITY_NAME, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS } from '../types'
 
 import {biorisUrl} from '../../config/appConf'
 import {converter} from '../../utils/converter'
@@ -88,18 +88,18 @@ export const setActivityStore = (param) => dispatch =>{
 
 
 
-export const setItemListSubject = (itemListSubject) => dispatch =>{
-    // console.log(param)
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(itemListSubject)}`
-        fetch(url,{method:'GET'})
-        .then(res=>res.json())
-        .then(res=>{
-            dispatch({
-                type:LIST_SUBJECT_ITEM,
-                payload:res.results
-            })
-        })
-}
+// export const setItemListSubject = (itemListSubject) => dispatch =>{
+//     // console.log(param)
+//     const url=`${biorisUrl}/tasks?param=${JSON.stringify(itemListSubject)}`
+//         fetch(url,{method:'GET'})
+//         .then(res=>res.json())
+//         .then(res=>{
+//             dispatch({
+//                 type:LIST_SUBJECT_ITEM,
+//                 payload:res.results
+//             })
+//         })
+// }
 
 export const setDelBtn = (param) => dispatch =>{
     // console.log(param)
@@ -115,45 +115,79 @@ export const setDelBtn = (param) => dispatch =>{
         })
 }
 
-export const setCustomField = (customFieldObj) => dispatch =>{
+// export const setCustomField = (customFieldObj) => dispatch =>{
+//     // console.log(param)
+//     const url=`${biorisUrl}/customField?param=${JSON.stringify(customFieldObj)}`
+//         fetch(url,{method:'GET'})
+//         .then(res=>res.json())
+//         .then(res=>{
+//             dispatch({
+//                 type:LIST_CUSTOM_FIELD_STKH,
+//                 payload:res.results
+//             })
+//         })
+// }
+
+// export const setTaskResult = (taskResulStatusObj) => dispatch =>{
+//     // console.log(param)
+//     const url=`${biorisUrl}/listOfValue?param=${JSON.stringify(taskResulStatusObj)}`
+//         fetch(url,{method:'GET'})
+//         .then(res=>res.json())
+//         .then(res=>{
+//             dispatch({
+//                 type:LIST_TASK_RESULT_STATUS,
+//                 payload:res.results
+//             })
+//         })
+// }
+
+// //Task Result Detail
+// export const SetTaskResultDetail = (param) => dispatch =>{
+//     // console.log(param)
+//     const url=`${biorisUrl}/tasks?param=${JSON.stringify(param)}`
+//         fetch(url,{method:'GET'})
+//         .then(res=>res.json())
+//         .then(res=>{
+//             dispatch({
+//                 type:TASK_RESULT_DETAIL,
+//                 payload:res.results
+//             })
+//         })
+// }
+
+
+//Get Activity Detail
+export const getDetails = (param) => dispatch =>{
     // console.log(param)
-    const url=`${biorisUrl}/customField?param=${JSON.stringify(customFieldObj)}`
-        fetch(url,{method:'GET'})
+    const url=biorisUrl+converter(param)
+    // console.log(url)
+        fetch(url)
         .then(res=>res.json())
         .then(res=>{
+            // console.log(res)
             dispatch({
-                type:LIST_CUSTOM_FIELD_STKH,
-                payload:res.results
+                type:ACTIVITY_DETAIL,
+                payload:res.data
             })
         })
 }
 
-export const setTaskResult = (taskResulStatusObj) => dispatch =>{
-    // console.log(param)
-    const url=`${biorisUrl}/listOfValue?param=${JSON.stringify(taskResulStatusObj)}`
-        fetch(url,{method:'GET'})
-        .then(res=>res.json())
-        .then(res=>{
-            dispatch({
-                type:LIST_TASK_RESULT_STATUS,
-                payload:res.results
-            })
-        })
+//Set Activity Name
+export const activityName=(param)=>{
+    return {
+        type:ACTIVITY_NAME,
+        payload:param
+    }
 }
 
-//Task Result Detail
-export const SetTaskResultDetail = (param) => dispatch =>{
-    // console.log(param)
-    const url=`${biorisUrl}/tasks?param=${JSON.stringify(param)}`
-        fetch(url,{method:'GET'})
-        .then(res=>res.json())
-        .then(res=>{
-            dispatch({
-                type:TASK_RESULT_DETAIL,
-                payload:res.results
-            })
-        })
+//Set Activity URI
+export const activityUri=(param)=>{
+    return {
+        type:ACTIVITY_URI,
+        payload:param
+    }
 }
+    
 
 
 

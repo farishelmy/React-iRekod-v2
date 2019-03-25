@@ -5,7 +5,7 @@ import ListTemplate from "./ListTemplate";
 
 import Breadcrumb from "../layouts/Breadcrumb";
 import { setActivePage, setPageTitle } from "../../actions/layoutInitAction";
-import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName, populateWorkflow } from "../../actions/workflowAction/authListWorkFlow";
+import { setCardView, setSelWorkFlow, setShowFab, getDetails, setWorkflowName, populateWorkflow, panelContent } from "../../actions/workflowAction/authListWorkFlow";
 import { setRecordStore, setListActivity, setWizardPage } from "../../actions/workflowAction/workflowDetailAction";
 import { setNewBread } from "../../actions/breadcrumbAction";
 
@@ -52,6 +52,7 @@ class ListWorkflow extends Component {
       const {
         user: { _id: bId }
       } = this.props.session;
+
       const {
         wrkflSel,
         workflowTemplate,
@@ -61,6 +62,7 @@ class ListWorkflow extends Component {
       this.props.setShowFab(false)
       this.props.setActivePage('workflowContent')
       this.props.setWizardPage("general")
+      this.props.panelContent(true)
   
       //Activity Wizard
       const workflowDet = {
@@ -91,10 +93,10 @@ class ListWorkflow extends Component {
       this.props.setNewBread(false, {
         id: wrkflSel,
         label: workflowName,
-        activePage: "viewWorkflow",
+        activePage: "workflowContent",
         isActive: true
-      });
-    };
+      })
+    }
 
   //Direct Page To WorkFlow Detail
   // setActivePage = FabRec => {
@@ -463,7 +465,9 @@ ListWorkflow.propTypes = {
   setWorkflowName: PropTypes.func.isRequired,
   setNewBread: PropTypes.func.isRequired,
   populateWorkflow: PropTypes.func.isRequired,
-};
+  panelContent:  PropTypes.func.isRequired,
+  
+}
 const mapStateToProps = state => ({
   session: state.session,
   listWorkflow: state.listWorkflow,
@@ -483,6 +487,7 @@ export default connect(
     setPageTitle,
     setWorkflowName,
     setWizardPage,
-    populateWorkflow
+    populateWorkflow,
+    panelContent
   }
 )(ListWorkflow);

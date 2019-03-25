@@ -16,7 +16,7 @@ import{
 const initialState={
     listActivity:[],
     listActivityDue: [],
-    activityDet: null,
+    activityDet: [],
     activityUri: null,
     activityName: null,
     wizardPage:"general",

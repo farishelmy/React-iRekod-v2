@@ -14,6 +14,7 @@ export const setBread = (breadDetails) => dispatch=>{
 
 }
 export const setNewBread = (isParent,breadDetails) => dispatch=>{
+    // console.log(isParent,breadDetails)
     dispatch({
         type: INSERT_NEW_BREADCRUMB,
         payload: breadDetails

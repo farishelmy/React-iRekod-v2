@@ -97,7 +97,7 @@ class ListActivity extends Component {
 
         this.props.getDetails(val) //Set Workflow Details
         this.props.activityUri(activityUri)  //Set Workflow Uri
-        this.props.activityName(workflowName)  //Set Workflow Name
+        this.props.activityName(activityName)  //Set Workflow Name
     
 
         const {listAct} = this.state
