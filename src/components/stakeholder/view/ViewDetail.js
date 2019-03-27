@@ -69,11 +69,6 @@ class ViewDetail extends Component {
     }
     this.props.viewStakehGroup(stakehGroup)
 
-
-
-
-
-
   }  
 
   componentDidUpdate(prevProps){     
@@ -163,12 +158,25 @@ class ViewDetail extends Component {
 
     }
 
+    handleChange = (e) => {
+      const inputName = e.target.getAttribute('name')
+      const inputVal = e.target.value
+      // ===""?e.target.value=null:e.target.value  
+      // console.log(e.target.value)    
+
+      this.setState({
+          [inputName]: inputVal
+      })
+      // console.log(inputName)   
+      //  console.log(inputVal)
+  }
+
   render() {
    
     const {pageTitle}=this.props.layout
     const {stakeholderDetail,stakeholderMember} = this.props.stakeholderView
     const {aclEntries,groupItem,memberItem}=this.state
-    console.log(stakeholderDetail)
+    // console.log(stakeholderDetail)
     // console.log(memberItem)
     // const {stakehSel} = this.props.stakeholderlistType
     // console.log(stakeholderMember)    
@@ -251,11 +259,11 @@ class ViewDetail extends Component {
                 <div className="card-body">                   
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
-                    <input type="text" value={stakeholderDetail.name} placeholder="First name" className="form-control"/>
+                    <input name="name" type="text" value={stakeholderDetail.name} placeholder="First name" className="form-control" onChange={this.handleChange}/>
                   </div>
                   <div className="form-group">
                     <label className="form-label">User Type</label>
-                    <input type="text" value={stakeholderDetail.typeName} placeholder="User Type" className="form-control"/>
+                    <input name="type" type="text" value={stakeholderDetail.typeName} placeholder="User Type" className="form-control" onChange={this.handleChange}/>
                   </div>               
                 </div>
                 <div className="card-footer text-right">

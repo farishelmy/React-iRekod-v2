@@ -10,9 +10,6 @@ import { setRecordStore, setListActivity, setWizardPage } from '../../actions/wo
 import { setNewBread } from '../../actions/breadcrumbAction'
 
 import Fab from '../fab/FabWorkflowContent'
-// import Search from '../modal/ModalWorkflow'
-import CardView from '../workflow/CardView'
-import ListView from '../workflow/ListView'
 
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper'
@@ -50,8 +47,7 @@ class WorkflowPanel extends Component {
     }  
 
     render() {
-
-        const { cardView, showFab, workflowDetails } = this.props.listWorkflow
+         
         const { workflow } = this.state
 
         return (

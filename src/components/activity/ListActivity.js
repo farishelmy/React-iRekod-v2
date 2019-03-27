@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 
 import Breadcrumb from '../layouts/Breadcrumb'
 import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction' 
-import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage} from '../../actions/activityAction/listActivity/listActivityAction'
-import { toggleErr} from '../../actions/activityAction/listActivity/modal'
+import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage, checkResult} from '../../actions/activityAction/listActivity/listActivityAction'
+import { toggleErr, showComplete } from '../../actions/activityAction/listActivity/modal'
 import {setNewBread} from '../../actions/breadcrumbAction'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
@@ -14,6 +14,8 @@ import CardView from './CardView'
 import ListView from './ListView'
 import Fab from '../../components/fab/FabActivity'
 import ReassignModal from '../activity/listActivity/modal/ReassignModal'
+import CompleteModal from '../activity/listActivity/modal/CompleteModal'
+
 
 import 'rc-tooltip/assets/bootstrap.css'
 
@@ -24,6 +26,7 @@ class ListActivity extends Component {
         super()
         this.state={
             listAct:[],
+            current:1,
         }
     
     }
@@ -43,13 +46,13 @@ class ListActivity extends Component {
 
     //Direct Page To WorkFlow Detail
     setActivePage=(page)=>{
+        
+        const {user:{_id:bId}}=this.props.session
+        const {activityName, listActivityDue }=this.props.listActivity      
          
         if (page === 'viewAct'){
 
-            // console.log(page)
-            
-            const {user:{_id:bId}}=this.props.session
-            const {activityName, listActivityDue}=this.props.listActivity          
+            // console.log(page)          
 
             // this.props.setPageSubject(workflowTemplate)
             this.props.setActivePage(page)
@@ -67,6 +70,11 @@ class ListActivity extends Component {
 
         else if (page === 'reassignActivity'){
             this.props.toggleErr(true)
+        }
+
+        else if (page === 'complete'){          
+             
+            this.props.showComplete(true)
         }
          
 
@@ -92,12 +100,20 @@ class ListActivity extends Component {
 
     //Selection
     markOnSel=(activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration)=>{        
+        const {user:{_id:bId}}=this.props.session
          
         const val = [{activityName,activityUri,markOnSel,workflowName,assignedTo,activityDateDue,icon,isSel,supervisor,priority,estDuration}]
 
         this.props.getDetails(val) //Set Workflow Details
         this.props.activityUri(activityUri)  //Set Workflow Uri
         this.props.activityName(activityName)  //Set Workflow Name
+
+        const param = {
+            _action: "CHECKRESULT",
+            _activityUri: activityUri,
+            _id: bId
+        }
+        this.props.checkResult(param)
     
 
         const {listAct} = this.state
@@ -203,7 +219,7 @@ class ListActivity extends Component {
                 
                     <div className="d-flex align-items-center">                          
 
-                    <Tooltip
+                    {/* <Tooltip
                         placement="top"
                         overlay={<div style={{ height: 20, width: '100%' }}>Create new activity</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -211,7 +227,7 @@ class ListActivity extends Component {
                     <button className="btn btn-sm btn-primary" onClick={this.createNewActivity} name="createNewAct" data-name="Create New" data-pagename="createNewAct">
                     <i className="fa fa-tasks" name="createNewAct" data-name="Create New" data-pagename="createNewAct"></i>
                     </button>
-                    </Tooltip>
+                    </Tooltip> */}
 
                     <Tooltip
                         placement="top"
@@ -224,7 +240,7 @@ class ListActivity extends Component {
                     </Tooltip>
 
 
-                    <Tooltip
+                    {/* <Tooltip
                         placement="top"
                         overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
@@ -234,7 +250,7 @@ class ListActivity extends Component {
 
                     </button>
 
-                    </Tooltip>
+                    </Tooltip> */}
                 </div>
 
             </div>
@@ -273,6 +289,11 @@ class ListActivity extends Component {
         />:''}
 
         <ReassignModal/>
+        <CompleteModal/>
+
+        {/* <div className="modal-footer justify-content-center">
+            <Pagination onChange={this.onChangePaging} current={current}  pageSize={pageSize} total={totalCount} />    
+        </div> */}
 
 </div>
 </section>
@@ -296,6 +317,8 @@ ListActivity.propTypes={
     activityName: PropTypes.func.isRequired,
     setWizardPage: PropTypes.func.isRequired,
     toggleErr: PropTypes.func.isRequired,
+    showComplete: PropTypes.func.isRequired,
+    checkResult: PropTypes.func.isRequired,
     
 }
 const mapStateToProps= state =>({
@@ -316,7 +339,9 @@ export default connect(mapStateToProps,
     activityUri,
     activityName,
     setWizardPage,
-    toggleErr
+    toggleErr,
+    showComplete,
+    checkResult
 
 })(ListActivity)
 

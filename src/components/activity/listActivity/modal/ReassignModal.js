@@ -22,6 +22,14 @@ class ReassignModal extends Component {
     }
   }
 
+  componentWillMount(){
+    const {stakehType}=this.props.stakeholderlistType   
+    const stakehOptions = stakehType.map(itm=>({ value: itm.uri, label:itm.Name}))
+    this.setState({
+      stakehList:stakehOptions,
+    })
+  }
+
   componentDidUpdate(prevProps){
     if(prevProps.stakeholderlistType.stakehType !== this.props.stakeholderlistType.stakehType){
       const {stakehType}=this.props.stakeholderlistType   

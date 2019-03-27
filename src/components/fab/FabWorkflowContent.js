@@ -80,7 +80,7 @@ class FabWorkflowContent extends Component {
                 placement="left"
                 overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Action</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                    <img name="enableSubBtn" src={require('../../img/fab-multi.svg')} alt='enableSubBtn' className='img-fluid' onClick={this.action}/>
+                    <img name="enableSubBtn" src={require('../../img/Icon/settings2.svg')} alt='enableSubBtn' className='img-fluid' onClick={this.action}/>
                 </Tooltip>
             </span>
 
@@ -89,7 +89,7 @@ class FabWorkflowContent extends Component {
                 placement="left"
                 overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Close Action</div>}
                 arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                    <img name="disableSubBtn" src={require('../../img/fab-multi-cancel.svg')} alt='disableSubBtn' className='img-fluid' onClick={this.action} />
+                    <img name="disableSubBtn" src={require('../../img/Icon/settings-close2.svg')} alt='disableSubBtn' className='img-fluid' onClick={this.action} />
                 </Tooltip>
             </span>
             

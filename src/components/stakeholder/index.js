@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import update from 'immutability-helper' 
 import Pagination from 'rc-pagination'
-import {setStakehSel,stakehSelObj,setStakehViewTrue,setStakehViewFalse,setShowFab} from '../../actions/stakeholderAction/stakehTypeAction' 
+import {setStakehSel,stakehSelObj,setStakehViewTrue,setStakehViewFalse,setShowFab,setStakehType} from '../../actions/stakeholderAction/stakehTypeAction' 
 import {setActivePage} from '../../actions/layoutInitAction'  
 import {setStakeholderItemDetail,viewStakehMember,viewStakehGroup,viewStakehAccess,setDelBtn} from '../../actions/stakeholderAction/stakehViewDetail'
 import {setNewBread} from '../../actions/breadcrumbAction'
@@ -31,6 +31,7 @@ class index extends Component {
             stakehSelect:null,    
             fabMenu:null,       
             loading:true, 
+            current: 1,
         };
     }   
 
@@ -40,9 +41,7 @@ class index extends Component {
             stakeholderlistType:stakehType,             
         })           
               
-    }
-
-   
+    }   
 
     componentDidUpdate(prevProps,prevState){
 
@@ -95,7 +94,16 @@ class index extends Component {
             const {stakehSel}=this.props.stakeholderlistType
             // console.log(stakehSel)
             this.setState({stakehSelect:stakehSel})
-        }   
+        }  
+
+        else if(prevProps.stakeholderlistType.stakehLabel!==this.props.stakeholderlistType.stakehLabel){
+            const value = 1            
+            this.setState({
+                current: value
+            })
+        }
+        
+        
              
     }
 
@@ -152,9 +160,7 @@ class index extends Component {
         })
     }
 
-     
-
-    //Fab View Detail
+    //Direct Page
     setActivePage=(param)=>{    
             
         const {stakehSel,stakehObj} = this.props.stakeholderlistType
@@ -183,27 +189,53 @@ class index extends Component {
             URI:stakehSel.uri, 
             ANODE:"A"           
        }
-       this.props.viewStakehMember(stakehMember)
-
-    //    //Group
-    //    const stakehGroup={
-    //         uri:stakehSel,             
-    //         action:'ITEM_LIST_GROUP',             
-    //    }
-    //    this.props.viewStakehGroup(stakehGroup)   
+       this.props.viewStakehMember(stakehMember)   
       
-    } 
+    }      
+
+    //Pagination
+    onChangePaging = (page) => {
+        const { user: { _id: bId }} = this.props.session
+        const { pageSize, stakehLabel } = this.props.stakeholderlistType      
+        // console.log(page)          
+
+        const param = {             
+            _action: 'LISTLOCATION',
+            _id: bId,
+            page: page,
+            start: (page-1)*pageSize,
+            filterType: stakehLabel === "All Locations"?stakehLabel
+                :stakehLabel === "Organization"?stakehLabel
+                :stakehLabel === "Position"?stakehLabel
+                :stakehLabel === "Person"?stakehLabel
+                :stakehLabel === "Unknown"?stakehLabel
+                :null,
+        }
+        // console.log(param)
+        this.props.setStakehType(param)           
+        
+        this.setState({
+            current: page,
+        })
+                 
+
+    }
+
+    stakehView=()=>{       
+        const { stakehView } = this.props.stakeholderlistType
+        this.props.setStakehViewFalse(!stakehView)
+    }
 
     deleteMulti=(param)=>{
-        this.props.setActivePage(param)
-        this.props.setWizardPage(param)       
+        // this.props.setActivePage(param)
+        // this.props.setWizardPage(param)       
 
     }      
 
     //Add Stakeholder Child
     child=(page)=>{
      
-        this.props.setActivePage(page)   
+        // this.props.setActivePage(page)   
         // console.log(page)
     }
     
@@ -213,19 +245,13 @@ class index extends Component {
     // }
     // stakehViewCard=()=>{       
     //     this.props.setStakehViewFalse(false)
-    // }  
-    
-    stakehView=()=>{       
-        const { stakehView } = this.props.stakeholderlistType
-        this.props.setStakehViewFalse(!stakehView)
-    }
-
-
+    // }   
+   
 
     //change page to New Stakeholder
     addStakeh=(e)=>{
-        e.preventDefault()
-        this.props.setActivePage(e.target.getAttribute('data-pagename'))
+        // e.preventDefault()
+        // this.props.setActivePage(e.target.getAttribute('data-pagename'))
         // console.log(e.target.getAttribute('data-pagename'))
     }
 
@@ -235,89 +261,25 @@ class index extends Component {
 
         // console.log(param)
         // this.props.setActivePage(param==="deleteMulti"?"deleteMulti":"edit")
-        this.props.setActivePage("edit")
+        // this.props.setActivePage("edit")
         // this.props.setActivePage(param==="basic"?"edit":param==="security"?"edit":param==="access"?"edit":param==="group"?"edit":"multi")
-        this.props.setWizardPage(param)
+        // this.props.setWizardPage(param)
         // console.log(param)
 
-        const {user:{bio_access_id:idAccess}} = this.props.session
-        const {stakehSel:{uri},stakehNumb} = this.props.stakeholderlistType  
-        // console.log(uri)      
-       
-        //Role List
-        const RoleObj={
-            action: "ITEM_LIST",
-            // bio_access_id: idAccess      
-        }
-        this.props.setRoleStore(RoleObj)
-        
-          //Stakeholder List
-        const stakehList={
-            action:"ITEM_LIST",
-            // bio_access_id:idAccess
-        }
-        this.props.setStakehList(stakehList)
-
-          //stkh Detail
-        const stakehDet={
-            uri:uri,
-            // bio_access_id:idAccess,
-            action:'ITEM_DETAIL',            
-        }
-        this.props.setStkhAccDetail(stakehDet)   
-
-        //Ancestor Group
-        const listAncestor={
-            // bio_access_id: idAccess,
-            uri: uri,
-            action: "ITEM_LIST_ANCESTOR",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setAncestor(listAncestor)
-
-        //Descendant Member
-        const listDescendant={
-            // bio_access_id: idAccess,
-            uri: uri,
-            action: "ITEM_LIST_DESCENDANT",
-            stakeh_type: parseInt(stakehNumb)      
-        }
-        this.props.setDescendant(listDescendant)
-
-        //Security Level
-         const SecurityObj={
-            action: "ITEM_LIST",
-            // bio_access_id: idAccess      
-        }
-        this.props.setSecLevel(SecurityObj)
-
-        //List Group
-        const stakehGroup={
-            uri:uri,
-            // bio_access_id:idAccess,
-            action:'ITEM_LIST_GROUP',             
-        }
-        this.props.viewStakehGroup(stakehGroup)
-
-         //Member
-        const stakehMember={
-            uri:uri,
-            // bio_access_id:idAccess,
-            action:'ITEM_LIST_MEMBER',             
-        }
-        this.props.viewStakehMember(stakehMember)         
+        // const {user:{bio_access_id:idAccess}} = this.props.session
+        // const {stakehSel:{uri},stakehNumb} = this.props.stakeholderlistType  
+        // console.log(uri)            
+         
     }    
-
-     
 
     
     render() {
         
-        const {stakehView,showFab,stakehNumb,stakehLabel}=this.props.stakeholderlistType
+        const {stakehView,showFab,stakehNumb,stakehLabel,totalCount,pageSize}=this.props.stakeholderlistType
+        const {stakeholderlistType, current, loading}=this.state  
+        // console.log(pageSize)            
         // const {pageTitle}=this.props.layout
-        const {stakeholderlistType}=this.state        
         // const {stakeholder_Detail}=this.props.stakeholderView 
-        const {loading} = this.state
         // console.log(loading)
         
         
@@ -445,14 +407,14 @@ class index extends Component {
 
                                     <MultiFab
                                         stakehAction={this.deleteMulti}/>
-                                }                                            
+                                }                                          
                                 
-
-                                
-                            </div>    
-                            {/* <div className="modal-footer">
-                                <Pagination onChange={this.pagination} current={current} total={25} />    
-                            </div> */}
+                            </div> 
+                           
+                            <div className="modal-footer justify-content-center">
+                                <Pagination onChange={this.onChangePaging} current={current} pageSize={pageSize} total={totalCount} />    
+                            </div>                             
+                            
                     </div>                            
                         
                 </section>           
@@ -486,6 +448,7 @@ index.propTypes={
     showMultiFab: PropTypes.func.isRequired,
     stakehSelObj: PropTypes.func.isRequired,   
     setNewBread: PropTypes.func.isRequired,  
+    setStakehType: PropTypes.func.isRequired,  
     
 }
 
@@ -519,6 +482,7 @@ export default connect(mapStateToProps,{
     setSecLevel,    
     showMultiFab,
     stakehSelObj,
-    setNewBread
+    setNewBread,
+    setStakehType
    
 })(index)

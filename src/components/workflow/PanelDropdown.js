@@ -4,7 +4,7 @@ import Select from 'react-select'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { getDetails, activityName, activityUri } from '../../actions/workflowAction/workflowDetailAction'
+import { setSelectAct, titleActivitySel } from '../../actions/workflowAction/workflowDetailAction'
 import { panelContent} from '../../actions/workflowAction/authListWorkFlow'
 
 
@@ -14,7 +14,11 @@ class PanelDropdown extends Component {
     constructor(props) {
         super(props)
         this.state = {                        
-          optionActivity:[],             
+          optionActivity:[], 
+          start:[],  
+          complete:[],
+          overdue:[],
+          notStart:[],  
         }
     }      
 
@@ -23,39 +27,52 @@ class PanelDropdown extends Component {
                  
           const {listActivity} = this.props.listActivity 
 
-          const notStart = listActivity.filter(itm => itm.iconCls === "activity-not-start")
-          const  groupNotStart = notStart.map((item)=> ({value:item.activityUri, label:item.activityName}))              
+          const start = listActivity.filter(itm => itm.iconCls === "activity-start")       
 
-          const  overdue = listActivity.filter(itm => itm.iconCls === "activity-overdue" )
-          const  groupOverdue = overdue.map((item)=> ({value:item.activityUri, label:item.activityName}))    
+          const notStart = listActivity.filter(itm => itm.iconCls === "activity-not-start")       
+
+          const overdue = listActivity.filter(itm => itm.iconCls === "activity-overdue")
+
+          const complete = listActivity.filter(itm => itm.iconCls === "activity-complete")        
+
           
-          const  complete = listActivity.filter(itm => itm.iconCls === "activity-complete" )
-          const  groupComplete = complete.map((item)=> ({value:item.activityUri, label:item.activityName}))       
-
-
-
-
-          const act = [
-            {
-              label: 'Complete',
-              options: groupComplete,
-            },
-
+          const act = [           
             {
               label: 'Started',
-              options: groupOverdue,
+              options: [
+                {value:"start", label:"Activity Started"}
+              ]   
+            },  
+            
+            {
+              label: 'Activity Overdue',
+              options: [
+                {value:"overdue", label:"Activity Overdue"}
+              ]   
+            }, 
+           
+            {
+              label: 'Activity Not Ready To Start',
+              options: [
+                {value:"NotStart", label:"Activity Not Ready To Start"}
+              ]       
             },
 
             {
-              label: 'Not Ready To Start',
-              options: groupNotStart,
-            },
-
+              label: 'Activity Complete',
+              options: [
+                {value:"Complete", label:"Activity Complete"}
+              ]       
+            },             
 
           ]
 
           this.setState({
             optionActivity: act,
+            start:start,
+            notStart:notStart,
+            overdue:overdue,
+            complete:complete
           })
 
           // const act = listActivity.map((item,idx)=> ({value:item.activityUri, label:item.activityName}))           
@@ -63,7 +80,12 @@ class PanelDropdown extends Component {
           //     optionActivity: act,
           // })
 
-        }         
+        }    
+        
+       
+        
+        
+
     }
 
     
@@ -71,77 +93,43 @@ class PanelDropdown extends Component {
     handleChange = (value) => {
       const { user: { _id: bId } } = this.props.session
       const { workflowName, panelContent  } = this.props.listWorkflow
-         
-         
-      this.setState({ selectActivity: value.label})  
 
-      const param ={
-        _action: "SEARCHACTIVITY",
-        activityName: value.label,
-        workflowName: workflowName,
-        assignedTo:  null,
-        supervisor:  null,
-        escalatedTo:  null,
-        dueDateFrom:  null,
-        dueDateTo:  null,
-        startDateFrom: null,
-        startDateTo: null,
-        completeDateFrom:  null,
-        completeDateTo:  null,
-        excludeActivityNotStart: null,
-        excludeCompletedActivity: null,
-        _id: bId
+      const {optionActivity, notStart, overdue, complete, start} = this.state 
+      
+      if(value.label === "Activity Not Ready To Start"){ 
+        this.props.setSelectAct(notStart)         
+        this.props.panelContent(false)
       }
-      this.props.getDetails(param) //Set Workflow Details
-      this.props.activityUri(value.value)  //Set Workflow Uri
-      this.props.activityName(value.label)  //Set Workflow Name
-      this.props.panelContent(false)
+
+      if(value.label === "Activity Started"){ 
+        this.props.setSelectAct(start)       
+        this.props.panelContent(false)
+      }  
+      
+      if(value.label === "Activity Complete"){ 
+        this.props.setSelectAct(complete)        
+        this.props.panelContent(false)
+      }
+
+      if(value.label === "Activity Overdue"){ 
+        this.props.setSelectAct(overdue)        
+        this.props.panelContent(false)
+      }
+      
+      this.props.titleActivitySel(value.label)
+      this.setState({ selectActivity: value.label})  
 
     }
 
-   
+  render() {         
 
-     
-
-  render() {       
-
-
-
-    const groupStyles = {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    };
-
-    const groupBadgeStyles = {
-      backgroundColor: '#EBECF0',
-      borderRadius: '2em',
-      color: '#172B4D',
-      display: 'inline-block',
-      fontSize: 12,
-      fontWeight: 'normal',
-      lineHeight: '1',
-      minWidth: 1,
-      padding: '0.16666666666667em 0.5em',
-      textAlign: 'center',
-    };
-
-    const formatGroupLabel = data => (
-      <div style={groupStyles}>
-        <span>{data.label}</span>
-        <span style={groupBadgeStyles}>{data.options.length}</span>
-      </div>
-    );
-
-    
     return (
      
       <Select
           className="basic-single"
           onChange={this.handleChange}
           options={this.state.optionActivity}
-          placeholder="Select Activity"    
-          formatGroupLabel={formatGroupLabel}         
+          placeholder="Select Activity"                  
       />
       
     )
@@ -152,12 +140,10 @@ PanelDropdown.propTypes={
     session: PropTypes.object.isRequired, 
     listActivity: PropTypes.object.isRequired,
     listWorkflow: PropTypes.object.isRequired,
-    breadcrumb: PropTypes.object.isRequired, 
-    getDetails: PropTypes.func.isRequired, 
-    activityName: PropTypes.func.isRequired,
-    activityUri: PropTypes.func.isRequired,
+    breadcrumb: PropTypes.object.isRequired,     
     panelContent: PropTypes.func.isRequired,
-    
+    setSelectAct: PropTypes.func.isRequired,
+    titleActivitySel: PropTypes.func.isRequired,   
    
   }
   const mapStateToProps= state =>({
@@ -168,10 +154,9 @@ PanelDropdown.propTypes={
     
   })
 export default connect(mapStateToProps,{
-    getDetails,
-    activityName,
-    activityUri,
-    panelContent
+    panelContent,
+    setSelectAct,
+    titleActivitySel
    
 
 })(PanelDropdown)

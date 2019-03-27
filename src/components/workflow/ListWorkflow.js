@@ -64,14 +64,14 @@ class ListWorkflow extends Component {
       this.props.setWizardPage("general")
       this.props.panelContent(true)
   
-      //Activity Wizard
+      //List Activity
       const workflowDet = {
         _action: "SEARCHACTIVITY",
         workflowUri: wrkflSel,
         _id: bId
       }
        
-      this.props.setListActivity(workflowDet);
+      this.props.setListActivity(workflowDet)
   
       //Record Wizard
       const recordDet = {
@@ -257,7 +257,7 @@ class ListWorkflow extends Component {
     const {
       user: { _id: bId }
     } = this.props.session
-    const { pageSize, totalCount } = this.props.listWorkflow
+    const { pageSize } = this.props.listWorkflow
 
     const workflow = {
       startDateFrom: '01/01/2000',
@@ -332,7 +332,8 @@ class ListWorkflow extends Component {
                 </h1>
 
                 <div className="d-flex align-items-center">
-                  <Tooltip
+
+                  {/* <Tooltip
                     placement="top"
                     overlay={
                       <div style={{ height: 20, width: "100%" }}>
@@ -355,7 +356,7 @@ class ListWorkflow extends Component {
                         data-pagename="createNewAct"
                       />
                     </button>
-                  </Tooltip>
+                  </Tooltip> */}
 
                   <Tooltip
                     placement="top"
@@ -374,7 +375,7 @@ class ListWorkflow extends Component {
                     </button>
                   </Tooltip>
 
-                  <Tooltip
+                  {/* <Tooltip
                     placement="top"
                     overlay={
                       <div style={{ height: 20, width: "100%" }}>
@@ -390,7 +391,8 @@ class ListWorkflow extends Component {
                     >
                       <i className="fa fa-sort-amount-asc" aria-hidden="true" />
                     </button>
-                  </Tooltip>                
+                  </Tooltip>   */}
+
                 </div>
               </div>
 
@@ -439,7 +441,8 @@ class ListWorkflow extends Component {
               ""
             )}
 
-            <div className="modal-footer">
+              
+            <div className="modal-footer justify-content-center">
                 <Pagination onChange={this.onChangePaging} current={current}  pageSize={pageSize} total={totalCount} />    
             </div>
 

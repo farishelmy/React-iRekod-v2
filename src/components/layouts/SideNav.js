@@ -190,7 +190,7 @@ class SideNav extends React.Component {
               {/* List Of WorkFlow */}
               <li>
                 <a href="/" aria-expanded={this.state.workFlowToggle} data-toggle="collapse" name="workflow" className={this.state.workFlowToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
-                  <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1" /></div>Workflow </a>
+                  <div className="userIcon"><img src={require('../../img/workflow.svg')} alt="doc" className="img-fluid p-1" /></div>Workflow </a>
                 <ul id="chartsDropdown" className={this.state.workFlowToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>
                   <li>
                     <a href="/" onClick={this.setActivePage} data-pagename="searchWorkflow" data-pagetitle="Search Workflow" >
@@ -202,7 +202,7 @@ class SideNav extends React.Component {
                   <li>
                     <a href="/" onClick={this.setActivePage} data-pagename="listAllWorkflow" data-pagetitle="List All Workflow" >
                       <div className="userIcon" data-pagename="listAllWorkflow">
-                        <img src={require('../../img/search.svg')} alt="doc" className="img-fluid p-1" data-pagename="listAllWorkflow" name="List All Workflow" />
+                        <img src={require('../../img/workflow.svg')} alt="doc" className="img-fluid p-1" data-pagename="listAllWorkflow" name="List All Workflow" />
                       </div>List All Workflow  
                       </a>
                   </li>
@@ -219,7 +219,7 @@ class SideNav extends React.Component {
               {/* List Of Activity */}
               <li>
                 <a href="/" aria-expanded={this.state.activityToggle} data-toggle="collapse" name="activity" className={this.state.activityToggle ? '' : 'collapsed'} onClick={this.toggleClass} >
-                  <div className="userIcon"><img src={require('../../img/folder.svg')} alt="doc" className="img-fluid p-1" /></div>Activity </a>
+                  <div className="userIcon"><img src={require('../../img/activity1.svg')} alt="doc" className="img-fluid p-1" /></div>Activity </a>
                 <ul id="chartsDropdown" className={this.state.activityToggle ? 'collapse list-unstyled show' : 'collapse list-unstyled'}>                  
                   <li>
                     <a href="/" onClick={this.setActivePage} data-pagename="searchActivity" data-pagetitle="Search Activity" >

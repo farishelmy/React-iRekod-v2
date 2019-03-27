@@ -9,22 +9,32 @@ import{
     ACTIVITY_NAME,
     ACTIVITY_DETAIL,
     SET_CONTAINER_LINE,
-    SET_RECORD_STORE
+    SET_RECORD_STORE,
+    TITLE_ACTIVITY_SEL,
+    ACTIVITY_STATUS,
+    CHECK_RESULT,
+    GET_RESULT
+
 
 } from '../../actions/types'
 
 const initialState={
     listActivity:[],
+    activityStatus:[],
     listActivityDue: [],
     activityDet: [],
     activityUri: null,
     activityName: null,
+    checkResult: null,
     wizardPage:"general",
     recordStore:[],
+    result:[],
     containerLine:true,
     cardView:true,
     showFab:null,
-    isSel:false
+    isSel:false,
+    titleActivitySel:null,
+
     
   
 }
@@ -96,6 +106,30 @@ export default function(state = initialState, action){
             ...state,
             recordStore:action.payload,
         } 
+
+        case TITLE_ACTIVITY_SEL:
+        return {
+            ...state,
+            titleActivitySel:action.payload
+        } 
+
+        case ACTIVITY_STATUS:
+        return {
+            ...state,
+            activityStatus:action.payload
+        } 
+
+        case CHECK_RESULT:
+        return {
+            ...state,
+            checkResult:action.payload
+        }
+
+        case GET_RESULT:
+        return {
+            ...state,
+            result:action.payload
+        }
 
         default:
         return state

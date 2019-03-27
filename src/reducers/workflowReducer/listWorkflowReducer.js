@@ -15,7 +15,7 @@ import{LIST_WORKFLOW,
     PAGE_SIZE,
     TOTAL_COUNT,
     PANEL_CONTENT,
-    SHOW_SUB_BTN
+    SHOW_SUB_BTN,
 } from '../../actions/types'
 
 const initialState={
@@ -155,6 +155,7 @@ export default function(state = initialState, action){
             ...state,
             showSubBtn:action.payload
         } 
+       
         default:
         return state
     }

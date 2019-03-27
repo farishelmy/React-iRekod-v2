@@ -8,15 +8,28 @@ import { changeSubBtn } from '../../actions/fabAction'
 import { setActivePage } from "../../actions/layoutInitAction"
 import { setWizardPage, setRecordStore } from "../../actions/workflowAction/workflowDetailAction"
 import { setNewBread } from "../../actions/breadcrumbAction"
+import { toggleErr, showComplete } from '../../actions/activityAction/listActivity/modal'
+import { getResult } from '../../actions/activityAction/listActivity/listActivityAction'
+
+import ReassignModal from '../activity/listActivity/modal/ReassignModal'
+import CompleteModal from '../activity/listActivity/modal/CompleteModal'
 
 
 class FabActivityContent extends Component {
+
+    constructor() {
+        super()
+        this.state = {          
+            result:[]
+        }
+
+    }     
        
 
     action=(e)=>{
         e.preventDefault()
 
-        const { workflowName, wrkflSel } = this.props.listWorkflow
+        const {  activityUri } = this.props.listActivity
         const { user: { _id: bId }} = this.props.session
 
         switch(e.target.name){
@@ -34,30 +47,53 @@ class FabActivityContent extends Component {
 
             case 'records':
                 
-                const recordDet = {
-                    _id: bId,
-                    _action: "SEARCHRECORD",
-                    jsonQuery: JSON.stringify([
-                      {
-                        op: "EQUALS",
-                        field: "%26%26Related+Records+of+Workflow",
-                        value1: workflowName
-                      }
-                    ]),
-                    searchOrder: "0"
-                  }
+                // const recordDet = {
+                //     _id: bId,
+                //     _action: "SEARCHRECORD",
+                //     jsonQuery: JSON.stringify([
+                //       {
+                //         op: "EQUALS",
+                //         field: "%26%26Related+Records+of+Workflow",
+                //         value1: workflowName
+                //       }
+                //     ]),
+                //     searchOrder: "0"
+                //   }
                   
-                this.props.setRecordStore(recordDet)
-                this.props.setActivePage('viewWorkflow')
+                // this.props.setRecordStore(recordDet)
+                this.props.setActivePage('viewAct')
                 this.props.setWizardPage("record") 
            
             break   
 
             case 'details':                
                 
-                this.props.setActivePage('viewWorkflow')
+                this.props.setActivePage('viewAct')
                 this.props.setWizardPage("general") 
                 this.props.changeSubBtn(false)                   
+                
+            break   
+
+            case 'assign':                
+                
+                this.props.toggleErr(true)               
+                  
+            break   
+
+            case 'complete':                
+                this.props.showComplete(true)      
+                
+                const param ={
+                    _action: "GETRESULT",
+                    _activityUri: activityUri, 
+                    _id: bId,
+                }
+                this.props.getResult(param)
+
+                
+                
+             
+                
                 
             break   
 
@@ -70,10 +106,12 @@ class FabActivityContent extends Component {
 
 
   render() {
-      const{showSubBtn} = this.props.listWorkflow
+      const {showSubBtn} = this.props.listWorkflow
+      
     
 
     return (
+        <section>
         <div className="fab">
             <span className={!showSubBtn?"fab-action-button":"d-none"}>
                 <Tooltip
@@ -101,7 +139,7 @@ class FabActivityContent extends Component {
                     placement="left"
                     overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Complete</div>}
                     arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                        <img name="details" src={require('../../img/complete.svg')} alt='details' className='img-fluid' onClick={this.action} />
+                        <img name="complete" src={require('../../img/complete.svg')} alt='complete' className='img-fluid' onClick={this.action} />
                     </Tooltip>
                 </span>
             </li>   
@@ -112,7 +150,7 @@ class FabActivityContent extends Component {
                     placement="left"
                     overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Assign</div>}
                     arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
-                        <img name="details" src={require('../../img/user.svg')} alt='details' className='img-fluid' onClick={this.action} />
+                        <img name="assign" src={require('../../img/user.svg')} alt='assign' className='img-fluid' onClick={this.action} />
                     </Tooltip>
                 </span>
             </li>
@@ -141,12 +179,18 @@ class FabActivityContent extends Component {
 
         </ul>
     </div>
+
+    <ReassignModal/>
+    <CompleteModal/>
+
+    </section>
     )
   }
 }
 
 FabActivityContent.propTypes={
     session: PropTypes.object.isRequired,
+    listActivity: PropTypes.object.isRequired,
     listWorkflow: PropTypes.object.isRequired,
     layout: PropTypes.object.isRequired,    
     fab: PropTypes.object.isRequired,
@@ -155,6 +199,9 @@ FabActivityContent.propTypes={
     setWizardPage:PropTypes.func.isRequired,
     setNewBread:PropTypes.func.isRequired,
     setRecordStore:PropTypes.func.isRequired,
+    toggleErr:PropTypes.func.isRequired,
+    showComplete:PropTypes.func.isRequired,
+    getResult:PropTypes.func.isRequired,
     
  
      
@@ -163,7 +210,8 @@ const mapStateToProps = state => ({
     fab:state.fab,
     layout:state.layout,   
     listWorkflow:state.listWorkflow,
-    session:state.session
+    session:state.session,
+    listActivity:state.listActivity
 })
 
 export default connect(mapStateToProps,{
@@ -171,7 +219,10 @@ export default connect(mapStateToProps,{
     setActivePage,
     setWizardPage,
     setNewBread,
-    setRecordStore
+    setRecordStore,
+    toggleErr,
+    showComplete,
+    getResult
    
 
 })(FabActivityContent)

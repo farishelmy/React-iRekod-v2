@@ -1,20 +1,20 @@
-import {SHOW_ADV,SHOW_LOADER,SET_LOADER_TEXT,SHOW_FORM,SHOW_ERR} from '../../actions/types'
+import {SHOW_COMPLETE,SHOW_LOADER,SET_LOADER_TEXT,SHOW_FORM,SHOW_ERR} from '../../actions/types'
 
 const initialState = {
-    showAdv:false,
-    showForm:false,
-    showErr:false,
-    showLoader:false,
-    loaderText:null
+  showComplete:false,
+  showForm:false,
+  showErr:false,
+  showLoader:false,
+  loaderText:null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
-  case SHOW_ADV:
+  case SHOW_COMPLETE:
     return {
         ...state,
-        showAdv:action.payload
+        showComplete:action.payload
     }
 
   case SHOW_FORM:

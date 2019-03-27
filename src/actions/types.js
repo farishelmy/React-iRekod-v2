@@ -44,6 +44,8 @@ export const SHOW_FAB = 'SHOW_FAB'
 export const STAKEH_LABEL = 'STAKEH_LABEL'
 export const STAKEH_NUMB = 'STAKEH_NUMB'
 export const DELETE_STAKEHOLDER = 'DELETE_STAKEHOLDER'
+export const PAGE_SIZE_LOCATION = 'PAGE_SIZE'
+export const TOTAL_COUNT_LOCATION = 'TOTAL_COUNT_LOCATION'
 
 //Stakeholder Viewer
 export const STAKEHOLDER_VIEW = 'STAKEHOLDER_VIEW'
@@ -126,7 +128,7 @@ export const SELECTED_INC_STAKEH = 'SELECTED_INC_STAKEH'
 export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
 
 //modal action and reducer link
-export const SHOW_ADV = 'SHOW_ADV'
+export const SHOW_COMPLETE = 'SHOW_COMPLETE'
 export const SHOW_FORM = 'SHOW_FORM'
 export const SHOW_ERR = 'SHOW_ERR'
 export const SHOW_LOADER = 'SHOW_LOADER'
@@ -144,6 +146,12 @@ export const LIST_ACTIVITY_DUE ='LIST_ACTIVITY_DUE'
 export const ACTIVITY_DETAIL = 'ACTIVITY_DETAIL'
 export const ACTIVITY_URI = 'ACTIVITY_URI'
 export const ACTIVITY_NAME = 'ACTIVITY_NAME'
+export const TITLE_ACTIVITY_SEL = 'TITLE_ACTIVITY_SEL'
+export const ACTIVITY_STATUS = 'ACTIVITY_STATUS'
+export const CHECK_RESULT = 'CHECK_RESULT'
+export const GET_RESULT = 'GET_RESULT'
+
+
 
 
 

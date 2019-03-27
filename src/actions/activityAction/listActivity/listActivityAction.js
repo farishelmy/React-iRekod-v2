@@ -5,7 +5,10 @@ import {LIST_ACTIVITY_DUE,
     SET_CARD_VIEW,
     SHOW_FAB,
     WIZARD_PAGE,
-    SHOW_ERR
+    SHOW_ERR,
+    CHECK_RESULT,
+    GET_RESULT
+
 } from '../../types'
     
 import {biorisUrl} from '../../../config/appConf'
@@ -76,5 +79,37 @@ export const setWizardPage=(param)=>{
         payload:param
     }
 }
+
+//Check Result
+export const checkResult=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)  
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{ 
+        // console.log(res)
+        dispatch({           
+            type: CHECK_RESULT,
+            payload: res.hasResult
+        })
+    })
+
+}
+
+//Get Result
+export const getResult=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)  
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{ 
+        // console.log(res.data[1].config)
+        dispatch({           
+            type: GET_RESULT,
+            payload: res.data[1].config
+        })
+    })
+
+}
+
+
  
 

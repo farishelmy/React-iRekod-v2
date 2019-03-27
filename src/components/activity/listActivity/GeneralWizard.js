@@ -45,14 +45,17 @@ class GeneralWizard extends Component {
       const {stakehType}=this.props.stakeholderlistType   
       const stakehOptions = stakehType.map(itm=>({ value: itm.uri, label:itm.Name}))
       const priorityVal = ({value: priority, label: priority})
+      const assignedToVal = ({value: assignedTo, label: assignedTo})
+      const supervisorVal = ({value: supervisor, label: supervisor})
+
       this.setState({
         activityName:activityName,
         activityUri:activityUri,        
         workflowName:workflowName,
-        assignedTo:assignedTo,
+        assignedTo:assignedToVal,
         activityDateDue:activityDateDue,
         icon:icon,
-        supervisor:supervisor,
+        supervisor:supervisorVal,
         priority:priorityVal,
         estDuration:estDuration,
         stakehList:stakehOptions,
@@ -98,6 +101,7 @@ class GeneralWizard extends Component {
   render() {
 
     const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration,stakehList,priorityOption} = this.state
+    // console.log(assignedTo)
      
    
     

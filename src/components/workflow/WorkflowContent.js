@@ -36,26 +36,33 @@ class WorkflowContent extends Component {
     }     
 
     componentDidUpdate(prevProps){
-        if(prevProps.listActivity.activityDet !== this.props.listActivity.activityDet){
-            const {activityDet} = this.props.listActivity
-            const temp = activityDet.map(item => item.iconCls).toString()            
+        if(prevProps.listActivity.activityStatus !== this.props.listActivity.activityStatus){
+            const {activityStatus, titleActivitySel} = this.props.listActivity
+            // const temp = activityDet.map(item => item.iconCls).toString()            
             // console.log(temp)            
                 
-            if (temp === "activity-overdue"){
+            if (titleActivitySel === "Activity Started"){
                 const titleValue = "Activity Started"
                 this.setState({
                     title:titleValue
                 })
             }
                 
-            if (temp === "activity-not-start"){
-                const titleValue = "Activity Not Ready Start"
+            if (titleActivitySel === "Activity Not Ready To Start"){
+                const titleValue = "Activity Not Ready To Start"
                 this.setState({
                     title:titleValue
                 })
             }
 
-            if (temp === "activity-complete"){
+            if (titleActivitySel === "Activity Overdue"){
+                const titleValue = "Activity Overdue"
+                this.setState({
+                    title:titleValue
+                })
+            }
+
+            if (titleActivitySel === "Activity Complete"){
                 const titleValue = "Activity Complete"
                 this.setState({
                     title:titleValue
@@ -108,8 +115,7 @@ class WorkflowContent extends Component {
 
     render() {
 
-        const { cardView, showFab, workflowDetails, panelContent } = this.props.listWorkflow
-        const { activityDet } = this.props.listActivity   
+        const { cardView, showFab, workflowDetails, panelContent } = this.props.listWorkflow        
         const { title } = this.state
         
         
@@ -130,7 +136,7 @@ class WorkflowContent extends Component {
                         <header>
                             <div className="d-flex bd-highlight">
                                 <h1 className="h3 display p-2 flex-grow-1 bd-highlight"><strong>{panelContent===true?'Workflow':title}</strong></h1>                      
-                                <div className="p-2 bd-highlight col-md-3"><PanelDropdown/></div> 
+                                <div className="p-2 bd-highlight col-md-5"><PanelDropdown/></div> 
                             </div>            
                         </header>   
                         

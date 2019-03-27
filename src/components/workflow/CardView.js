@@ -1,5 +1,7 @@
 import React from 'react'
 import posed from 'react-pose'
+import Tooltip from "rc-tooltip"
+import "rc-tooltip/assets/bootstrap.css"
 
 export default function Workflow({workflowName, markOnSel,workflowUri, isSel,supervisor,icon,dateStart,dateDue,jobNo,priority}) {
     
@@ -31,7 +33,19 @@ export default function Workflow({workflowName, markOnSel,workflowUri, isSel,sup
         
            <div className={isSel?"card bg-primary":"card"} onClick={handleClick} >
                <div className="text-center">
-                    <img className="img-card mt-4" src={require('../../img/Icon/'+icon+'.svg')} alt="activity"/>
+                    
+            <Tooltip
+              placement="top"
+              overlay={
+                <div style={{ height: 20, width: "100%" }}>
+                  Status: {icon}
+                </div>
+              }
+              arrowContent={<div className="rc-tooltip-arrow-inner" />}
+              >
+              <img className="img-card mt-4" src={require('../../img/Icon/'+icon+'.svg')} alt="activity"/>
+            </Tooltip>
+
                </div>
                <div className="card-body text-center">                  
                    <hr className={isSel?"mt-0 bg-light":"mt-0"} />

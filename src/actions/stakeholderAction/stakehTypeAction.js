@@ -1,4 +1,4 @@
-import {STAKEH_TYPE,STAKEH_SEL,STAKEH_SEL_OBJ,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEH_LABEL} from '../types'
+import {STAKEH_TYPE,STAKEH_SEL,STAKEH_SEL_OBJ,STAKEH_VIEW,SHOW_FAB,STAKEH_NUMB,STAKEH_LABEL,TOTAL_COUNT_LOCATION} from '../types'
 import {biorisUrl} from '../../config/appConf'
 import {converter} from '../../utils/converter'
  
@@ -14,6 +14,10 @@ export const setStakehType = (param) => dispatch =>{
             dispatch({
                 type:STAKEH_TYPE,
                 payload:res.data
+            })
+            dispatch({           
+                type: TOTAL_COUNT_LOCATION,
+                payload: parseInt(res.totalCount)
             })
         })
 }

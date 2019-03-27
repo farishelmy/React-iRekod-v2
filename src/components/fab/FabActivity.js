@@ -41,7 +41,7 @@ const deleteBtn=()=>{
                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Suspend Activity</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                         >
-                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                            <img name="suspend" src={require('../../img/fab-trash.svg')} alt='suspend' className='img-fluid' onClick={deleteBtn}/>
                     </Tooltip>
                 </span>
             </li>
@@ -53,7 +53,7 @@ const deleteBtn=()=>{
                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Reasign Activity</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                         >
-                            <img name="reassignActivity" src={require('../../img/fab-trash.svg')} alt='reassignActivity' className='img-fluid' onClick={sendActive}/>
+                            <img name="reassignActivity" src={require('../../img/user.svg')} alt='reassignActivity' className='img-fluid' onClick={sendActive}/>
                     </Tooltip>
                 </span>
             </li>
@@ -65,7 +65,7 @@ const deleteBtn=()=>{
                         overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Complete Activity</div>}
                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}
                         >
-                            <img name="delete" src={require('../../img/fab-trash.svg')} alt='delete' className='img-fluid' onClick={deleteBtn}/>
+                            <img name="complete" src={require('../../img/complete.svg')} alt='complete' className='img-fluid' onClick={sendActive}/>
                     </Tooltip>
                 </span>
             </li>

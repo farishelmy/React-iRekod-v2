@@ -1,5 +1,5 @@
-import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_RECORD_STORE,LIST_SUBJECT_ITEM ,SET_CONTAINER_LINE, DELETE_WORKFLOW, ACTIVITY_DETAIL,
-    ACTIVITY_URI, ACTIVITY_NAME, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS } from '../types'
+import { LIST_ACTIVITY, WIZARD_PAGE, SET_ACTIVITY_STORE, SET_RECORD_STORE,TITLE_ACTIVITY_SEL,SET_CONTAINER_LINE, DELETE_WORKFLOW, ACTIVITY_DETAIL,
+    ACTIVITY_URI, ACTIVITY_NAME, LIST_SELECTED_TASK_RESULT_TITLE, LIST_SELECTED_TASK_RESULT_STATUS,ACTIVITY_STATUS } from '../types'
 
 import {biorisUrl} from '../../config/appConf'
 import {converter} from '../../utils/converter'
@@ -172,6 +172,14 @@ export const getDetails = (param) => dispatch =>{
         })
 }
 
+//Get Activity status in Panel Dropdown
+export const setSelectAct=(param)=>{
+    return {
+        type:ACTIVITY_STATUS,
+        payload:param
+    }
+}
+
 //Set Activity Name
 export const activityName=(param)=>{
     return {
@@ -184,6 +192,14 @@ export const activityName=(param)=>{
 export const activityUri=(param)=>{
     return {
         type:ACTIVITY_URI,
+        payload:param
+    }
+}
+
+// Set Title Activity Selected
+export const titleActivitySel=(param)=>{
+    return {
+        type:TITLE_ACTIVITY_SEL,
         payload:param
     }
 }
