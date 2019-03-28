@@ -1,6 +1,8 @@
 import {
     SHOW_ERR,
-    SHOW_COMPLETE
+    SHOW_COMPLETE,
+    SHOW_SUSPEND
+
 } from '../../types'
     
 import {biorisUrl} from '../../../config/appConf'
@@ -15,6 +17,12 @@ export const toggleErr = (modalstate) => ({
 //Toggle Complete
 export const showComplete = (modalstate) => ({
     type: SHOW_COMPLETE,
+    payload: modalstate
+})
+
+//Toggle Suspend
+export const showSuspend = (modalstate) => ({
+    type: SHOW_SUSPEND,
     payload: modalstate
 })
 
@@ -35,6 +43,21 @@ export const changeAssignee=(param)=>dispatch=>{
 
 //Activity Complete
 export const completeActivity=(param)=>dispatch=>{
+    const url=biorisUrl+converter(param)  
+    fetch(url)
+    .then(res=>res.json())
+    .then(res=>{ 
+        console.log(res)
+        // dispatch({           
+        //     type: GET_RESULT,
+        //     payload: res.data[1].config
+        // })
+    })
+
+}
+
+//Activity Suspend
+export const suspendActivity=(param)=>dispatch=>{
     const url=biorisUrl+converter(param)  
     fetch(url)
     .then(res=>res.json())

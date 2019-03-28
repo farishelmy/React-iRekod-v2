@@ -16,7 +16,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
     <div className={active==='general'?'tab activeTab mx-auto':'tab mx-auto'}>
             <img
             name="general"
-            src={require('../../../img/tasks.svg')} alt="general"
+            src={require('../../../img/information.svg')} alt="general"
             className={active==='general'?'img-fluid desaturate':'img-fluid'}
             onClick={sendActive} />
         </div>
@@ -36,7 +36,7 @@ const FolderTabHeader =({activeEditor,active,isContainer})=>{
     <div className={active==='record'?'tab activeTab mx-auto':'tab mx-auto'}>
                 <img
                 name="record"
-                src={require('../../../img/browser.svg')} alt="record"
+                src={require('../../../img/fab-child.svg')} alt="record"
                 className={active==='record'?'img-fluid desaturate':'img-fluid'}
                 onClick={sendActive} />
         </div>

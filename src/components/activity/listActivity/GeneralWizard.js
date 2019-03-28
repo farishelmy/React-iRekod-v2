@@ -1,14 +1,14 @@
 import React, { Component,Fragment } from 'react' 
  
 import Select from 'react-select'
-// import duration from 'bootstrap-duration-picker'
+// import moment from 'moment-duration-format'
+import moment from 'moment'
+ 
 
 import 'rc-checkbox/assets/index.css'
 import { Button } from 'reactstrap'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
-
- 
 
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -28,15 +28,16 @@ class GeneralWizard extends Component {
             priority:null,
             estDuration:null,
             stakehList:[],
+            day:null,
+            hour:null,
+            minute:null, 
             priorityOption:[
                 {value: "Very High" ,label: "Very High" },
                 {value: "High" ,label: "High"},
                 {value: "Medium" , label: "Medium"},
                 {value:  "Low" ,label: "Low"},  
                 {value: "Very Low" ,label: "Very Low"}                
-            ],      
-
-        
+            ],               
         }     
     }   
     
@@ -47,6 +48,9 @@ class GeneralWizard extends Component {
       const priorityVal = ({value: priority, label: priority})
       const assignedToVal = ({value: assignedTo, label: assignedTo})
       const supervisorVal = ({value: supervisor, label: supervisor})
+      const a = moment(estDuration*1000, "seconds").format("d [days] hh:mm");
+     
+      console.log(a)
 
       this.setState({
         activityName:activityName,
@@ -93,14 +97,23 @@ class GeneralWizard extends Component {
         // console.log(param)
     }
 
+    formSuspend = (e) => {
+        e.preventDefault()
+        const { day, hour, minute,  } = this.state      
+        const total = (day*86400)+(hour*3600)+(minute*60)
+       
+        console.log(total)
+    
+        
+        
     
 
-    
+    }
 
     
   render() {
 
-    const {activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration,stakehList,priorityOption} = this.state
+    const { activityName,activityUri,workflowName,assignedTo,activityDateDue,icon,supervisor,priority,estDuration,stakehList,priorityOption } = this.state
     // console.log(assignedTo)
      
    
@@ -111,19 +124,19 @@ class GeneralWizard extends Component {
         <h1 className="h3 display text-primary text-center">General</h1>
             <form className="mt-3 mr-3 ml-3" onSubmit={this.formSubmit}>
                 <div className="row justify-content-center mb-5">
-                    <div className="col-xl-3 col-lg-4 col-md-4">
+                    <div className="col-xl-2 col-lg-3 col-md-3">
                         <div className="text-center mt-5">
                             <img src={require('../../../img/management.svg')} alt="management" className=" img-dash" />
                         </div>
                     </div>  
                    
-                    <div className="col-xl-9 col-lg-8 col-md-8 col-sm-2">
+                    <div className="col-xl-10 col-lg-9 col-md-9 col-sm-2">
                         <div className="form-group">
                             <label>Activity Name</label>
                                 <input type="text" name="activityName" className="form-control" placeholder="Name" onChange={this.handleChange} value={activityName} />
                         </div>
                         <div className="row">
-                            <div className="col-sm-6 form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Assigned To</label>
                                 <Select 
                                     name="assignedTo"
@@ -134,7 +147,7 @@ class GeneralWizard extends Component {
                                     isClearable
                                 /> 
                             </div>
-                            <div className="col-sm-6 form-group">
+                            <div className="col-sm-4 form-group">
                                 <label>Supervisor</label>
                                 <Select 
                                     name="supervisor"
@@ -144,12 +157,8 @@ class GeneralWizard extends Component {
                                     placeholder="Name"
                                     isClearable
                                 /> 
-                            </div>
-                            <div className="col-sm-6 form-group">
-                                <label>Estimate</label>
-                                <input name="estDuration" type="text" id="Duration" className="form-control" placeholder="Date" onChange={this.handleChange} value={estDuration}/>
-                            </div>
-                            <div className="col-sm-6 form-group">
+                            </div>                           
+                            <div className="col-sm-4 form-group">
                                 <label>Priority</label>
                                 <Select 
                                     name="priority"
@@ -159,8 +168,22 @@ class GeneralWizard extends Component {
                                     placeholder="Name"
                                     isClearable
                                 /> 
-                            </div>                           
+                            </div>                            
                         </div>
+                        <div className="form-group">
+                            <label>Estimate</label>
+                            <div className="row">                       
+                                <div className="col-sm-4 form-group">
+                                    <input name="estDuration" type="number" name="day" className="form-control" placeholder="Day" onChange={this.handleChange} value={estDuration}/> 
+                                </div>
+                                <div className="col-sm-4 form-group">
+                                    <input name="estDuration" type="number" name="hour" max="24" min="0" className="form-control" placeholder="Hour" onChange={this.handleChange} value={estDuration}/> 
+                                </div>
+                                <div className="col-sm-4 form-group">
+                                    <input name="estDuration" type="number" name="minute" max="59" min="0" className="form-control" placeholder="Minute" onChange={this.handleChange} value={estDuration}/> 
+                                </div>
+                            </div>                                     
+                        </div> 
                     </div>
                 </div>
                 <div className="modal-footer">

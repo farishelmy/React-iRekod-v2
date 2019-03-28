@@ -13,7 +13,9 @@ import{
     TITLE_ACTIVITY_SEL,
     ACTIVITY_STATUS,
     CHECK_RESULT,
-    GET_RESULT
+    GET_RESULT,
+    PAGE_SIZE,
+    TOTAL_COUNT
 
 
 } from '../../actions/types'
@@ -34,6 +36,8 @@ const initialState={
     showFab:null,
     isSel:false,
     titleActivitySel:null,
+    totalCount:null,
+    pageSize:null,
 
     
   
@@ -129,6 +133,18 @@ export default function(state = initialState, action){
         return {
             ...state,
             result:action.payload
+        }
+
+        case PAGE_SIZE:
+        return {
+            ...state,
+            pageSize:action.payload
+        } 
+
+        case TOTAL_COUNT:
+        return {
+            ...state,
+            totalCount:action.payload
         }
 
         default:

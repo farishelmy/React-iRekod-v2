@@ -131,7 +131,7 @@ export const VIEW_RECIPIENTS = 'VIEW_RECIPIENTS'
 export const SHOW_COMPLETE = 'SHOW_COMPLETE'
 export const SHOW_FORM = 'SHOW_FORM'
 export const SHOW_ERR = 'SHOW_ERR'
-export const SHOW_LOADER = 'SHOW_LOADER'
+export const SHOW_SUSPEND = 'SHOW_SUSPEND'
 export const SET_LOADER_TEXT = 'SET_LOADER_TEXT'
 
 

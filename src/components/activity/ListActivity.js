@@ -3,10 +3,12 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Breadcrumb from '../layouts/Breadcrumb'
-import {setActivePage,setPageTitle, setPageSubject} from '../../actions/layoutInitAction' 
-import {getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage, checkResult} from '../../actions/activityAction/listActivity/listActivityAction'
-import { toggleErr, showComplete } from '../../actions/activityAction/listActivity/modal'
-import {setNewBread} from '../../actions/breadcrumbAction'
+import { setActivePage, setPageTitle, setPageSubject} from '../../actions/layoutInitAction' 
+import { getDetails, activityUri, activityName, setCardView, setShowFab, setWizardPage, checkResult, getResult, setListActDue } from '../../actions/activityAction/listActivity/listActivityAction'
+import { toggleErr, showComplete, showSuspend } from '../../actions/activityAction/listActivity/modal'
+import { setNewBread} from '../../actions/breadcrumbAction'
+
+import Pagination from 'rc-pagination'
 import Tooltip from 'rc-tooltip'
 import update from 'immutability-helper' 
 
@@ -15,8 +17,10 @@ import ListView from './ListView'
 import Fab from '../../components/fab/FabActivity'
 import ReassignModal from '../activity/listActivity/modal/ReassignModal'
 import CompleteModal from '../activity/listActivity/modal/CompleteModal'
+import SuspendModal from '../activity/listActivity/modal/SuspendModal'
 
 
+import 'rc-pagination/assets/index.css'
 import 'rc-tooltip/assets/bootstrap.css'
 
 
@@ -45,10 +49,10 @@ class ListActivity extends Component {
     }
 
     //Direct Page To WorkFlow Detail
-    setActivePage=(page)=>{
+    setActivePage=(page)=>{         
         
         const {user:{_id:bId}}=this.props.session
-        const {activityName, listActivityDue }=this.props.listActivity      
+        const {activityName, listActivityDue, activityUri, checkResult }=this.props.listActivity      
          
         if (page === 'viewAct'){
 
@@ -72,9 +76,26 @@ class ListActivity extends Component {
             this.props.toggleErr(true)
         }
 
+        else if (page === 'suspend'){
+            this.props.showSuspend(true)
+            
+        }
+
         else if (page === 'complete'){          
              
             this.props.showComplete(true)
+
+            if (checkResult=== true){
+                const param ={
+
+                    _action: "GETRESULT",
+                    _activityUri: activityUri, 
+                    _id: bId,
+                }
+                this.props.getResult(param)
+            }
+
+
         }
          
 
@@ -164,11 +185,29 @@ class ListActivity extends Component {
         this.props.setCardView(!cardView)
     }     
 
+    onChangePaging = (page) => {
+        const { user: { _id: bId }} = this.props.session
+        const { pageSize } = this.props.listActivity
+    
+        const param = {           
+          _action: 'LISTACTDUE',
+          page: page,
+          start: (page-1)*pageSize,
+          _id: bId
+        }
+      
+        this.props.setListActDue(param)
+    
+        this.setState({
+          current: page,
+        })
+      }
+
   render() {
 
-    const{cardView, showFab}=this.props.listActivity   
-    
-    const{listAct}=this.state
+    const{ cardView, showFab, pageSize, totalCount }=this.props.listActivity  
+     
+    const{ listAct, current }=this.state
     // console.log(listAct)
     
     const rec = listAct.map(itm=>cardView?
@@ -290,10 +329,12 @@ class ListActivity extends Component {
 
         <ReassignModal/>
         <CompleteModal/>
+        <SuspendModal/>
 
-        {/* <div className="modal-footer justify-content-center">
+
+        <div className="modal-footer justify-content-center">
             <Pagination onChange={this.onChangePaging} current={current}  pageSize={pageSize} total={totalCount} />    
-        </div> */}
+        </div>
 
 </div>
 </section>
@@ -319,6 +360,9 @@ ListActivity.propTypes={
     toggleErr: PropTypes.func.isRequired,
     showComplete: PropTypes.func.isRequired,
     checkResult: PropTypes.func.isRequired,
+    getResult: PropTypes.func.isRequired,
+    setListActDue: PropTypes.func.isRequired,
+    showSuspend: PropTypes.func.isRequired,
     
 }
 const mapStateToProps= state =>({
@@ -341,7 +385,10 @@ export default connect(mapStateToProps,
     setWizardPage,
     toggleErr,
     showComplete,
-    checkResult
+    checkResult,
+    getResult,
+    setListActDue,
+    showSuspend
 
 })(ListActivity)
 

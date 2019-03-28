@@ -1,10 +1,10 @@
-import {SHOW_COMPLETE,SHOW_LOADER,SET_LOADER_TEXT,SHOW_FORM,SHOW_ERR} from '../../actions/types'
+import {SHOW_COMPLETE,SHOW_SUSPEND,SET_LOADER_TEXT,SHOW_FORM,SHOW_ERR} from '../../actions/types'
 
 const initialState = {
   showComplete:false,
   showForm:false,
   showErr:false,
-  showLoader:false,
+  showSuspend:false,
   loaderText:null
 }
 
@@ -29,10 +29,10 @@ export default (state = initialState, action) => {
         showErr:action.payload
     }
 
-    case SHOW_LOADER:
+    case SHOW_SUSPEND:
     return {
         ...state,
-        showLoader:action.payload
+        showSuspend:action.payload
     }
 
     case SET_LOADER_TEXT:

@@ -68,6 +68,13 @@ class WorkflowContent extends Component {
                     title:titleValue
                 })
             }
+
+            if (titleActivitySel === "Activity Suspend"){
+                const titleValue = "Activity Suspend"
+                this.setState({
+                    title:titleValue
+                })
+            }
             
              
 

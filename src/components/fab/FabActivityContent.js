@@ -8,11 +8,13 @@ import { changeSubBtn } from '../../actions/fabAction'
 import { setActivePage } from "../../actions/layoutInitAction"
 import { setWizardPage, setRecordStore } from "../../actions/workflowAction/workflowDetailAction"
 import { setNewBread } from "../../actions/breadcrumbAction"
-import { toggleErr, showComplete } from '../../actions/activityAction/listActivity/modal'
+import { toggleErr, showComplete, showSuspend } from '../../actions/activityAction/listActivity/modal'
 import { getResult } from '../../actions/activityAction/listActivity/listActivityAction'
 
 import ReassignModal from '../activity/listActivity/modal/ReassignModal'
 import CompleteModal from '../activity/listActivity/modal/CompleteModal'
+import SuspendModal from '../activity/listActivity/modal/SuspendModal'
+
 
 
 class FabActivityContent extends Component {
@@ -29,7 +31,7 @@ class FabActivityContent extends Component {
     action=(e)=>{
         e.preventDefault()
 
-        const {  activityUri } = this.props.listActivity
+        const {  activityUri, checkResult } = this.props.listActivity
         const { user: { _id: bId }} = this.props.session
 
         switch(e.target.name){
@@ -83,18 +85,21 @@ class FabActivityContent extends Component {
             case 'complete':                
                 this.props.showComplete(true)      
                 
-                const param ={
-                    _action: "GETRESULT",
-                    _activityUri: activityUri, 
-                    _id: bId,
-                }
-                this.props.getResult(param)
+                if (checkResult=== true){
+                    const param ={
+                        _action: "GETRESULT",
+                        _activityUri: activityUri, 
+                        _id: bId,
+                    }
+                    this.props.getResult(param)
+                }             
+                
+            break   
 
+            case 'suspend':                
+            this.props.showSuspend(true)
                 
-                
-             
-                
-                
+
             break   
 
             default:
@@ -132,6 +137,17 @@ class FabActivityContent extends Component {
             </span>
             
         <ul className="fab-buttons">
+
+            <li className={showSubBtn?"fab-buttons-item":"d-none"}>
+                <span className="fab-buttons-link">
+                    <Tooltip
+                    placement="left"
+                    overlay={<div style={{ height: 20, width: '100%', textAlign:'center'}}>Suspend</div>}
+                    arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
+                        <img name="suspend" src={require('../../img/suspend.svg')} alt='complete' className='img-fluid' onClick={this.action} />
+                    </Tooltip>
+                </span>
+            </li>
 
             <li className={showSubBtn?"fab-buttons-item":"d-none"}>
                 <span className="fab-buttons-link">
@@ -182,6 +198,7 @@ class FabActivityContent extends Component {
 
     <ReassignModal/>
     <CompleteModal/>
+    <SuspendModal/>
 
     </section>
     )
@@ -202,6 +219,7 @@ FabActivityContent.propTypes={
     toggleErr:PropTypes.func.isRequired,
     showComplete:PropTypes.func.isRequired,
     getResult:PropTypes.func.isRequired,
+    showSuspend:PropTypes.func.isRequired,
     
  
      
@@ -222,7 +240,8 @@ export default connect(mapStateToProps,{
     setRecordStore,
     toggleErr,
     showComplete,
-    getResult
+    getResult,
+    showSuspend
    
 
 })(FabActivityContent)

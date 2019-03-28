@@ -107,7 +107,7 @@ class ReassignModal extends Component {
             </ModalBody>
 
             <ModalFooter>
-              <Button type="submit" color="primary">Save</Button>{' '}
+              <Button type="submit" color="primary">Save</Button>
               <Button color="secondary" onClick={this.toggle}>Cancel</Button>
             </ModalFooter>
 

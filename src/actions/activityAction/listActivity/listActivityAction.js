@@ -7,7 +7,9 @@ import {LIST_ACTIVITY_DUE,
     WIZARD_PAGE,
     SHOW_ERR,
     CHECK_RESULT,
-    GET_RESULT
+    GET_RESULT,
+    PAGE_SIZE,
+    TOTAL_COUNT
 
 } from '../../types'
     
@@ -24,6 +26,14 @@ export const setListActDue=(param)=>dispatch=>{
         dispatch({           
             type: LIST_ACTIVITY_DUE,
             payload: res.data
+        })
+        dispatch({           
+            type: PAGE_SIZE,
+            payload: res.pageSize
+        })
+        dispatch({           
+            type: TOTAL_COUNT,
+            payload: parseInt(res.totalCount)
         })
     })
 
