@@ -82,17 +82,17 @@ class PanelDropdown extends Component {
               label: 'Activity Started',
               value:"start"              
             },  
-            
-            {
-              label: 'Activity Overdue',
-              value: "overdue", 
-            }, 
-           
+
             {
               label: 'Activity Not Ready To Start',
               value:"NotStart"   
             },
 
+            {
+              label: 'Activity Overdue',
+              value: "overdue", 
+            },           
+            
             {
               label: 'Activity Suspend',
               value:"suspend"                     

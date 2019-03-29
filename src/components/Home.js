@@ -85,6 +85,8 @@ class Home extends Component {
       'viewAct':ActivityDetails,
       'searchActivity': SearchActivity,
       'reassignActivity': ReassignActivity,
+
+    
       
 
        

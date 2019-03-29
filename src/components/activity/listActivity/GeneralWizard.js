@@ -48,7 +48,8 @@ class GeneralWizard extends Component {
       const priorityVal = ({value: priority, label: priority})
       const assignedToVal = ({value: assignedTo, label: assignedTo})
       const supervisorVal = ({value: supervisor, label: supervisor})
-      const a = moment(estDuration*1000, "seconds").format("d [days] hh:mm");
+    //   const ab = parseInt(estDuration)
+      const a = moment(28800, "seconds").format("d [days], h [hrs], m [min]");
      
       console.log(a)
 

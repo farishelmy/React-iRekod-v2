@@ -75,8 +75,7 @@ class SideNav extends React.Component {
     this.props.setStakehLabel(e.target.getAttribute('data-label'))
     this.props.setStakehNumb(e.target.getAttribute('data-label'))
     this.props.setStakehSel(null)  // ID stakeholder select to null
-    this.props.setShowFab(false) // Fab True false
-    // this.props.setSelWorkFlow(null)  //ID select for workflow     
+    this.props.setShowFab(false) // Fab True false     
 
     ///////////////////////////////workflow////////////////////////////////////
 

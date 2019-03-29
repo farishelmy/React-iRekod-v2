@@ -305,14 +305,14 @@ class index extends Component {
                          
                                 <div className="p-2 bd-highlight d-flex align-items-center">                          
 
-                                    <Tooltip
+                                    {/* <Tooltip
                                         placement="top"
                                         overlay={<div style={{ height: 20, width: '100%' }}>Create New Stakeholder</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
                                         <button className="btn btn-sm btn-primary" data-pagename="addStakeholder" onClick={this.addStakeh}>
                                             <i className="fa fa-user-plus" data-pagename="addStakeholder"></i>
                                         </button>                            
-                                    </Tooltip>
+                                    </Tooltip> */}
 
                                     <Tooltip
                                         placement='top'
@@ -342,14 +342,14 @@ class index extends Component {
                                         </button>
                                     </Tooltip> */}
 
-                                    <Tooltip
+                                    {/* <Tooltip
                                         placement="top"
                                         overlay={<div style={{ height: 20, width: '100%' }}>Sort by latest creation</div>}
                                         arrowContent={<div className="rc-tooltip-arrow-inner"></div>}>
                                         <button className="btn btn-sm btn-primary ml-2"  alt="Sort" onClick={this.sortItem}>
                                             <i className="fa fa-sort-amount-asc" aria-hidden="true"></i>
                                         </button>
-                                    </Tooltip>
+                                    </Tooltip> */}
  
                                 </div>
                         </div>

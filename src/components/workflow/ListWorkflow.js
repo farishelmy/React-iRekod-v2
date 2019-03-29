@@ -307,6 +307,7 @@ class ListWorkflow extends Component {
           workflowUri={itm.workflowUri}
           markOnSel={this.markOnSel}
           isSel={itm.isSel}
+          icon={itm.iconCls}
           dateStart={itm.dateStarted}
           dateDue={itm.dateDue}
           jobNo={itm.jobNumber}
